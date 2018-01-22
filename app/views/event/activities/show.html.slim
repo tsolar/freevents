@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong Type:
+  = @event_activity.type
+p
+  strong Event day:
+  = @event_activity.event_day
+p
+  strong Title:
+  = @event_activity.title
+p
+  strong Description:
+  = @event_activity.description
+p
+  strong Starts at:
+  = @event_activity.starts_at
+p
+  strong Ends at:
+  = @event_activity.ends_at
+
+=> link_to 'Edit', edit_event_activity_path(@event_activity)
+'|
+=< link_to 'Back', event_activities_path

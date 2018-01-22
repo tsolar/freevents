@@ -1,0 +1,29 @@
+inherit_gem:
+  rubocop-rails:
+    - config/rails.yml
+
+require: rubocop-rspec
+
+AllCops:
+  # Override rubocop-rails target version
+  TargetRubyVersion: 2.4
+
+  # Display Cop name, please!
+  DisplayCopNames: true
+
+  Exclude:
+    # exclude rails commands
+    - 'bin/**/*'
+
+    # If set Exclude in "AllCops", it checks "node_modules" folder too
+    - 'node_modules/**/*'
+
+# rubocop-rails disables by default lots of Cops. Below are enabled cops we want to enable.
+
+# Disable this check. Check again if we port to Ruby 3.0
+# see https://stackoverflow.com/questions/38325533/disable-frozen-string-literal-comment-checking
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/DefWithParentheses:
+  Enabled: true

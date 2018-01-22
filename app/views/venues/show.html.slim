@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @venue.name
+p
+  strong Description:
+  = @venue.description
+p
+  strong Address:
+  = @venue.address
+p
+  strong Lat:
+  = @venue.lat
+p
+  strong Lng:
+  = @venue.lng
+
+=> link_to 'Edit', edit_venue_path(@venue)
+'|
+=< link_to 'Back', venues_path

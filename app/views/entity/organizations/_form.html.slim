@@ -1,0 +1,9 @@
+= simple_form_for(@entity_organization) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :type
+    = f.input :name
+
+  .form-actions
+    = f.button :submit

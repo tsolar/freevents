@@ -1,0 +1,42 @@
+p#notice = notice
+
+p
+  strong Event:
+  = @event_activity_postulation.event
+p
+  strong Postulant firstname:
+  = @event_activity_postulation.postulant_firstname
+p
+  strong Postulant lastname:
+  = @event_activity_postulation.postulant_lastname
+p
+  strong Postulant email:
+  = @event_activity_postulation.postulant_email
+p
+  strong Postulant phone number:
+  = @event_activity_postulation.postulant_phone_number
+p
+  strong Postulant bio:
+  = @event_activity_postulation.postulant_bio
+p
+  strong Activity type:
+  = @event_activity_postulation.activity_type
+p
+  strong Activity title:
+  = @event_activity_postulation.activity_title
+p
+  strong Activity description:
+  = @event_activity_postulation.activity_description
+p
+  strong Activity estimated duration:
+  = @event_activity_postulation.activity_estimated_duration
+p
+  strong Activity difficulty level:
+  = @event_activity_postulation.activity_difficulty_level
+p
+  strong Activity preferred time:
+  = @event_activity_postulation.activity_preferred_time
+
+=> link_to 'Edit', edit_event_activity_postulation_path(@event_activity_postulation)
+'|
+=< link_to 'Back', event_activity_postulations_path

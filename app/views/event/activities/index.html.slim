@@ -1,0 +1,31 @@
+h1 Listing event_activities
+
+table
+  thead
+    tr
+      th Type
+      th Event day
+      th Title
+      th Description
+      th Starts at
+      th Ends at
+      th
+      th
+      th
+
+  tbody
+    - @event_activities.each do |event_activity|
+      tr
+        td = event_activity.type
+        td = event_activity.event_day
+        td = event_activity.title
+        td = event_activity.description
+        td = event_activity.starts_at
+        td = event_activity.ends_at
+        td = link_to 'Show', event_activity
+        td = link_to 'Edit', edit_event_activity_path(event_activity)
+        td = link_to 'Destroy', event_activity, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Activity', new_event_activity_path

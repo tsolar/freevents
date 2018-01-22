@@ -1,0 +1,19 @@
+= simple_form_for(@event_activity_postulation) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :event
+    = f.input :postulant_firstname
+    = f.input :postulant_lastname
+    = f.input :postulant_email
+    = f.input :postulant_phone_number
+    = f.input :postulant_bio
+    = f.input :activity_type
+    = f.input :activity_title
+    = f.input :activity_description
+    = f.input :activity_estimated_duration
+    = f.input :activity_difficulty_level
+    = f.input :activity_preferred_time
+
+  .form-actions
+    = f.button :submit

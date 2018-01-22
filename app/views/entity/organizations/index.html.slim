@@ -1,0 +1,23 @@
+h1 Listing entity_organizations
+
+table
+  thead
+    tr
+      th Type
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @entity_organizations.each do |entity_organization|
+      tr
+        td = entity_organization.type
+        td = entity_organization.name
+        td = link_to 'Show', entity_organization
+        td = link_to 'Edit', edit_entity_organization_path(entity_organization)
+        td = link_to 'Destroy', entity_organization, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Organization', new_entity_organization_path

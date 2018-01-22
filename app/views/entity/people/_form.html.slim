@@ -1,0 +1,11 @@
+= simple_form_for(@entity_person) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :firstname
+    = f.input :lastname
+    = f.input :dob
+    = f.input :bio
+
+  .form-actions
+    = f.button :submit

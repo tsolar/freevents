@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Firstname:
+  = @entity_person.firstname
+p
+  strong Lastname:
+  = @entity_person.lastname
+p
+  strong Dob:
+  = @entity_person.dob
+p
+  strong Bio:
+  = @entity_person.bio
+
+=> link_to 'Edit', edit_entity_person_path(@entity_person)
+'|
+=< link_to 'Back', entity_people_path

@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Event activity:
+  = @event_activity_participation.event_activity
+p
+  strong Event participation:
+  = @event_activity_participation.event_participation
+p
+  strong Type:
+  = @event_activity_participation.type
+
+=> link_to 'Edit', edit_event_activity_participation_path(@event_activity_participation)
+'|
+=< link_to 'Back', event_activity_participations_path

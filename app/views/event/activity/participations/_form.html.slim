@@ -1,0 +1,10 @@
+= simple_form_for(@event_activity_participation) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :event_activity
+    = f.association :event_participation
+    = f.input :type
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,2 @@
+module Entity::OrganizationsHelper
+end
