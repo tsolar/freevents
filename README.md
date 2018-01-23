@@ -1,24 +1,34 @@
-# README
+# Freevents
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is an application to handle event organization, speakers, attendees, etc.
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+* Ruby 2.4.1
+* PostgreSQL 9.x or 10
+  * For Debian you will need `libpq-dev` in order to be able to install `pg` gem
+  ```bash
+  apt install libpq-dev
+  ```
 
-* System dependencies
+## Installation
 
-* Configuration
+Clone the repo
 
-* Database creation
+```bash
+git clone http://github.com/tsolar/freevents.git
+cd freevents
+```
 
-* Database initialization
+Create PostgreSQL user and database
 
-* How to run the test suite
+``` bash
+sudo -u postgres createuser $USER -s
+rails db:create
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Run migrations
 
-* Deployment instructions
-
-* ...
+``` bash
+rails db:migrate
+```
