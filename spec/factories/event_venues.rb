@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :event_venue, class: 'Event::Venue' do
-    event nil
-    venue nil
+  factory :event_venue, class: "Event::Venue" do
+    event
+    venue
   end
 end

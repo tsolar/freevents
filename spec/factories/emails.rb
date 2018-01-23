@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :email do
-    address "MyString"
-    emailable nil
-    label "MyString"
+    address { FFaker::Internet.email }
+    emailable { FactoryBot.create(:entity_person) }
+    label { FFaker::Lorem.word }
   end
 end

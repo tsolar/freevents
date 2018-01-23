@@ -4,27 +4,21 @@ Rails.application.routes.draw do
 
   namespace :event do
     resources :activities
-  end
-  namespace :event do
+    resources :participations
+
     namespace :activity do
       resources :participations
-    end
-  end
-  namespace :entity do
-    resources :organizations
-  end
-  namespace :entity do
-    resources :people
-  end
-  namespace :event do
-    namespace :activity do
       resources :postulations
     end
   end
-  resources :venues
-  namespace :event do
-    resources :participations
+
+  namespace :entity do
+    resources :organizations
+    resources :people
   end
+
+  resources :venues
   resources :events
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

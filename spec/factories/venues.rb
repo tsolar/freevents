@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :venue do
-    name "MyString"
-    description "MyText"
-    address "MyString"
-    lat 1.5
-    lng 1.5
+    name { FFaker::Venue.name }
+    description { FFaker::Lorem.paragraph }
+    address { FFaker::Address.street_address }
+    lat -33.4489
+    lng -70.6693
   end
 end
