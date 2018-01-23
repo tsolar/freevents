@@ -1,12 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "event/activities/edit", type: :view do
   before(:each) do
     @event_activity = assign(:event_activity, Event::Activity.create!(
-      :type => "",
-      :event_day => nil,
-      :title => "MyString",
-      :description => "MyText"
+                                                type: "",
+                                                event_day: nil,
+                                                title: "MyString",
+                                                description: "MyText"
     ))
   end
 

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Entity::People", type: :request do
   describe "GET /entity_people" do

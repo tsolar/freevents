@@ -28,7 +28,7 @@ class Entity::OrganizationsController < ApplicationController
 
     respond_to do |format|
       if @entity_organization.save
-        format.html { redirect_to @entity_organization, notice: 'Organization was successfully created.' }
+        format.html { redirect_to @entity_organization, notice: "Organization was successfully created." }
         format.json { render :show, status: :created, location: @entity_organization }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class Entity::OrganizationsController < ApplicationController
   def update
     respond_to do |format|
       if @entity_organization.update(entity_organization_params)
-        format.html { redirect_to @entity_organization, notice: 'Organization was successfully updated.' }
+        format.html { redirect_to @entity_organization, notice: "Organization was successfully updated." }
         format.json { render :show, status: :ok, location: @entity_organization }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class Entity::OrganizationsController < ApplicationController
   def destroy
     @entity_organization.destroy
     respond_to do |format|
-      format.html { redirect_to entity_organizations_url, notice: 'Organization was successfully destroyed.' }
+      format.html { redirect_to entity_organizations_url, notice: "Organization was successfully destroyed." }
       format.json { head :no_content }
     end
   end

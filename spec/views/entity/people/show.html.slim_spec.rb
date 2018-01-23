@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "entity/people/show", type: :view do
   before(:each) do
     @entity_person = assign(:entity_person, Entity::Person.create!(
-      :firstname => "Firstname",
-      :lastname => "Lastname",
-      :bio => "MyText"
+                                              firstname: "Firstname",
+                                              lastname: "Lastname",
+                                              bio: "MyText"
     ))
   end
 

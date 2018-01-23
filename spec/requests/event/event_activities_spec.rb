@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Event::Activities", type: :request do
   describe "GET /event_activities" do

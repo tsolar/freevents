@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "events/new", type: :view do
   before(:each) do
     assign(:event, Event.new(
-      :title => "MyString",
-      :description => "MyText"
+                     title: "MyString",
+                     description: "MyText"
     ))
   end
 

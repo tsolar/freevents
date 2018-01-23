@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "events/edit", type: :view do
   before(:each) do
     @event = assign(:event, Event.create!(
-      :title => "MyString",
-      :description => "MyText"
+                              title: "MyString",
+                              description: "MyText"
     ))
   end
 

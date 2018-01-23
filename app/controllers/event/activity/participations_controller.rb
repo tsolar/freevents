@@ -28,7 +28,7 @@ class Event::Activity::ParticipationsController < ApplicationController
 
     respond_to do |format|
       if @event_activity_participation.save
-        format.html { redirect_to @event_activity_participation, notice: 'Participation was successfully created.' }
+        format.html { redirect_to @event_activity_participation, notice: "Participation was successfully created." }
         format.json { render :show, status: :created, location: @event_activity_participation }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class Event::Activity::ParticipationsController < ApplicationController
   def update
     respond_to do |format|
       if @event_activity_participation.update(event_activity_participation_params)
-        format.html { redirect_to @event_activity_participation, notice: 'Participation was successfully updated.' }
+        format.html { redirect_to @event_activity_participation, notice: "Participation was successfully updated." }
         format.json { render :show, status: :ok, location: @event_activity_participation }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class Event::Activity::ParticipationsController < ApplicationController
   def destroy
     @event_activity_participation.destroy
     respond_to do |format|
-      format.html { redirect_to event_activity_participations_url, notice: 'Participation was successfully destroyed.' }
+      format.html { redirect_to event_activity_participations_url, notice: "Participation was successfully destroyed." }
       format.json { head :no_content }
     end
   end

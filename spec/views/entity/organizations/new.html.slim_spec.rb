@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "entity/organizations/new", type: :view do
   before(:each) do
     assign(:entity_organization, Entity::Organization.new(
-      :type => "",
-      :name => "MyString"
+                                   type: "",
+                                   name: "MyString"
     ))
   end
 

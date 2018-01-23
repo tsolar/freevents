@@ -1,12 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "event/participations/edit", type: :view do
   before(:each) do
     @event_participation = assign(:event_participation, Event::Participation.create!(
-      :event => nil,
-      :type => "",
-      :participant => nil,
-      :description => "MyText"
+                                                          event: nil,
+                                                          type: "",
+                                                          participant: nil,
+                                                          description: "MyText"
     ))
   end
 

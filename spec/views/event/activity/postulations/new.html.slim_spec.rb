@@ -1,20 +1,20 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "event/activities/new", type: :view do
   before(:each) do
     assign(:event_activity, Event::Activity::Postulation.new(
-      :event => nil,
-      :postulant_firstname => "MyString",
-      :postulant_lastname => "MyString",
-      :postulant_email => "MyString",
-      :postulant_phone_number => "MyString",
-      :postulant_bio => "MyText",
-      :activity_type => "MyString",
-      :activity_title => "MyString",
-      :activity_description => "MyText",
-      :activity_estimated_duration => 1,
-      :activity_difficulty_level => "MyString",
-      :activity_preferred_time => "MyString"
+                              event: nil,
+                              postulant_firstname: "MyString",
+                              postulant_lastname: "MyString",
+                              postulant_email: "MyString",
+                              postulant_phone_number: "MyString",
+                              postulant_bio: "MyText",
+                              activity_type: "MyString",
+                              activity_title: "MyString",
+                              activity_description: "MyText",
+                              activity_estimated_duration: 1,
+                              activity_difficulty_level: "MyString",
+                              activity_preferred_time: "MyString"
     ))
   end
 

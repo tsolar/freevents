@@ -28,7 +28,7 @@ class Entity::PeopleController < ApplicationController
 
     respond_to do |format|
       if @entity_person.save
-        format.html { redirect_to @entity_person, notice: 'Person was successfully created.' }
+        format.html { redirect_to @entity_person, notice: "Person was successfully created." }
         format.json { render :show, status: :created, location: @entity_person }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class Entity::PeopleController < ApplicationController
   def update
     respond_to do |format|
       if @entity_person.update(entity_person_params)
-        format.html { redirect_to @entity_person, notice: 'Person was successfully updated.' }
+        format.html { redirect_to @entity_person, notice: "Person was successfully updated." }
         format.json { render :show, status: :ok, location: @entity_person }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class Entity::PeopleController < ApplicationController
   def destroy
     @entity_person.destroy
     respond_to do |format|
-      format.html { redirect_to entity_people_url, notice: 'Person was successfully destroyed.' }
+      format.html { redirect_to entity_people_url, notice: "Person was successfully destroyed." }
       format.json { head :no_content }
     end
   end

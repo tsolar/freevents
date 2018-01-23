@@ -28,7 +28,7 @@ class Event::Activity::PostulationsController < ApplicationController
 
     respond_to do |format|
       if @event_activity_postulation.save
-        format.html { redirect_to @event_activity_postulation, notice: 'Postulation was successfully created.' }
+        format.html { redirect_to @event_activity_postulation, notice: "Postulation was successfully created." }
         format.json { render :show, status: :created, location: @event_activity_postulation }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class Event::Activity::PostulationsController < ApplicationController
   def update
     respond_to do |format|
       if @event_activity_postulation.update(event_activity_postulation_params)
-        format.html { redirect_to @event_activity_postulation, notice: 'Postulation was successfully updated.' }
+        format.html { redirect_to @event_activity_postulation, notice: "Postulation was successfully updated." }
         format.json { render :show, status: :ok, location: @event_activity_postulation }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class Event::Activity::PostulationsController < ApplicationController
   def destroy
     @event_activity_postulation.destroy
     respond_to do |format|
-      format.html { redirect_to event_activity_postulations_url, notice: 'Postulation was successfully destroyed.' }
+      format.html { redirect_to event_activity_postulations_url, notice: "Postulation was successfully destroyed." }
       format.json { head :no_content }
     end
   end

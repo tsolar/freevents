@@ -1,13 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "venues/show", type: :view do
   before(:each) do
     @venue = assign(:venue, Venue.create!(
-      :name => "Name",
-      :description => "MyText",
-      :address => "Address",
-      :lat => 2.5,
-      :lng => 3.5
+                              name: "Name",
+                              description: "MyText",
+                              address: "Address",
+                              lat: 2.5,
+                              lng: 3.5
     ))
   end
 
