@@ -14,5 +14,9 @@ FactoryBot.define do
     #   # create_list(:event_day, evaluator.days_count, event: event)
     #   create_list(:event_venue, evaluator.venues_count, event: event)
     # end
+
+    trait :invalid do
+      title nil
+    end
   end
 end
