@@ -55,12 +55,13 @@ gem "country_select", require: "country_select_without_sort_alphabetical"
 # Validate dates
 gem "validates_timeliness", "~> 4.0"
 
-
 # Follow coding standards!
 gem "rubocop", require: false
 gem "rubocop-rails"
 gem "rubocop-rspec"
 
+# User authentication
+gem "devise"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
