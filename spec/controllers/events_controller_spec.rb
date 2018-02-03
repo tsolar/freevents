@@ -89,10 +89,25 @@ RSpec.describe EventsController, type: :controller do
     context "when user is logged in" do
       login_user
 
-      it "returns a success response" do
-        event = Event.create! valid_attributes
-        get :edit, params: { id: event.to_param }, session: valid_session
-        expect(response).to be_success
+      context "when user is owner of the event" do
+        it "returns a success response" do
+          event = Event.create! valid_attributes.merge(owner: @user)
+          get :edit, params: { id: event.to_param }, session: valid_session
+          expect(assigns(:event).owner).to eq @user
+          expect(response).to be_success
+        end
+      end
+
+      context "when user is not owner of the event" do
+        it "rendirects back with flash message" do
+          event = Event.create! valid_attributes
+          event_owner = event.owner
+          get :edit, params: { id: event.to_param }, session: valid_session
+          expect(assigns(:event).owner).not_to eq @user
+          expect(assigns(:event).owner).to eq event_owner
+          expect(response).to redirect_to root_path
+          expect(flash[:alert]).to include(I18n.t("unauthorized"))
+        end
       end
     end
   end
@@ -105,6 +120,7 @@ RSpec.describe EventsController, type: :controller do
           expect {
             post :create, params: { event: valid_attributes }, session: valid_session
           }.to change(Event, :count).by(1)
+          expect(Event.last.owner).to eq @user
         end
 
         it "redirects to the created event" do
@@ -149,18 +165,21 @@ RSpec.describe EventsController, type: :controller do
     let(:new_attributes) {
       FactoryBot.attributes_for(:event, valid_attributes.merge(title: "other title"))
     }
+    let(:event) { Event.create! valid_attributes }
+
     context "when user is logged in" do
       login_user
+
+      let(:event) { Event.create! valid_attributes.merge(owner: @user) }
+
       context "with valid params" do
         it "updates the requested event" do
-          event = Event.create! valid_attributes
           put :update, params: { id: event.to_param, event: new_attributes }, session: valid_session
           event.reload
           expect(event.title).to eq "other title"
         end
 
         it "redirects to the event" do
-          event = Event.create! valid_attributes
           put :update, params: { id: event.to_param, event: valid_attributes }, session: valid_session
           expect(response).to redirect_to(event)
         end
@@ -168,7 +187,6 @@ RSpec.describe EventsController, type: :controller do
 
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'edit' template)" do
-          event = Event.create! valid_attributes
           put :update, params: { id: event.to_param, event: invalid_attributes }, session: valid_session
           expect(response).to be_success
         end
@@ -178,14 +196,12 @@ RSpec.describe EventsController, type: :controller do
     context "when usser is not logged in" do
       context "with valid params" do
         it "does not update the requested event" do
-          event = Event.create! valid_attributes
           put :update, params: { id: event.to_param, event: new_attributes }, session: valid_session
           event.reload
           expect(event.title).to eq valid_attributes[:title]
         end
 
         it "redirects to new user session path" do
-          event = Event.create! valid_attributes
           put :update, params: { id: event.to_param, event: valid_attributes }, session: valid_session
           expect(response).to redirect_to(new_user_session_path)
         end
@@ -193,7 +209,6 @@ RSpec.describe EventsController, type: :controller do
 
       context "with invalid params" do
         it "redirects to new user session path" do
-          event = Event.create! valid_attributes
           put :update, params: { id: event.to_param, event: invalid_attributes }, session: valid_session
           expect(response).to redirect_to(new_user_session_path)
         end
@@ -206,14 +221,17 @@ RSpec.describe EventsController, type: :controller do
       login_user
 
       it "destroys the requested event" do
-        event = Event.create! valid_attributes
+        # Can't use `let!` because it runs before `login_user`,
+        # and user is needed to create the event.
+        # So let's create the `event` just like this.
+        event = Event.create! valid_attributes.merge(owner: @user)
         expect {
           delete :destroy, params: { id: event.to_param }, session: valid_session
         }.to change(Event, :count).by(-1)
       end
 
       it "redirects to the events list" do
-        event = Event.create! valid_attributes
+        event = Event.create! valid_attributes.merge(owner: @user)
         delete :destroy, params: { id: event.to_param }, session: valid_session
         expect(response).to redirect_to(events_url)
       end

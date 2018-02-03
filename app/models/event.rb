@@ -15,6 +15,11 @@ class Event < ApplicationRecord
            through: :event_venues,
            source: :venue
 
+  belongs_to :owner,
+             inverse_of: :events,
+             class_name: "User",
+             foreign_key: :owner_id
+
   validates :title, presence: true
   validates :title, uniqueness: true
   validates :days, presence: true

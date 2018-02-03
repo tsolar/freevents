@@ -9,4 +9,5 @@ class Entity::Person < ApplicationRecord
 
   validates :firstname, presence: true
   validates :lastname, presence: true
+  validates :bio, length: { maximum: 300 }
 end

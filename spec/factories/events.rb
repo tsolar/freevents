@@ -5,6 +5,8 @@ FactoryBot.define do
 
     days_attributes { [FactoryBot.attributes_for(:event_day)] }
 
+    owner { FactoryBot.create(:user) }
+
     # transient do
     #   # days_count 1
     #   venues_count 0
