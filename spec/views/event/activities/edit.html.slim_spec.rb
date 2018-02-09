@@ -1,13 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "event/activities/edit", type: :view do
+  before { skip("Not yet implemented") }
+
   before(:each) do
-    @event_activity = assign(:event_activity, Event::Activity.create!(
-                                                type: "",
-                                                event_day: nil,
-                                                title: "MyString",
-                                                description: "MyText"
-    ))
+    @event_activity = assign(:event_activity, FactoryBot.create(:event_activity))
   end
 
   it "renders the edit event_activity form" do

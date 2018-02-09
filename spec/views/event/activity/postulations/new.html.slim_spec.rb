@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "event/activities/new", type: :view do
+  before { skip("Not yet implemented") }
   before(:each) do
     assign(:event_activity, Event::Activity::Postulation.new(
                               event: nil,

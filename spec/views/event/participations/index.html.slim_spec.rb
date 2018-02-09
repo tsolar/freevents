@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "event/participations/index", type: :view do
+  before { skip("Not yet implemented") }
   before(:each) do
     assign(:event_participations, [
       Event::Participation.create!(
