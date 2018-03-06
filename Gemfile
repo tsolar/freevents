@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem "dotenv-rails", require: "dotenv/rails-now"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 5.1.4"
@@ -67,6 +68,9 @@ gem "devise"
 gem "pundit"
 gem "pundit-matchers", "~> 1.4.1"
 
+# Queue jobs and emails
+gem "delayed_job_active_record"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
@@ -85,7 +89,6 @@ group :development, :test do
 
   # lets generate some layouts with bootstrap...
   gem "rails_layout"
-
 end
 
 group :development do

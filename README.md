@@ -20,6 +20,12 @@ git clone http://github.com/tsolar/freevents.git
 cd freevents
 ```
 
+Install gems
+
+``` bash
+bundle install
+```
+
 Create PostgreSQL user and database
 
 ``` bash
@@ -31,4 +37,10 @@ Run migrations
 
 ``` bash
 rails db:migrate
+```
+
+Run server
+
+``` bash
+rails s
 ```
