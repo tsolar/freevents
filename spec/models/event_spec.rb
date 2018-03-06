@@ -27,6 +27,13 @@ RSpec.describe Event, type: :model do
     it { should have_many(:venues)
                  .class_name("::Venue")
                  .through(:event_venues) }
+
+    it {
+      should belong_to(:owner)
+        .inverse_of(:events)
+        .class_name("User")
+        .with_foreign_key(:owner_id)
+    }
   end
 
   describe "to_s" do

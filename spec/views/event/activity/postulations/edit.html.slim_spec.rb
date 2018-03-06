@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "event/activities/edit", type: :view do
+  before { skip("Not yet implemented") }
   before(:each) do
     @event_activity = assign(:event_activity, Event::Activity::Postulation.create!(
                                                 event: nil,
