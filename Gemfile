@@ -36,9 +36,6 @@ gem "jbuilder", "~> 2.5"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # Use slim to generate views
 gem "slim-rails"
 
@@ -70,6 +67,9 @@ gem "pundit-matchers", "~> 1.4.1"
 
 # Queue jobs and emails
 gem "delayed_job_active_record"
+gem "daemons"
+
+gem "seed_migration"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -99,6 +99,14 @@ group :development do
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
 
+  # Use Capistrano for deployment
+  gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-rails", "~> 1.3", require: false
+  gem "capistrano-rvm"
+  gem "capistrano3-puma"
+  gem "capistrano3-delayed-job"
+  gem "capistrano3-postgres", require: false
+  gem "capistrano-measure", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
