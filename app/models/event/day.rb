@@ -8,5 +8,6 @@ class Event::Day < ApplicationRecord
   validates :event, presence: true
   validates :date, presence: true
   validates :start_time, presence: true
+  validates :start_time, timeliness: { on_or_before: :end_time }
   validates :end_time, presence: true
 end
