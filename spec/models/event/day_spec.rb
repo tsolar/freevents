@@ -10,8 +10,10 @@ RSpec.describe Event::Day, type: :model do
     describe "timeliness" do
       context "start_time is after end_time" do
         it "should validate start_time" do
-          now = Time.current
-          day = FactoryBot.build(:event_day, start_time: now + 1.hour, end_time: now)
+          day = FactoryBot.build(
+            :event_day,
+            start_time: "15:00",
+            end_time: "14:00")
           expect(day.valid?).to be false
           expect(day.save).to be false
           expect(day.errors[:start_time]).not_to be_empty
@@ -20,8 +22,10 @@ RSpec.describe Event::Day, type: :model do
 
       context "start_time is before end_time" do
         it "should validate start_time" do
-          now = Time.current
-          day = FactoryBot.build(:event_day, start_time: now, end_time: now + 1.hour)
+          day = FactoryBot.build(
+            :event_day,
+            start_time: "14:00",
+            end_time: "15:00")
           expect(day.valid?).to be true
           expect(day.save).to be true
           expect(day.errors[:start_time]).to be_empty

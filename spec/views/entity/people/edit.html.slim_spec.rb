@@ -2,11 +2,10 @@ require "rails_helper"
 
 RSpec.describe "entity/people/edit", type: :view do
   before(:each) do
-    @entity_person = assign(:entity_person, Entity::Person.create!(
-                                              firstname: "MyString",
-                                              lastname: "MyString",
-                                              bio: "MyText"
-    ))
+    @entity_person = assign(
+      :entity_person,
+      FactoryBot.create(:entity_person)
+    )
   end
 
   it "renders the edit entity_person form" do

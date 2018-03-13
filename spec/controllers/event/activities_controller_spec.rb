@@ -24,7 +24,6 @@ require "rails_helper"
 # `rails-controller-testing` gem.
 
 RSpec.describe Event::ActivitiesController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Event::Activity. As you add validations to Event::Activity, be sure to
   # adjust the attributes here as well.
@@ -40,6 +39,10 @@ RSpec.describe Event::ActivitiesController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # Event::ActivitiesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  let(:event) {
+    skip("Create an event to make routes match")
+  }
 
   describe "GET #index" do
     it "returns a success response" do
@@ -59,7 +62,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: { event_id: event.to_param }, session: valid_session
       expect(response).to be_success
     end
   end

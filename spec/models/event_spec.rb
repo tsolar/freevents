@@ -63,22 +63,29 @@ RSpec.describe Event, type: :model do
 
     let(:days_attributes) {
       [
-        FactoryBot.attributes_for(:event_day, date: Time.current, start_time: Time.current, end_time: Time.current + 3.hours),
-        FactoryBot.attributes_for(:event_day, date: Time.current.tomorrow, start_time: Time.current.tomorrow, end_time: Time.current.tomorrow + 3.hours)
+        FactoryBot.attributes_for(:event_day, date: Time.current, start_time: "15:00", end_time: "18:00"),
+        FactoryBot.attributes_for(:event_day, date: Time.current.tomorrow, start_time: "15:00", end_time: "18:00")
       ]
     }
+
 
     context "when first day is created BEFORE last day" do
       it "should return days ordered by date, not by created_at or id" do
         days = event.days
         expect(days.first.date < days.last.date).to be true
       end
+
+      context "when first day end_time is on next day" do
+        it "should return days ordered by date (start_time maybe?)" do
+          skip "Change start_time and end_time to datetime"
+        end
+      end
     end
 
     context "when first day is created AFTER last day" do
       let(:days_attributes) {
         [
-          FactoryBot.attributes_for(:event_day, date: Time.current.tomorrow, start_time: Time.current.tomorrow, end_time: Time.current.tomorrow + 3.hours)
+          FactoryBot.attributes_for(:event_day, date: Time.current.tomorrow, start_time: "15:00", end_time: "18:00")
         ]
       }
 
@@ -87,8 +94,8 @@ RSpec.describe Event, type: :model do
           FactoryBot.attributes_for(
             :event_day,
             date: Time.current,
-            start_time: Time.current,
-            end_time: Time.current + 3.hours
+            start_time: "15:00",
+            end_time: "18:00"
           )
         )
         event.reload
@@ -120,8 +127,8 @@ RSpec.describe Event, type: :model do
           :event,
           days_attributes:
           [
-            FactoryBot.attributes_for(:event_day, start_time: Time.current, end_time: Time.current + 3.hours),
-            FactoryBot.attributes_for(:event_day, start_time: Time.current.tomorrow, end_time: Time.current.tomorrow + 3.hours)
+            FactoryBot.attributes_for(:event_day, start_time: "15:00", end_time: "18:00"),
+            FactoryBot.attributes_for(:event_day, start_time: "15:00", end_time: "18:00")
           ]
         )
       }

@@ -2,24 +2,18 @@ require "rails_helper"
 
 RSpec.describe "entity/people/index", type: :view do
   before(:each) do
-    assign(:entity_people, [
-      Entity::Person.create!(
-        firstname: "Firstname",
-        lastname: "Lastname",
-        bio: "MyText"
-      ),
-      Entity::Person.create!(
-        firstname: "Firstname",
-        lastname: "Lastname",
-        bio: "MyText"
-      )
-    ])
+    assign(
+      :entity_people,
+      FactoryBot.create_list(:entity_person, 2)
+    )
   end
 
   it "renders a list of entity/people" do
     render
-    assert_select "tr>td", text: "Firstname".to_s, count: 2
-    assert_select "tr>td", text: "Lastname".to_s, count: 2
-    assert_select "tr>td", text: "MyText".to_s, count: 2
+    assert_select "tr>td", text: Entity::Person.first.firstname.to_s, count: 1
+    assert_select "tr>td", text: Entity::Person.last.firstname.to_s, count: 1
+
+    assert_select "tr>td", text: Entity::Person.first.lastname.to_s, count: 1
+    assert_select "tr>td", text: Entity::Person.last.lastname.to_s, count: 1
   end
 end

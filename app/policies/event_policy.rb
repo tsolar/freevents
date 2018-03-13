@@ -15,6 +15,10 @@ class EventPolicy < ApplicationPolicy
     scope.where(id: record.id).exists? && is_owner?
   end
 
+  def respond_attendance?
+    user.present? && !is_owner?
+  end
+
   class Scope < Scope
     def resolve
       scope
@@ -23,6 +27,6 @@ class EventPolicy < ApplicationPolicy
 
   private
     def is_owner?
-      user && user == record.owner
+      user.present? && user == record.owner
     end
 end

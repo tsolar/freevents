@@ -36,6 +36,10 @@ RSpec.describe Event::Activity::PostulationsController, type: :controller do
     skip("Add a hash of attributes invalid for your model")
   }
 
+  let(:event) {
+    skip("Create an event to make routes match")
+  }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # Event::Activity::PostulationsController. Be sure to keep this updated too.
@@ -59,7 +63,7 @@ RSpec.describe Event::Activity::PostulationsController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: { event_id: event.to_param }, session: valid_session
       expect(response).to be_success
     end
   end

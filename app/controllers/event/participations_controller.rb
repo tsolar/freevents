@@ -1,4 +1,5 @@
 class Event::ParticipationsController < ApplicationController
+  before_action :set_event, only: [:show, :new, :create, :edit, :update, :destroy]
   before_action :set_event_participation, only: [:show, :edit, :update, :destroy]
 
   # GET /event/participations
@@ -14,7 +15,7 @@ class Event::ParticipationsController < ApplicationController
 
   # GET /event/participations/new
   def new
-    @event_participation = Event::Participation.new
+    @event_participation = Event::Participation.new(event: @event)
   end
 
   # GET /event/participations/1/edit
@@ -67,8 +68,19 @@ class Event::ParticipationsController < ApplicationController
       @event_participation = Event::Participation.find(params[:id])
     end
 
+    def set_event
+      @event = Event.find_by(id: params[:event_id])
+      # TODO: render 404 if not found?
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_participation_params
-      params.require(:event_participation).permit(:event_id, :type, :participant_id, :participant_type, :description)
+      params.require(:event_participation).permit(
+        :event_id,
+        :type,
+        :participant_id,
+        :participant_type,
+        :description
+      )
     end
 end

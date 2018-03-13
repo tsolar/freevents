@@ -27,7 +27,8 @@ class Event::Activity::Postulation < ApplicationRecord
       participant = Entity::Person.create(
         firstname: self.postulant_firstname,
         lastname: self.postulant_lastname,
-        bio: self.postulant_bio
+        bio: self.postulant_bio,
+        user: User.create(email: self.postulant_email)
       )
       participant.emails.create(address: self.postulant_email)
     end

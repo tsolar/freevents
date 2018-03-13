@@ -16,5 +16,14 @@ RSpec.describe Event::Participation, type: :model do
       expect(ep.valid?).to be true
       expect(ep.persisted?).to be true
     end
+
+    context "when attributes are invalid" do
+      it "should not create the Event::Participation" do
+        ep_invalid = FactoryBot.build(:event_participation, :invalid)
+        expect(ep_invalid.valid?).to be false
+        expect(ep_invalid.save).to be false
+        expect(ep_invalid.persisted?).to be false
+      end
+    end
   end
 end

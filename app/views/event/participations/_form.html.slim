@@ -2,9 +2,9 @@
   = f.error_notification
 
   .form-inputs
-    = f.association :event
-    = f.input :type
-    = f.association :participant
+    /= f.association :event
+    /= f.input :type
+    = f.association :participant, collection: User.all
     = f.input :description
 
   .form-actions

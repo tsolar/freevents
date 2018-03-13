@@ -254,4 +254,138 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
+  describe "PUT #respond_attendance" do
+    let!(:event) { FactoryBot.create(:event) }
+
+    context "when user is not logged in" do
+      it "redirects to new user session path" do
+        expect {
+          put :respond_attendance, params: { id: event.to_param, will_attend: "yes" }, session: valid_session
+        }.to change(Event::Participation, :count).by(0)
+          .and change(Entity::Person, :count).by(0)
+          .and change(User, :count).by(0)
+
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    context "when user is logged in" do
+      login_user
+
+      context "and when user is event owner" do
+        # let(:event) { FactoryBot.create(:event, owner: @user) }
+
+        it "should not create an event participation" do
+          skip "Not sure if deny or not to event owner to be a participant"
+        end
+      end
+
+      context "and when user is not event owner" do
+        before :each do
+          expect(event.owner).not_to eq @user
+        end
+
+        context "and user is already registered to event (participation exists)" do
+          before :each do
+            # User is already registered to event if exists an Event::Participation related
+            FactoryBot.create(
+              :event_attendee,
+              participant: FactoryBot.create(:entity_person, user: @user)
+            )
+          end
+
+          let(:answer) { "who knows" }
+
+          context "answer is an allowed answer" do
+            context "and answer is yes" do
+              let(:answer) { "yes" }
+
+              it "should save the event participation" do
+              end
+            end
+
+            context "and answer is no" do
+              let(:answer) { "no" }
+
+              it "should save the event participation" do
+              end
+            end
+
+            context "and answer is maybe" do
+              let(:answer) { "maybe" }
+
+              it "should save the event participation" do
+              end
+            end
+
+            after :each do
+              expect {
+                put :respond_attendance, params: { id: event.to_param, will_attend: answer }, session: valid_session
+              }.to change(Event::Participation, :count).by(0)
+                .and change(Entity::Person, :count).by(0)
+                .and change(User, :count).by(0)
+
+              event_participation = Event::Participation.where(
+                event: event,
+                participant: Entity::Person.where(user: @user).first
+              ).first
+
+              expect(event_participation.answer.will_attend).to eq answer
+            end
+          end
+
+          context "and answer is not yes, no, or maybe" do
+            it "should not save the event participation" do
+              event_participation_answer = Event::Participation.where(
+                event: event,
+                participant: Entity::Person.where(user: @user).first
+              ).first.answer
+
+              expect {
+                put :respond_attendance, params: { id: event.to_param, will_attend: answer }, session: valid_session
+              }.to change(Event::Participation, :count).by(0)
+                .and change(Entity::Person, :count).by(0)
+                .and change(User, :count).by(0)
+
+              event_participation = Event::Participation.where(
+                event: event,
+                participant: Entity::Person.where(user: @user).first
+              ).first
+
+              expect(event_participation.answer.will_attend).to eq event_participation_answer.will_attend
+
+            end
+          end
+
+        end
+
+        context "and user is not registered to event (participation does not exist)" do
+          let(:answer) { "who knows" }
+
+          context "and answer is yes" do
+            let(:answer) { "yes" }
+
+            it "should create the event participation" do
+              expect {
+                put :respond_attendance, params: { id: event.to_param, will_attend: answer }, session: valid_session
+              }.to change(Event::Participation, :count).by(1)
+                .and change(Entity::Person, :count).by(0)
+                .and change(User, :count).by(0)
+
+              event_participation = Event::Participation.where(
+                event: event,
+                participant: Entity::Person.where(user: @user).first
+              ).first
+
+              expect(event_participation.answer.will_attend).to eq "yes"
+            end
+          end
+
+          context "and answer is no"
+          context "and answer is maybe"
+          context "and answer is not yes, no, or maybe"
+        end
+      end
+    end
+  end
 end

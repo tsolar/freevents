@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :respond_attendance]
   after_action :verify_authorized
 
   # GET /events
@@ -64,6 +64,15 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def respond_attendance
+    answer = params[:will_attend]
+    participation = Event::Attendee.where(
+      event: @event,
+      participant: Entity::Person.where(user: current_user).first_or_create
+    ).first_or_create
+    participation.answer.update(will_attend: answer)
   end
 
   private

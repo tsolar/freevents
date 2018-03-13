@@ -4,5 +4,7 @@ FactoryBot.define do
     lastname { FFaker::NameMX.last_name }
     dob { Date.today - Random.rand(18..40).years }
     bio { FFaker::HipsterIpsum.paragraph[0..298] }
+    # user can be nil?, if managing persons without registered users
+    user
   end
 end
