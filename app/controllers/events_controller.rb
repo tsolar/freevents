@@ -72,7 +72,18 @@ class EventsController < ApplicationController
       event: @event,
       participant: Entity::Person.where(user: current_user).first_or_create
     ).first_or_create
-    participation.answer.update(will_attend: answer)
+    if participation.answer.update(will_attend: answer)
+      notice = "Your answer was successfully registered"
+      respond_to do |format|
+        format.html { redirect_to events_url, notice: notice }
+        format.json { render json: @event, notice: notice }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to events_url, notice: "There was an problem registering your answer. Please, try again" }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

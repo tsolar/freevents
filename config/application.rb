@@ -24,7 +24,7 @@ module Freevents
     config.active_job.queue_name_delimiter = "."
 
     # Mailer config
-    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.delivery_method = ENV["ACTION_MAILER_DELIVERY_METHOD"] || :smtp
     config.action_mailer.smtp_settings = {
       user_name: ENV["ACTION_MAILER_SMTP_USERNAME"],
       password: ENV["ACTION_MAILER_SMTP_PASSWORD"],

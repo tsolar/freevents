@@ -1,19 +1,7 @@
-= simple_form_for @event, wrapper: :horizontal_form, wrapper_mappings: { \
-    time: :horizontal_multi_select,
-    date: :horizontal_multi_select,
-  } do |f|
-  = f.error_notification
-
-  .form-inputs
-    = f.input :title
-    = f.input :description
-
-    fieldset
-      legend Days
-      = f.simple_fields_for :days do |day|
-        = render 'day_fields', f: day
-      .links
-        = link_to_add_association 'add day', f, :days, class: "btn btn-secondary btn-md"
-
-  .form-actions
-    = f.button :submit, class: "btn-primary"
+- participation = Event::Participation.find_by(event: event, participant: current_user.try(:person))
+/ TODO: use/define delegates in model
+- answer = participation.try(:answer).try(:will_attend)
+.actions.btn-group role="group"
+  = link_to 'Interested', respond_attendance_event_path(event, will_attend: "maybe"), method: :put, class: "btn #{answer == 'maybe' ? 'btn-primary' : 'btn-secondary'}"
+  = link_to 'Going', respond_attendance_event_path(event, will_attend: "yes"), method: :put, class: "btn #{answer == 'yes' ? 'btn-primary' : 'btn-secondary'}"
+  = link_to 'Not going', respond_attendance_event_path(event, will_attend: "no"), method: :put, class: "btn #{answer == 'no' ? 'btn-primary' : 'btn-secondary'}"

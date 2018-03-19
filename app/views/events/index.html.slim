@@ -1,22 +1,21 @@
 h1 Listing events
 
-table
-  thead
-    tr
-      th Title
-      th Description
-      th
-      th
-      th
+.events
+  - @events.each do |event|
+    .event
+      .link
+        = link_to event.title, event
+      .description
+        = event.description
 
-  tbody
-    - @events.each do |event|
-      tr
-        td = event.title
-        td = event.description
-        td = link_to 'Show', event
-        td = link_to 'Edit', edit_event_path(event)
-        td = link_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete
+      .participation-buttons
+        = render partial: "events/attending_form", locals: { event: event }
+
+      .actions.btn-group role="group"
+        - if policy(event).edit?
+          = link_to 'Edit', edit_event_path(event), class: "btn btn-secondary"
+        - if policy(event).destroy?
+          = link_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-secondary"
 
 br
 
