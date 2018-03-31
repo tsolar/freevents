@@ -4,7 +4,7 @@ class Event::Attendee < Event::Participation
     foreign_key: :event_participation_id,
     inverse_of: :attendee
 
-  has_many :tickets, as: :holder
+  has_one :ticket, as: :holder
 
   after_create :create_answer
 end

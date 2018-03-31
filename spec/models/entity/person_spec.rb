@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Entity::Person, type: :model do
   describe "Validations" do
     it { should validate_presence_of :firstname }
-    it { should validate_presence_of :lastname }
+    it { should_not validate_presence_of :lastname }
     it { should validate_length_of(:bio).is_at_most(300) }
   end
 

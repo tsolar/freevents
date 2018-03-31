@@ -14,7 +14,7 @@ RSpec.describe Event::Attendee, type: :model do
         .with_foreign_key(:event_participation_id)
         .inverse_of(:attendee)
     }
-    it { should have_many(:tickets) }
+    it { should have_one(:ticket) }
   end
 
   describe "Create" do

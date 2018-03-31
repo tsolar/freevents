@@ -71,6 +71,10 @@ gem "daemons"
 
 gem "seed_migration"
 
+# Generate QR codes!
+gem "barby"
+gem "rqrcode"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]

@@ -1,0 +1,19 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @event.title
+p
+  strong Description:
+  = @event.description
+p
+  strong Date:
+  = @event.dates
+
+h2 Code
+.code
+  img src=generate_qr(scan_ticket_url(@ticket.token)) class="qr-code"
+
+=> link_to 'Edit', edit_event_path(@event)
+'|
+=< link_to 'Back', events_path

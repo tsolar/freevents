@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Event::Participation, type: :model do
   describe "Validations" do
     it { should validate_presence_of :event }
+    it { should validate_presence_of :participant }
   end
 
   describe "Relationships" do

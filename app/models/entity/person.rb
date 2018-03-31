@@ -10,6 +10,6 @@ class Entity::Person < ApplicationRecord
   belongs_to :user, inverse_of: :person
 
   validates :firstname, presence: true
-  validates :lastname, presence: true
+  # validates :lastname, presence: true
   validates :bio, length: { maximum: 300 }
 end

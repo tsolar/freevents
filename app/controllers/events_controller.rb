@@ -68,10 +68,17 @@ class EventsController < ApplicationController
 
   def respond_attendance
     answer = params[:will_attend]
+    person = current_user.person
+    if person.nil?
+      person = current_user.create_person(
+        firstname: Mail::Address.new(current_user.email).local
+      )
+    end
     participation = Event::Attendee.where(
       event: @event,
-      participant: Entity::Person.where(user: current_user).first_or_create
+      participant: person # person must exist!
     ).first_or_create
+
     if participation.answer.update(will_attend: answer)
       notice = "Your answer was successfully registered"
       respond_to do |format|

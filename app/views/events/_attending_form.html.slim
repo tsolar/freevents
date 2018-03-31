@@ -1,7 +1,11 @@
-- participation = Event::Participation.find_by(event: event, participant: current_user.try(:person))
-/ TODO: use/define delegates in model
-- answer = participation.try(:answer).try(:will_attend)
-.actions.btn-group role="group"
-  = link_to 'Interested', respond_attendance_event_path(event, will_attend: "maybe"), method: :put, class: "btn #{answer == 'maybe' ? 'btn-primary' : 'btn-secondary'}"
-  = link_to 'Going', respond_attendance_event_path(event, will_attend: "yes"), method: :put, class: "btn #{answer == 'yes' ? 'btn-primary' : 'btn-secondary'}"
-  = link_to 'Not going', respond_attendance_event_path(event, will_attend: "no"), method: :put, class: "btn #{answer == 'no' ? 'btn-primary' : 'btn-secondary'}"
+- if policy(event).respond_attendance?
+  - participation = Event::Participation.find_by(event: event, participant: current_user.try(:person))
+  / TODO: use/define delegates in model
+  - answer = participation.try(:answer).try(:will_attend)
+  .actions.btn-group role="group"
+    = link_to 'Interested', respond_attendance_event_path(event, will_attend: "maybe"), method: :put, class: "btn #{answer == 'maybe' ? 'btn-primary' : 'btn-secondary'}"
+    = link_to 'Going', respond_attendance_event_path(event, will_attend: "yes"), method: :put, class: "btn #{answer == 'yes' ? 'btn-primary' : 'btn-secondary'}"
+    = link_to 'Not going', respond_attendance_event_path(event, will_attend: "no"), method: :put, class: "btn #{answer == 'no' ? 'btn-primary' : 'btn-secondary'}"
+  - if participation.present? && participation.ticket.present? && answer == "yes"
+    br/
+    = link_to "Show ticket", ticket_path(token: participation.ticket.token), class: "btn btn-success"
