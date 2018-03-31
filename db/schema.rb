@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315200656) do
+ActiveRecord::Schema.define(version: 20180331024551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,17 @@ ActiveRecord::Schema.define(version: 20180315200656) do
     t.datetime "updated_at", null: false
     t.bigint "owner_id"
     t.index ["owner_id"], name: "index_events_on_owner_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.string "holder_type"
+    t.bigint "holder_id"
+    t.string "token"
+    t.boolean "scanned"
+    t.datetime "scanned_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["holder_type", "holder_id"], name: "index_tickets_on_holder_type_and_holder_id"
   end
 
   create_table "users", force: :cascade do |t|
