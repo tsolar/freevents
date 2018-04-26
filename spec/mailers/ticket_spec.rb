@@ -15,5 +15,16 @@ RSpec.describe TicketMailer, type: :mailer do
       img_src = generate_qr(scan_ticket_url(ticket.token))
       expect(mail.body.encoded).to match("#{img_src}")
     end
+
+    it "is sent to the right user" do
+      expect {
+        perform_enqueued_jobs do
+          ticket
+        end
+      }.to change { ActionMailer::Base.deliveries.size }.by(1)
+
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to[0]).to eq ticket.holder.participant.user.email
+    end
   end
 end

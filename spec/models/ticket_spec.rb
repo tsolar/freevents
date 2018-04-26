@@ -10,13 +10,15 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "Create" do
-    it "should create a valid Ticket" do
+    it "should create a valid Ticket and send email to holder" do
       ticket = FactoryBot.build(:ticket)
       expect(ticket).to be_valid
-      expect(ticket.save).to be true
-      expect(ticket.token).not_to be nil
-      expect(ticket.scanned).to be nil
-      expect(ticket.scanned_at).to be nil
+      expect {
+        expect(ticket.save).to be true
+        expect(ticket.token).not_to be nil
+        expect(ticket.scanned).to be nil
+        expect(ticket.scanned_at).to be nil
+      }.to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
     end
 
     it "should not create an invalid Ticket" do
@@ -51,6 +53,16 @@ RSpec.describe Ticket, type: :model do
       expect(ticket2.token).not_to eq token
       expect(ticket2.scanned).to be nil
       expect(ticket2.scanned_at).to be nil
+    end
+  end
+
+  describe "update" do
+    it "should not send any email" do
+      ticket = FactoryBot.create(:ticket)
+
+      expect {
+        expect(ticket.update(scanned: true, scanned_at: Time.now)).to be true
+      }.not_to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
     end
   end
 end
