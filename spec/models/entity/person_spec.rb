@@ -22,4 +22,19 @@ RSpec.describe Entity::Person, type: :model do
     it { should belong_to(:user).inverse_of(:person) }
   end
 
+  describe "#full_name" do
+    let(:person) { FactoryBot.create(:entity_person) }
+
+    it "returns first name and last name" do
+      expect(person.full_name).to eq "#{person.firstname} #{person.lastname}"
+    end
+
+    context "when lastname is nil" do
+      let(:person) { FactoryBot.create(:entity_person, lastname: nil) }
+
+      it "returns only the first name" do
+        expect(person.full_name).to eq person.firstname
+      end
+    end
+  end
 end

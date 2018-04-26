@@ -58,6 +58,9 @@ RSpec.configure do |config|
     config.include ::Rails::Controller::Testing::Integration, type: type
   end
 
+  # include application helper
+  config.include ApplicationHelper
+
   # to prevent ActiveRecord::AssociationTypeMismatch when running tests
   config.before(:suite) { FactoryBot.reload }
 end

@@ -12,4 +12,8 @@ class Entity::Person < ApplicationRecord
   validates :firstname, presence: true
   # validates :lastname, presence: true
   validates :bio, length: { maximum: 300 }
+
+  def full_name
+    [firstname, lastname].join(" ").strip.squeeze(" ")
+  end
 end

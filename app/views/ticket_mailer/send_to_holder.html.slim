@@ -1,0 +1,27 @@
+h1
+  | Ticket for event #{@ticket.holder.event}
+
+p = @greeting
+
+p
+  | Please present this code at the venue
+  .code
+    img src=generate_qr(scan_ticket_url(@ticket.token)) class="qr-code"
+
+h2
+  | Event information
+p
+  strong
+    | Title:
+  span
+    |  #{@ticket.holder.event.title}
+p
+  strong
+    | Description:
+  span
+    |  #{@ticket.holder.event.description}
+p
+  strong
+    | Date:
+  span
+    |  #{@ticket.holder.event.dates}
