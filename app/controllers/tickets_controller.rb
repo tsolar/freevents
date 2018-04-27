@@ -5,6 +5,19 @@ class TicketsController < ApplicationController
   after_action :verify_authorized
 
   def show
+    respond_to do |format|
+      format.html {}
+      format.png do
+        require 'barby/outputter/png_outputter'
+        text = scan_ticket_url(@ticket.token)
+        barcode = Barby::QrCode.new(
+          text,
+          level: :q
+        )
+        blob = Barby::PngOutputter.new(barcode).to_png(xdim: 5)
+        send_data blob, type: "image/png", disposition: :inline
+      end
+    end
   end
 
   def scan
