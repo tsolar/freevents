@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "Freevents <noreply@#{ENV['ACTION_MAILER_DEFAULT_URL_HOST']}>"
   layout "mailer"
 end
