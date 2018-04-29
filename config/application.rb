@@ -32,13 +32,19 @@ module Freevents
       address: ENV["ACTION_MAILER_SMTP_ADDRESS"],
       port: ENV["ACTION_MAILER_SMTP_PORT"],
       authentication: ENV["ACTION_MAILER_SMTP_AUTHENTICATION"] || :plain,
-      enable_starttls_auto: true
+      enable_starttls_auto: ENV["ACTION_MAILER_ENABLE_STARTTLS_AUTO"] == "false" ? false : true
     }
 
     config.action_mailer.default_url_options = {
       host: ENV["ACTION_MAILER_DEFAULT_URL_HOST"] || "localhost",
       port: ENV["ACTION_MAILER_DEFAULT_URL_PORT"] || 3000,
       protocol: ENV["ACTION_MAILER_DEFAULT_URL_PROTOCOL"] || "https"
+    }
+
+    # In case of unsing mailgun as delivery_method
+    config.action_mailer.mailgun_settings = {
+      api_key: ENV["MAILGUN_API_KEY"],
+      domain: ENV["ACTION_MAILER_SMTP_DOMAIN"]
     }
   end
 end

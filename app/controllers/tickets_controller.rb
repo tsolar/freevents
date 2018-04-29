@@ -7,6 +7,9 @@ class TicketsController < ApplicationController
   def show
     respond_to do |format|
       format.html {}
+      format.pdf do
+        render pdf: "file_name"   # Excluding ".pdf" extension.
+      end
       format.png do
         require 'barby/outputter/png_outputter'
         text = scan_ticket_url(@ticket.token)

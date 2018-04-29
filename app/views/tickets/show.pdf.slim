@@ -1,0 +1,21 @@
+html
+  head
+    meta[charset='utf-8']
+    title PDF
+
+  body[]
+    p#notice = notice
+
+    p
+      strong Title:
+      = @event.title
+    p
+      strong Description:
+      = @event.description
+    p
+      strong Date:
+      = @event.dates
+
+    h2 Code
+    .code
+      img src=generate_qr(scan_ticket_url(@ticket.token)) class="qr-code"
