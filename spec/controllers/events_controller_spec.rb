@@ -73,6 +73,15 @@ RSpec.describe EventsController, type: :controller do
         get :new, params: {}, session: valid_session
         expect(response).to be_success
       end
+
+      it "assings to event one day" do
+        get :new, params: {}, session: valid_session
+        expect(assigns(:event)).to be_a_new Event
+        expect(assigns(:event).days).to be_present
+        expect(assigns(:event).days.length).to eq 1
+        expect(assigns(:event).days.count).to eq 0
+      end
+
     end
   end
 

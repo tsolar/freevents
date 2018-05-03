@@ -18,6 +18,7 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    @event.days.build
     authorize Event
   end
 
