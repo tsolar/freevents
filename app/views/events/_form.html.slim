@@ -4,6 +4,8 @@
   } do |f|
   = f.error_notification
 
+  = render partial: 'common/error_messages', locals: { model: @event }
+
   .form-inputs
     = f.input :title
     = f.input :description
