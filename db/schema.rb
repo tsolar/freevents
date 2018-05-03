@@ -100,20 +100,10 @@ ActiveRecord::Schema.define(version: 20180331024551) do
     t.index ["event_id"], name: "index_event_activity_postulations_on_event_id"
   end
 
-  create_table "event_attendees", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "will_attend"
-    t.boolean "did_attend"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_event_attendees_on_user_id"
-  end
-
   create_table "event_days", force: :cascade do |t|
     t.bigint "event_id"
-    t.date "date"
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_event_days_on_event_id"
@@ -206,7 +196,6 @@ ActiveRecord::Schema.define(version: 20180331024551) do
   add_foreign_key "event_activity_participations", "event_activities"
   add_foreign_key "event_activity_participations", "event_participations"
   add_foreign_key "event_activity_postulations", "events"
-  add_foreign_key "event_attendees", "users"
   add_foreign_key "event_days", "events"
   add_foreign_key "event_participation_answers", "event_participations"
   add_foreign_key "event_participations", "events"

@@ -112,9 +112,8 @@ class EventsController < ApplicationController
         days_attributes: [
           :id,
           :_destroy,
-          :date,
-          :start_time,
-          :end_time
+          :starts_at,
+          :ends_at
         ]
       )
     end
