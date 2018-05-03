@@ -15,5 +15,21 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require jquery-datetimepicker/build/jquery.datetimepicker.full
 //= require cocoon
 //= require_tree .
+
+const datetimepickerDefaults = {
+  formatDate: 'y-m-d',
+  format: 'Y-m-d H:i',
+  allowBlank: true,
+  defaultSelect: false,
+  validateOnBlur: false
+};
+
+$('.datetimepicker').datetimepicker(datetimepickerDefaults);
+
+$('.container').on('cocoon:after-insert', function() {
+  $('.datetimepicker').datetimepicker(datetimepickerDefaults);
+})
+$.datetimepicker.setLocale('en');
