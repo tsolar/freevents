@@ -15,7 +15,7 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
-//= require jquery-datetimepicker/build/jquery.datetimepicker.full
+//= require jquery-datetimepicker/build/jquery.datetimepicker.full.js
 //= require cocoon
 //= require_tree .
 
