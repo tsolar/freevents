@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306182357) do
+ActiveRecord::Schema.define(version: 20180331024551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 20180306182357) do
     t.text "bio"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_entity_people_on_user_id"
   end
 
   create_table "event_activities", force: :cascade do |t|
@@ -100,12 +102,20 @@ ActiveRecord::Schema.define(version: 20180306182357) do
 
   create_table "event_days", force: :cascade do |t|
     t.bigint "event_id"
-    t.date "date"
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_event_days_on_event_id"
+  end
+
+  create_table "event_participation_answers", force: :cascade do |t|
+    t.bigint "event_participation_id"
+    t.string "will_attend"
+    t.boolean "did_attend"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_participation_id"], name: "index_event_participation_answers_on_event_participation_id"
   end
 
   create_table "event_participations", force: :cascade do |t|
@@ -136,6 +146,17 @@ ActiveRecord::Schema.define(version: 20180306182357) do
     t.datetime "updated_at", null: false
     t.bigint "owner_id"
     t.index ["owner_id"], name: "index_events_on_owner_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.string "holder_type"
+    t.bigint "holder_id"
+    t.string "token"
+    t.boolean "scanned"
+    t.datetime "scanned_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["holder_type", "holder_id"], name: "index_tickets_on_holder_type_and_holder_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -169,12 +190,14 @@ ActiveRecord::Schema.define(version: 20180306182357) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "entity_people", "users"
   add_foreign_key "event_activities", "event_activity_postulations"
   add_foreign_key "event_activities", "event_days"
   add_foreign_key "event_activity_participations", "event_activities"
   add_foreign_key "event_activity_participations", "event_participations"
   add_foreign_key "event_activity_postulations", "events"
   add_foreign_key "event_days", "events"
+  add_foreign_key "event_participation_answers", "event_participations"
   add_foreign_key "event_participations", "events"
   add_foreign_key "event_venues", "events"
   add_foreign_key "event_venues", "venues"

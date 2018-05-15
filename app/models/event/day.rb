@@ -6,8 +6,11 @@ class Event::Day < ApplicationRecord
            foreign_key: :event_day_id
 
   validates :event, presence: true
-  validates :date, presence: true
-  validates :start_time, presence: true
-  validates :start_time, timeliness: { on_or_before: :end_time }
-  validates :end_time, presence: true
+  validates :starts_at, presence: true
+  validates :starts_at, timeliness: { on_or_before: :ends_at }
+  validates :ends_at, presence: true
+
+  def date
+    starts_at.to_date if starts_at.present?
+  end
 end

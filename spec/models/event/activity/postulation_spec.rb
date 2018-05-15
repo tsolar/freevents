@@ -41,10 +41,10 @@ RSpec.describe Event::Activity::Postulation, type: :model do
 
         expect {
           postulation.approve
-        }.to change(Event::Activity::Participation, :count).by(1).and \
-          change(Event::Activity, :count).by(1).and \
-            change(Event::Participation, :count).by(1).and \
-              change(Entity::Person, :count).by(1)
+        }.to change(Event::Activity::Participation, :count).by(1)
+          .and change(Event::Activity, :count).by(1)
+          .and change(Event::Participation, :count).by(1)
+          .and change(Entity::Person, :count).by(1)
 
         ea = Event::Activity.last
         expect(ea.title).to eq postulation.activity_title

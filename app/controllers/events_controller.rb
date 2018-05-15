@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :respond_attendance]
   after_action :verify_authorized
 
   # GET /events
@@ -18,6 +18,7 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    @event.days.build
     authorize Event
   end
 
@@ -36,7 +37,10 @@ class EventsController < ApplicationController
         format.html { redirect_to @event, notice: "Event was successfully created." }
         format.json { render :show, status: :created, location: @event }
       else
-        format.html { render :new }
+        format.html {
+          @event.days.build if @event.days.empty?
+          render :new
+        }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -66,6 +70,33 @@ class EventsController < ApplicationController
     end
   end
 
+  def respond_attendance
+    answer = params[:will_attend]
+    person = current_user.person
+    if person.nil?
+      person = current_user.create_person(
+        firstname: Mail::Address.new(current_user.email).local
+      )
+    end
+    participation = Event::Attendee.where(
+      event: @event,
+      participant: person # person must exist!
+    ).first_or_create
+
+    if participation.answer.update(will_attend: answer)
+      notice = "Your answer was successfully registered"
+      respond_to do |format|
+        format.html { redirect_to events_url, notice: notice }
+        format.json { render json: @event, notice: notice }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to events_url, notice: "There was an problem registering your answer. Please, try again" }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
@@ -81,9 +112,8 @@ class EventsController < ApplicationController
         days_attributes: [
           :id,
           :_destroy,
-          :date,
-          :start_time,
-          :end_time
+          :starts_at,
+          :ends_at
         ]
       )
     end

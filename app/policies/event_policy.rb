@@ -15,6 +15,12 @@ class EventPolicy < ApplicationPolicy
     scope.where(id: record.id).exists? && is_owner?
   end
 
+  def respond_attendance?
+    # Not check for user.person. It's created if it's nil.
+    scope.where(id: record.id).exists? && user.present? && !is_owner?
+    # TODO: check if ticket is scanned
+  end
+
   class Scope < Scope
     def resolve
       scope
@@ -23,6 +29,6 @@ class EventPolicy < ApplicationPolicy
 
   private
     def is_owner?
-      user && user == record.owner
+      user.present? && user == record.owner
     end
 end

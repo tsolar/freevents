@@ -53,6 +53,8 @@ RSpec.describe Event, type: :model do
     end
   end
 
+  let(:today) { Date.today }
+
   describe "#days" do
     let(:event) {
       FactoryBot.create(
@@ -63,8 +65,8 @@ RSpec.describe Event, type: :model do
 
     let(:days_attributes) {
       [
-        FactoryBot.attributes_for(:event_day, date: Time.current, start_time: Time.current, end_time: Time.current + 3.hours),
-        FactoryBot.attributes_for(:event_day, date: Time.current.tomorrow, start_time: Time.current.tomorrow, end_time: Time.current.tomorrow + 3.hours)
+        FactoryBot.attributes_for(:event_day, starts_at: "#{today} 15:00", ends_at: "#{today} 18:00"),
+        FactoryBot.attributes_for(:event_day, starts_at: "#{today + 1.day} 15:00", ends_at: "#{today + 1.day} 18:00")
       ]
     }
 
@@ -78,7 +80,7 @@ RSpec.describe Event, type: :model do
     context "when first day is created AFTER last day" do
       let(:days_attributes) {
         [
-          FactoryBot.attributes_for(:event_day, date: Time.current.tomorrow, start_time: Time.current.tomorrow, end_time: Time.current.tomorrow + 3.hours)
+          FactoryBot.attributes_for(:event_day, starts_at: "#{today + 1.day} 15:00", ends_at: "#{today + 1.day} 18:00")
         ]
       }
 
@@ -86,15 +88,14 @@ RSpec.describe Event, type: :model do
         event.days.create(
           FactoryBot.attributes_for(
             :event_day,
-            date: Time.current,
-            start_time: Time.current,
-            end_time: Time.current + 3.hours
+            starts_at: "#{today} 15:00",
+            ends_at: "#{today} 18:00"
           )
         )
         event.reload
       end
 
-      it "should return days ordered by date, not by created_at or id" do
+      it "should return days ordered by starts_at, not by created_at or id" do
         days = event.days
         expect(days.first.date < days.last.date).to be true
       end
@@ -110,7 +111,7 @@ RSpec.describe Event, type: :model do
       end
 
       it "should return the dates of that day" do
-        expect(event.dates).to eq "#{event.days.first.date} #{event.days.first.start_time.strftime('%H:%M')}"
+        expect(event.dates).to eq "#{event.days.first.date} #{event.days.first.starts_at.strftime('%H:%M')}"
       end
     end
 
@@ -120,8 +121,8 @@ RSpec.describe Event, type: :model do
           :event,
           days_attributes:
           [
-            FactoryBot.attributes_for(:event_day, start_time: Time.current, end_time: Time.current + 3.hours),
-            FactoryBot.attributes_for(:event_day, start_time: Time.current.tomorrow, end_time: Time.current.tomorrow + 3.hours)
+            FactoryBot.attributes_for(:event_day, starts_at: "#{today} 15:00", ends_at: "#{today} 18:00"),
+            FactoryBot.attributes_for(:event_day, starts_at: "#{today} 15:00", ends_at: "#{today} 18:00")
           ]
         )
       }
@@ -131,7 +132,7 @@ RSpec.describe Event, type: :model do
       end
 
       it "should return the date of the first day, and the date of the last day" do
-        expect(event.dates).to eq "#{event.days.first.date} #{event.days.first.start_time.strftime('%H:%M')} - #{event.days.last.date} #{event.days.last.start_time.strftime('%H:%M')}"
+        expect(event.dates).to eq "#{event.days.first.starts_at.to_date} #{event.days.first.starts_at.strftime('%H:%M')} - #{event.days.last.ends_at.to_date} #{event.days.last.ends_at.strftime('%H:%M')}"
       end
     end
   end

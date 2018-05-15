@@ -13,6 +13,7 @@ RSpec.describe EventPolicy do
 
     it { is_expected.to permit_actions([:index, :show]) }
     it { is_expected.to forbid_action(:destroy) }
+    it { is_expected.to forbid_action(:respond_attendance) }
     it { is_expected.to forbid_new_and_create_actions }
     it { is_expected.to forbid_edit_and_update_actions }
   end
@@ -23,15 +24,19 @@ RSpec.describe EventPolicy do
       it { is_expected.to permit_action(:destroy) }
       it { is_expected.to permit_new_and_create_actions }
       it { is_expected.to permit_edit_and_update_actions }
+      it { is_expected.to forbid_action(:respond_attendance) }
     end
 
     context "user is not the event owner" do
-      let(:other_user) { FactoryBot.create(:user) }
+      let(:other_person) { FactoryBot.create(:entity_person) }
+      let(:other_user) { other_person.user }
       let(:event) {
         FactoryBot.create(:event, owner: other_user)
       }
+      let(:person) { FactoryBot.create(:entity_person) }
+      let(:user) { person.user }
 
-      it { is_expected.to permit_actions([:index, :show]) }
+      it { is_expected.to permit_actions([:index, :show, :respond_attendance]) }
       it { is_expected.to forbid_action(:destroy) }
       it { is_expected.to permit_new_and_create_actions }
       it { is_expected.to forbid_edit_and_update_actions }

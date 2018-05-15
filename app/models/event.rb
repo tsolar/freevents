@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   has_many :days,
-           -> { order("date ASC") },
+           -> { order("starts_at ASC") },
            inverse_of: :event,
            dependent: :destroy
 
@@ -33,10 +33,10 @@ class Event < ApplicationRecord
   end
 
   def dates
-    dates = "#{days.first.date} #{days.first.start_time.strftime('%H:%M')}"
+    dates = "#{days.first.starts_at.strftime('%F %R')}"
 
     if days.count > 1
-      dates = "#{dates} - #{days.last.date} #{days.last.start_time.strftime('%H:%M')}"
+      dates = "#{dates} - #{days.last.ends_at.strftime('%F %R')}"
     end
 
     dates

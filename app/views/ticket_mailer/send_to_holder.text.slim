@@ -1,0 +1,26 @@
+= @greeting
+= "\r\n" * 2
+
+| Event information
+= "\r\n"
+| Title:
+= "\r\n"
+|  #{@ticket.holder.event.title}
+= "\r\n"
+| Description:
+= "\r\n"
+|  #{@ticket.holder.event.description}
+= "\r\n"
+| Date:
+= "\r\n"
+|  #{@ticket.holder.event.dates}
+
+= "\r\n" * 2
+
+| You can see the ticket on your browser on the following link:
+= "\r\n"
+= ticket_url(@ticket.token)
+= "\r\n" * 2
+| You can also download the ticket as PDF on the following link:
+= "\r\n"
+= ticket_url(@ticket.token, format: :pdf)

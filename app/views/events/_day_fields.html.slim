@@ -1,6 +1,5 @@
 .nested-fields.card.bg-light.p-4
-  = f.input :date
-  = f.input :start_time
-  = f.input :end_time
+  = f.input :starts_at, as: :datetimepicker, readonly: true
+  = f.input :ends_at, as: :datetimepicker, readonly: true
   .col-xs-2
     = link_to_remove_association "remove day", f, class: "btn btn-danger btn-sm"

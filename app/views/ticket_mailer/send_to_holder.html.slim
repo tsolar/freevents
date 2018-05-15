@@ -1,0 +1,36 @@
+h1
+  | Ticket for event #{@ticket.holder.event}
+
+p = @greeting
+
+p
+  | Please present this code at the venue
+  .code
+    img src=ticket_url(@ticket.token, format: :png) class="qr-code png"
+
+h2
+  | Event information
+p
+  strong
+    | Title:
+  span
+    |  #{@ticket.holder.event.title}
+p
+  strong
+    | Description:
+  span
+    |  #{@ticket.holder.event.description}
+p
+  strong
+    | Date:
+  span
+    |  #{@ticket.holder.event.dates}
+
+p
+  | If you do not see any QR code, you can&nbsp;
+  = link_to ticket_url(@ticket.token), target: "_blank", rel: "noreferrer" do
+    | see the ticket on your browser
+p
+  | You can also&nbsp;
+  = link_to ticket_url(@ticket.token, format: :pdf), target: "_blank", rel: "noreferrer" do
+    | download the ticket as PDF

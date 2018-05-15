@@ -3,38 +3,42 @@ require "rails_helper"
 RSpec.describe Event::Day, type: :model do
   describe "Validations" do
     it { should validate_presence_of :event }
-    it { should validate_presence_of :date }
-    it { should validate_presence_of :start_time }
-    it { should validate_presence_of :end_time }
+    it { should validate_presence_of :starts_at }
+    it { should validate_presence_of :ends_at }
 
     describe "timeliness" do
-      context "start_time is after end_time" do
-        it "should validate start_time" do
+      context "starts_at is after ends_at" do
+        it "should validate starts_at" do
           now = Time.current
-          day = FactoryBot.build(:event_day, start_time: now + 1.hour, end_time: now)
+          day = FactoryBot.build(
+            :event_day,
+            starts_at: now,
+            ends_at: now - 1.hour)
           expect(day.valid?).to be false
           expect(day.save).to be false
-          expect(day.errors[:start_time]).not_to be_empty
+          expect(day.errors[:starts_at]).not_to be_empty
         end
       end
 
-      context "start_time is before end_time" do
-        it "should validate start_time" do
-          now = Time.current
-          day = FactoryBot.build(:event_day, start_time: now, end_time: now + 1.hour)
+      context "starts_at is before ends_at" do
+        it "should validate starts_at" do
+          day = FactoryBot.build(
+            :event_day,
+            starts_at: "14:00",
+            ends_at: "15:00")
           expect(day.valid?).to be true
           expect(day.save).to be true
-          expect(day.errors[:start_time]).to be_empty
+          expect(day.errors[:starts_at]).to be_empty
         end
       end
 
-      context "start_time is equal to end_time" do
-        it "should validate start_time" do
+      context "starts_at is equal to ends_at" do
+        it "should validate starts_at" do
           now = Time.current
-          day = FactoryBot.build(:event_day, start_time: now, end_time: now )
+          day = FactoryBot.build(:event_day, starts_at: now, ends_at: now )
           expect(day.valid?).to be true
           expect(day.save).to be true
-          expect(day.errors[:start_time]).to be_empty
+          expect(day.errors[:starts_at]).to be_empty
         end
       end
     end
@@ -55,6 +59,13 @@ RSpec.describe Event::Day, type: :model do
       event_day = FactoryBot.create(:event_day)
       expect(event_day.valid?).to be true
       expect(event_day.persisted?).to be true
+    end
+  end
+
+  describe "#date" do
+    it "should return starts_at as date" do
+      event_day = FactoryBot.create(:event_day)
+      expect(event_day.date).to eq event_day.starts_at.to_date
     end
   end
 end
