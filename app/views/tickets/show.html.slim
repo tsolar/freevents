@@ -14,6 +14,9 @@ h2 Code
 .code
   img src=generate_qr(scan_ticket_url(@ticket.token)) class="qr-code"
 
+= link_to "Download ticket", ticket_url(@ticket.token, format: :pdf), class: "btn btn-info"
+br
+
 => link_to 'Edit', edit_event_path(@event)
 '|
 =< link_to 'Back', events_path
