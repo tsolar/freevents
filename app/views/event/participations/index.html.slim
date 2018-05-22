@@ -18,9 +18,10 @@ table
         td = event_participation.type
         td = event_participation.participant
         td = event_participation.description
-        td = link_to 'Show', event_participation
-        td = link_to 'Edit', edit_event_participation_path(event_participation)
-        td = link_to 'Destroy', event_participation, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Show', event_participation_path(id: event_participation.to_param, event_id: event_participation.event_id)
+
+        td = link_to 'Edit', edit_event_participation_path(id: event_participation.to_param, event_id: event_participation.event_id)
+        td = link_to 'Destroy', event_participation_path(id: event_participation.to_param, event_id: event_participation.event_id), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 

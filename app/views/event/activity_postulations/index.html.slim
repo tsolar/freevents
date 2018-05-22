@@ -1,0 +1,19 @@
+h1 Listing event_activity_postulations
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @event_activity_postulations.each do |event_activity_postulation|
+      tr
+        td = link_to 'Show', event_activity_postulation
+        td = link_to 'Edit', edit_event_activity_postulation_path(event_activity_postulation)
+        td = link_to 'Destroy', event_activity_postulation, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Activity postulation', new_event_activity_postulation_path

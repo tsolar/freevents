@@ -1,0 +1,6 @@
+h1
+  | #{t('actions.editing')} #{Event::Activity::Postulation.model_name.human.downcase}
+
+== render 'form'
+
+=> link_to t('actions.show'), event_activities_postulation_path(event_id: @event.to_param, id: @event_activity_postulation.to_param)

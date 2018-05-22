@@ -23,14 +23,28 @@ RSpec.describe Event::Activity::Postulation, type: :model do
       postulation = FactoryBot.build(:event_activity_postulation)
       expect {
         postulation.save
-      }.to change(Event::Activity::Participation, :count).by(0).and \
-        change(Event::Activity::Postulation, :count).by(1).and \
-          change(Event::Activity, :count).by(0).and \
-            change(Event::Participation, :count).by(0).and \
-              change(Entity::Person, :count).by(0)
+      }.to change(Event::Activity::Participation, :count).by(0)
+        .and change(Event::Activity::Postulation, :count).by(1)
+        .and change(Event::Activity, :count).by(0)
+        .and change(Event::Participation, :count).by(0)
+        .and change(Entity::Person, :count).by(0)
 
       expect(postulation.valid?).to be true
       expect(postulation.persisted?).to be true
+    end
+
+    it "should not create an invalid Event::Activity::Postulation" do
+      postulation = FactoryBot.build(:event_activity_postulation, :invalid)
+      expect {
+        expect(postulation.save).to be false
+      }.to change(Event::Activity::Participation, :count).by(0)
+        .and change(Event::Activity::Postulation, :count).by(0)
+        .and change(Event::Activity, :count).by(0)
+        .and change(Event::Participation, :count).by(0)
+        .and change(Entity::Person, :count).by(0)
+
+      expect(postulation.valid?).to be false
+      expect(postulation.persisted?).to be false
     end
   end
 
@@ -84,11 +98,11 @@ RSpec.describe Event::Activity::Postulation, type: :model do
 
         expect {
           postulation.approve
-        }.to change(Event::Activity::Participation, :count).by(1).and \
-          change(Event::Activity, :count).by(1).and \
-            change(Event::Participation, :count).by(1).and \
-              change(Entity::Person, :count).by(0).and \
-                change(Email, :count).by(0)
+        }.to change(Event::Activity::Participation, :count).by(1)
+          .and change(Event::Activity, :count).by(1)
+          .and change(Event::Participation, :count).by(1)
+          .and change(Entity::Person, :count).by(0)
+          .and change(Email, :count).by(0)
 
         ea = Event::Activity.last
         expect(ea.title).to eq postulation.activity_title

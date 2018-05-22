@@ -13,7 +13,12 @@ Rails.application.routes.draw do
     resources :participations, controller: "event/participations"
     resources :activities, controller: "event/activities" do
       # resources :participations
-      resources :postulations, controller: "event/activity/postulations"
+      resources :postulations, controller: "event/activity/postulations" # , except: [:new, :create, :destroy, :index]
+    end
+
+    # these routes are for receiving postulations for event activities
+    namespace :activities do
+      resources :postulations, controller: "/event/activity_postulations"
     end
 
     member do

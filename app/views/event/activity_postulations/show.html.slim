@@ -1,0 +1,62 @@
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:event)
+    | :
+  = @event_activity_postulation.event
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_firstname)
+    | :
+  = @event_activity_postulation.postulant_firstname
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_lastname)
+    | :
+  = @event_activity_postulation.postulant_lastname
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_email)
+    | :
+  = @event_activity_postulation.postulant_email
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_phone_number)
+    | :
+  = @event_activity_postulation.postulant_phone_number
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_bio)
+    | :
+  = @event_activity_postulation.postulant_bio
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_type)
+    | :
+  = @event_activity_postulation.activity_type
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_title)
+    | :
+  = @event_activity_postulation.activity_title
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_description)
+    | :
+  = @event_activity_postulation.activity_description
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_estimated_duration)
+    | :
+  = @event_activity_postulation.activity_estimated_duration
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_difficulty_level)
+    | :
+  = @event_activity_postulation.activity_difficulty_level
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_preferred_time)
+    | :
+  = @event_activity_postulation.activity_preferred_time.present? ? t(@event_activity_postulation.activity_preferred_time) : t("doesnt_matter")
+
+=> link_to t('actions.edit'), edit_event_activities_postulation_path(event_id: @event.to_param, id: @event_activity_postulation.to_param)

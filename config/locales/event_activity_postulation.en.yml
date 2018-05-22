@@ -1,0 +1,19 @@
+en:
+  activerecord:
+    models:
+      event/activity/postulation:
+        one: Activity postulation
+        other: Activities postulations
+    attributes:
+      event/activity/postulation:
+        event: :activerecord.models.event.one
+        event_id: :activerecord.models.event.one
+        postulant_firstname: Postulant first name
+        postulant_lastname: Postulant last name
+        postulant_phone_number: Postulant phone number
+        postulant_bio: Postulant bio (description, brief)
+        activity_type: Activity type
+        activity_description: Activity description
+        activity_estimated_duration: Activity estimated duration
+        activity_difficulty_level: Activity difficulty level
+        activity_preferred_time: Activity preferred time
