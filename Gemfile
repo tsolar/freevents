@@ -8,7 +8,10 @@ end
 gem "dotenv-rails", require: "dotenv/rails-now"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 5.1.4"
+gem "rails", "~> 5.2"
+
+# for railties app_generator_test
+gem "bootsnap", ">= 1.1.0", require: false
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
