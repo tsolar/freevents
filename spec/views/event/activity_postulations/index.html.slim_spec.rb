@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "event/activity_postulations/index", type: :view do
+RSpec.xdescribe "event/activity_postulations/index", type: :view do
   before(:each) do
     assign(:event_activity_postulations, [
       Event::Activity::Postulation.create!(),

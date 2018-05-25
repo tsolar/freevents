@@ -44,33 +44,92 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
   let(:event) { Event.last || FactoryBot.create(:event) }
 
   describe "GET #index" do
-    it "returns a success response" do
-      activity_postulation = Event::Activity::Postulation.create! valid_attributes
-      get :index, params: { event_id: event.to_param }, session: valid_session
-      expect(response).to be_success
+    context "when user is not logged in" do
+      it "redirects to new user session path" do
+        get :index, params: { event_id: event.to_param }, session: valid_session
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    context "when user is logged in" do
+      login_user
+
+      context "when user is owner of the event (when user can update event)" do
+        let(:event) { FactoryBot.create(:event, owner: @user) }
+
+        it "returns a success response" do
+          get :index, params: { event_id: event.to_param }, session: valid_session
+          expect(response.status).to eq 200
+        end
+      end
+
+      context "when user is not owner of the event" do
+        it "returns to root_path with flash message" do
+          get :index, params: { event_id: event.to_param }, session: valid_session
+          expect(response).to redirect_to root_path
+          expect(flash[:alert]).to include(I18n.t("unauthorized"))
+        end
+      end
     end
   end
 
   describe "GET #show" do
-    it "returns a success response" do
-      activity_postulation = Event::Activity::Postulation.create! valid_attributes
-      get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
-      expect(response).to be_success
+    let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes }
+
+    context "when user is not logged in" do
+      it "redirects to new user session path" do
+        get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    context "when user is logged in" do
+      login_user
+
+      context "when user is not event owner" do
+        it "returns to root_path with flash message" do
+          get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+          expect(response).to redirect_to root_path
+          expect(flash[:alert]).to include(I18n.t("unauthorized"))
+        end
+      end
+
+      context "when user is event owner" do
+        let(:event) { FactoryBot.create(:event, owner: @user) }
+
+        it "returns a success response" do
+          get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+          expect(response.status).to eq 200
+        end
+      end
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
       get :new, params: { event_id: event.to_param }, session: valid_session
-      expect(response).to be_success
+      expect(response.status).to eq 200
     end
   end
 
   describe "GET #edit" do
-    it "returns a success response" do
-      activity_postulation = Event::Activity::Postulation.create! valid_attributes
-      get :edit, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
-      expect(response).to be_success
+    let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes }
+
+    context "when user is not logged in" do
+      it "redirects to new user session path" do
+        get :edit, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    context "when user is logged in" do
+      login_user
+
+      it "redirects to root path with flash message" do
+        get :edit, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+        expect(response).to redirect_to root_path
+        expect(flash[:alert]).to include(I18n.t("unauthorized"))
+      end
     end
   end
 
@@ -99,49 +158,103 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
   end
 
   describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        FactoryBot.attributes_for(:event_activity_postulation)
-      }
+    # TODO: uncomment this when create postulation creator?
+    # context "with valid params" do
+    #   let(:new_attributes) {
+    #     FactoryBot.attributes_for(:event_activity_postulation)
+    #   }
 
-      it "updates the requested event_activity_postulation" do
-        activity_postulation = Event::Activity::Postulation.create! valid_attributes
-        put :update, params: { event_id: event.to_param, id: activity_postulation.to_param, event_activity_postulation: new_attributes }, session: valid_session
-        activity_postulation.reload
-        expect(activity_postulation.postulant_firstname).to eq new_attributes[:postulant_firstname]
-        expect(activity_postulation.activity_title).to eq new_attributes[:activity_title]
-        expect(activity_postulation.activity_description).to eq new_attributes[:activity_description]
-      end
+    #   it "updates the requested event_activity_postulation" do
+    #     activity_postulation = Event::Activity::Postulation.create! valid_attributes
+    #     put :update, params: { event_id: event.to_param, id: activity_postulation.to_param, event_activity_postulation: new_attributes }, session: valid_session
+    #     activity_postulation.reload
+    #     expect(activity_postulation.postulant_firstname).to eq new_attributes[:postulant_firstname]
+    #     expect(activity_postulation.activity_title).to eq new_attributes[:activity_title]
+    #     expect(activity_postulation.activity_description).to eq new_attributes[:activity_description]
+    #   end
 
-      it "redirects to the event_activity_postulation" do
-        activity_postulation = Event::Activity::Postulation.create! valid_attributes
-        put :update, params: { event_id: event.to_param, id: activity_postulation.to_param, event_activity_postulation: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(event_activities_postulation_path(event_id: activity_postulation.event.to_param, id: activity_postulation.to_param))
+    #   it "redirects to the event_activity_postulation" do
+    #     activity_postulation = Event::Activity::Postulation.create! valid_attributes
+    #     put :update, params: { event_id: event.to_param, id: activity_postulation.to_param, event_activity_postulation: valid_attributes }, session: valid_session
+    #     expect(response).to redirect_to(event_activities_postulation_path(event_id: activity_postulation.event.to_param, id: activity_postulation.to_param))
+    #   end
+    # end
+
+    # context "with invalid params" do
+    #   it "returns a success response (i.e. to display the 'edit' template)" do
+    #     activity_postulation = Event::Activity::Postulation.create! valid_attributes
+    #     put :update, params: { event_id: event.to_param, id: activity_postulation.to_param, event_activity_postulation: invalid_attributes }, session: valid_session
+    #     expect(response.status).to eq 200
+    #   end
+    # end
+
+    let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes }
+
+    context "when user is not logged in" do
+      it "redirects to new user session path" do
+        put :update, params: { event_id: event.to_param, id: activity_postulation.to_param, event_activity_postulation: invalid_attributes }, session: valid_session
+        expect(response).to redirect_to new_user_session_path
       end
     end
 
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        activity_postulation = Event::Activity::Postulation.create! valid_attributes
+    context "when user is logged in" do
+      login_user
+
+      it "redirects to root path with flash message" do
         put :update, params: { event_id: event.to_param, id: activity_postulation.to_param, event_activity_postulation: invalid_attributes }, session: valid_session
-        expect(response).to be_success
+        expect(response).to redirect_to root_path
+        expect(flash[:alert]).to include(I18n.t("unauthorized"))
       end
     end
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested event_activity_postulation" do
-      activity_postulation = Event::Activity::Postulation.create! valid_attributes
-      expect {
-        delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
-      }.to change(Event::Activity::Postulation, :count).by(-1)
+    let(:activity_postulation) { FactoryBot.build(:event_activity_postulation, event: event) }
+    let(:event) { FactoryBot.create(:event) }
+
+    context "when user is not logged in" do
+      it "redirects to new_user_session_path" do
+        activity_postulation.save # save must occur after login_user, to @user to be present
+        expect {
+          delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+        }.to change(Event::Activity::Postulation, :count).by(0)
+        expect(response).to redirect_to new_user_session_path
+      end
     end
 
-    it "redirects to the event_activity_postulations list" do
-      activity_postulation = Event::Activity::Postulation.create! valid_attributes
-      delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
-      expect(response).to redirect_to(event_activities_postulations_url(event_id: event.to_param))
+    context "when user is logged in" do
+      login_user
+
+      context "when user is not logged in" do
+        it "should redirect to root_path with flash message" do
+          activity_postulation.save # save must occur after login_user, to @user to be present
+          expect {
+            delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+          }.to change(Event::Activity::Postulation, :count).by(0)
+
+          expect(response).to redirect_to root_path
+          expect(flash[:alert]).to include(I18n.t("unauthorized"))
+        end
+      end
+
+      context "when user is event owner" do
+        let(:event) { FactoryBot.create(:event, owner: @user) }
+
+        it "destroys the requested event_activity_postulation" do
+          activity_postulation.save
+          expect {
+            delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+          }.to change(Event::Activity::Postulation, :count).by(-1)
+        end
+
+        it "redirects to the event_activity_postulations list" do
+          activity_postulation.save
+          delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+          expect(response).to redirect_to(event_activities_postulations_url(event_id: event.to_param))
+        end
+      end
     end
+
   end
 
 end

@@ -1,11 +1,14 @@
 class Event::ActivityPostulationsController < ApplicationController
+  before_action :authenticate_user!, except: [:new, :create]
   before_action :set_event
   before_action :set_event_activity_postulation, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
 
   # GET /event/activity_postulations
   # GET /event/activity_postulations.json
   def index
-    @event_activity_postulations = Event::Activity::Postulation.all
+    @event_activity_postulations = Event::Activity::Postulation.where(event: @event)
+    authorize @event, :update?
   end
 
   # GET /event/activity_postulations/1
@@ -16,6 +19,7 @@ class Event::ActivityPostulationsController < ApplicationController
   # GET /event/activity_postulations/new
   def new
     @event_activity_postulation = Event::Activity::Postulation.new
+    authorize @event_activity_postulation
   end
 
   # GET /event/activity_postulations/1/edit
@@ -26,6 +30,7 @@ class Event::ActivityPostulationsController < ApplicationController
   # POST /event/activity_postulations.json
   def create
     @event_activity_postulation = Event::Activity::Postulation.new(event_activity_postulation_params)
+    authorize @event_activity_postulation
 
     respond_to do |format|
       if @event_activity_postulation.save
@@ -66,6 +71,7 @@ class Event::ActivityPostulationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event_activity_postulation
       @event_activity_postulation = Event::Activity::Postulation.find(params[:id])
+      authorize @event_activity_postulation
     end
 
     def set_event

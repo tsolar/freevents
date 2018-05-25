@@ -108,7 +108,7 @@ RSpec.describe EventsController, type: :controller do
       end
 
       context "when user is not owner of the event" do
-        it "rendirects back with flash message" do
+        it "redirects back with flash message" do
           event = Event.create! valid_attributes
           event_owner = event.owner
           get :edit, params: { id: event.to_param }, session: valid_session

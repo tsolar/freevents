@@ -3,6 +3,7 @@ h1 Listing event_activity_postulations
 table
   thead
     tr
+      th = Event::Activity::Postulation.human_attribute_name(:activity_title)
       th
       th
       th
@@ -10,10 +11,11 @@ table
   tbody
     - @event_activity_postulations.each do |event_activity_postulation|
       tr
-        td = link_to 'Show', event_activity_postulation
-        td = link_to 'Edit', edit_event_activity_postulation_path(event_activity_postulation)
-        td = link_to 'Destroy', event_activity_postulation, data: { confirm: 'Are you sure?' }, method: :delete
+        td = event_activity_postulation.activity_title
+        td = link_to 'Show', event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param)
+        td = link_to 'Edit', edit_event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param)
+        td = link_to 'Destroy', event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
-= link_to 'New Activity postulation', new_event_activity_postulation_path
+= link_to 'New Activity postulation', new_event_activities_postulation_path(event_id: @event.to_param)
