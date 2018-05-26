@@ -9,6 +9,16 @@ RSpec.describe Event::Activity::Postulation, type: :model do
     it { should validate_presence_of :activity_description }
 
     it { should validate_length_of(:postulant_bio).is_at_most(300) }
+
+    it {
+      should validate_inclusion_of(:activity_type)
+        .in_array(Event::Activity::Postulation::ACTIVITY_TYPES)
+    }
+
+    it {
+      should validate_inclusion_of(:activity_difficulty_level)
+        .in_array(Event::Activity::Postulation::ACTIVITY_DIFFICULTY_LEVELS)
+    }
   end
 
   describe "Relationships" do

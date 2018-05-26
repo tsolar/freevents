@@ -1,16 +1,22 @@
 class Event::Activity::Postulation < ApplicationRecord
   belongs_to :event
   has_one :event_activity,
-          class_name: "Event::Activity",
-          foreign_key: :event_activity_postulation_id
+    class_name: "Event::Activity",
+    foreign_key: :event_activity_postulation_id
+
+  ACTIVITY_TYPES = %w(workshop speech)
+  ACTIVITY_DIFFICULTY_LEVELS = %w(everyone easy medium hard expert)
 
   validates :postulant_firstname, presence: true
   validates :postulant_lastname, presence: true
   validates :postulant_email, presence: true
+  validates :postulant_bio, length: { maximum: 300 }
+
   validates :activity_title, presence: true
   validates :activity_description, presence: true
-
-  validates :postulant_bio, length: { maximum: 300 }
+  validates :activity_type, inclusion: { in: ACTIVITY_TYPES }
+  validates :activity_difficulty_level,
+    inclusion: { in: ACTIVITY_DIFFICULTY_LEVELS }
 
   def approve
     activity = Event::Activity.create(

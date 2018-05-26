@@ -10,6 +10,10 @@ p
   strong Date:
   = @event.dates
 
-=> link_to 'Edit', edit_event_path(@event)
+- if policy(@event).update?
+  = link_to Event::Activity::Postulation.model_name.human(count: 2), event_activities_postulations_path(event_id: @event.to_param)
+  br/
+
+=> link_to t('actions.edit'), edit_event_path(@event)
 '|
-=< link_to 'Back', events_path
+=< link_to t('back'), events_path

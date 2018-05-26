@@ -12,11 +12,11 @@
     = f.input :postulant_email
     = f.input :postulant_phone_number
     = f.input :postulant_bio
-    = f.input :activity_type
+    = f.input :activity_type, collection: Event::Activity::Postulation::ACTIVITY_TYPES.map { |x| [t(x), x] }
     = f.input :activity_title
     = f.input :activity_description
     = f.input :activity_estimated_duration
-    = f.input :activity_difficulty_level
+    = f.input :activity_difficulty_level, collection: Event::Activity::Postulation::ACTIVITY_DIFFICULTY_LEVELS.map { |x| [t(x), x] }
     = f.input :activity_preferred_time, collection: ["am", "pm"].map { |x| [t(x), x] }, include_blank: t("doesnt_matter")
 
   .form-actions
