@@ -20,4 +20,5 @@ class Event::Activity < ApplicationRecord
   delegate :event, to: :event_day
 
   validates :event_day, presence: true
+  validates :title, presence: true
 end

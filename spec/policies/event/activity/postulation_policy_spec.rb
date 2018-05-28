@@ -10,14 +10,14 @@ RSpec.describe Event::Activity::PostulationPolicy do
   context "user is not logged in" do
     let(:user) { nil }
 
-    it { is_expected.to forbid_actions([:index, :show, :destroy]) }
+    it { is_expected.to forbid_actions([:index, :show, :destroy, :approve]) }
     it { is_expected.to permit_new_and_create_actions }
     it { is_expected.to forbid_edit_and_update_actions }
   end
 
   context "user is logged in" do
     context "when user is not event owner" do
-      it { is_expected.to forbid_actions([:index, :show, :destroy]) }
+      it { is_expected.to forbid_actions([:index, :show, :destroy, :approve]) }
       it { is_expected.to permit_new_and_create_actions }
       it { is_expected.to forbid_edit_and_update_actions }
     end
@@ -28,7 +28,7 @@ RSpec.describe Event::Activity::PostulationPolicy do
         FactoryBot.create(:event_activity_postulation, event: event)
       }
       it { is_expected.to forbid_action(:index) }
-      it { is_expected.to permit_actions([:show, :destroy]) }
+      it { is_expected.to permit_actions([:show, :destroy, :approve]) }
       it { is_expected.to permit_new_and_create_actions }
       it { is_expected.to forbid_edit_and_update_actions }
     end

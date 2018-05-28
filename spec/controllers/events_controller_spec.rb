@@ -45,7 +45,7 @@ RSpec.describe EventsController, type: :controller do
     it "returns a success response" do
       event = Event.create! valid_attributes
       get :index, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response.status).to eq 200
     end
   end
 
@@ -53,7 +53,14 @@ RSpec.describe EventsController, type: :controller do
     it "returns a success response" do
       event = Event.create! valid_attributes
       get :show, params: { id: event.to_param }, session: valid_session
-      expect(response).to be_success
+      expect(response.status).to eq 200
+    end
+
+    context "when event does not exist" do
+      it "renders 404" do
+        get :show, params: { id: 0 }, session: valid_session
+        expect(response.status).to eq 404
+      end
     end
   end
 
@@ -61,7 +68,7 @@ RSpec.describe EventsController, type: :controller do
     context "when user is not logged in" do
       it "redirects to new user session path" do
         get :new, params: {}, session: valid_session
-        expect(response).not_to be_success
+        expect(response.status).not_to eq 200
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -71,7 +78,7 @@ RSpec.describe EventsController, type: :controller do
 
       it "returns a success response" do
         get :new, params: {}, session: valid_session
-        expect(response).to be_success
+        expect(response.status).to eq 200
       end
 
       it "assings to event one day" do
@@ -90,7 +97,7 @@ RSpec.describe EventsController, type: :controller do
       it "redirects to new user session path" do
         event = Event.create! valid_attributes
         get :edit, params: { id: event.to_param }, session: valid_session
-        expect(response).not_to be_success
+        expect(response.status).not_to eq 200
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -103,7 +110,7 @@ RSpec.describe EventsController, type: :controller do
           event = Event.create! valid_attributes.merge(owner: @user)
           get :edit, params: { id: event.to_param }, session: valid_session
           expect(assigns(:event).owner).to eq @user
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
       end
 
@@ -141,7 +148,7 @@ RSpec.describe EventsController, type: :controller do
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'new' template)" do
           post :create, params: { event: invalid_attributes }, session: valid_session
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
       end
     end
@@ -197,7 +204,7 @@ RSpec.describe EventsController, type: :controller do
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'edit' template)" do
           put :update, params: { id: event.to_param, event: invalid_attributes }, session: valid_session
-          expect(response).to be_success
+          expect(response.status).to eq 200
         end
       end
     end

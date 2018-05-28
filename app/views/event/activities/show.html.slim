@@ -19,6 +19,6 @@ p
   strong Ends at:
   = @event_activity.ends_at
 
-=> link_to 'Edit', edit_event_activity_path(@event_activity)
+=> link_to 'Edit', edit_event_activity_path(event_id: @event.to_param, id: @event_activity.to_param)
 '|
 =< link_to 'Back', event_activities_path

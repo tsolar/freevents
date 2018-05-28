@@ -19,6 +19,9 @@ class Event::Activity::Postulation < ApplicationRecord
     inclusion: { in: ACTIVITY_DIFFICULTY_LEVELS }
 
   def approve
+    # TODO: to prevent create a duplicated activity
+    # first, find an activity by postulation (self)
+    # and if exists, use that activity, else create a new one
     activity = Event::Activity.create(
       event_day: self.event.days.first,
       title: self.activity_title,

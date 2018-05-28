@@ -1,7 +1,7 @@
 class Event::ActivityPostulationsController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   before_action :set_event
-  before_action :set_event_activity_postulation, only: [:show, :edit, :update, :destroy]
+  before_action :set_event_activity_postulation, only: [:show, :edit, :update, :destroy, :approve]
   after_action :verify_authorized
 
   # GET /event/activity_postulations
@@ -67,16 +67,29 @@ class Event::ActivityPostulationsController < ApplicationController
     end
   end
 
+  def approve
+    @event_activity_postulation.approve
+    respond_to do |format|
+      format.html { redirect_to event_activities_postulations_url(event_id: @event.id), notice: 'Activity postulation was successfully approved.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event_activity_postulation
-      @event_activity_postulation = Event::Activity::Postulation.find(params[:id])
-      authorize @event_activity_postulation
+      @event_activity_postulation = Event::Activity::Postulation.find_by(id: params[:id], event_id: @event.to_param)
+      if @event_activity_postulation.present?
+        authorize @event_activity_postulation
+      else
+        render_404
+      end
     end
 
     def set_event
       @event = Event.find(params[:event_id])
-      # TODO: redirect to 404 if not present
+    rescue
+      render_404
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

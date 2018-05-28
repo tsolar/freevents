@@ -22,10 +22,10 @@ table
         td = event_activity.description
         td = event_activity.starts_at
         td = event_activity.ends_at
-        td = link_to 'Show', event_activity
-        td = link_to 'Edit', edit_event_activity_path(event_activity)
-        td = link_to 'Destroy', event_activity, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Show', event_activity_path(event_id: @event.to_param, id: event_activity.to_param)
+        td = link_to 'Edit', edit_event_activity_path(event_id: @event.to_param, id: event_activity.to_param)
+        td = link_to 'Destroy', event_activity_path(event_id: @event.to_param, id: event_activity.to_param), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
-= link_to 'New Activity', new_event_activity_path
+= link_to 'New Activity', new_event_activity_path(event_id: @event.to_param)

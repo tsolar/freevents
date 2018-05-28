@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def render_404
+    render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+  end
+
   private
     def user_not_authorized
       flash[:alert] = I18n.t("unauthorized")

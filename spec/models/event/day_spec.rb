@@ -68,4 +68,11 @@ RSpec.describe Event::Day, type: :model do
       expect(event_day.date).to eq event_day.starts_at.to_date
     end
   end
+
+  describe "#to_s" do
+    it "should return #date" do
+      event_day = FactoryBot.create(:event_day)
+      expect("#{event_day}").to eq event_day.date.to_s
+    end
+  end
 end

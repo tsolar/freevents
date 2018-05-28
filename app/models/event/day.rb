@@ -13,4 +13,8 @@ class Event::Day < ApplicationRecord
   def date
     starts_at.to_date if starts_at.present?
   end
+
+  def to_s
+    date.to_s
+  end
 end

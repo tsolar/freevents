@@ -1,9 +1,14 @@
-h1 Listing event_activity_postulations
+h1
+  => Event::Activity::Postulation.model_name.human(count: 2)
+  => t('for').downcase
+  => Event.model_name.human.downcase
+  strong = @event
 
 table
   thead
     tr
       th = Event::Activity::Postulation.human_attribute_name(:activity_title)
+      th
       th
       th
       th
@@ -15,6 +20,10 @@ table
         td = link_to 'Show', event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param)
         td = link_to 'Edit', edit_event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param)
         td = link_to 'Destroy', event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :delete
+        - if event_activity_postulation.event_activity.present?
+          td = link_to 'Show activity', event_activity_path(event_id: @event.to_param, id: event_activity_postulation.event_activity.to_param)
+        - else
+          td = link_to 'Approve', approve_event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :post
 
 br
 

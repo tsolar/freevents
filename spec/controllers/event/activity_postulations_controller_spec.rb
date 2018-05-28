@@ -54,6 +54,13 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
     context "when user is logged in" do
       login_user
 
+      context "when event does not exist" do
+        it "renders 404 view" do
+          get :index, params: { event_id: 0 }, session: valid_session
+          expect(response.status).to eq 404
+        end
+      end
+
       context "when user is owner of the event (when user can update event)" do
         let(:event) { FactoryBot.create(:event, owner: @user) }
 
@@ -100,6 +107,16 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
         it "returns a success response" do
           get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
           expect(response.status).to eq 200
+        end
+      end
+
+      context "when event in params is not the postulation event" do
+        let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes.merge(event: FactoryBot.create(:event, owner: @user)) }
+
+        it "renders 404" do
+          get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
+          expect(response.status).to eq 404
+          expect(response).to render_template(file: "#{Rails.root}/public/404.html")
         end
       end
     end

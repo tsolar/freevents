@@ -13,7 +13,11 @@ Rails.application.routes.draw do
 
     # these routes are for receiving postulations for event activities
     namespace :activities do
-      resources :postulations, controller: "/event/activity_postulations"
+      resources :postulations, controller: "/event/activity_postulations" do
+        member do
+          post :approve
+        end
+      end
     end
 
     resources :participations, controller: "event/participations"

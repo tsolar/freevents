@@ -3,7 +3,7 @@
 
   .form-inputs
     = f.input :type
-    = f.association :event_day
+    = f.association :event_day, include_blank: false
     = f.input :title
     = f.input :description
     = f.input :starts_at
