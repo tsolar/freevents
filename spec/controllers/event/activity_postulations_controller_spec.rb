@@ -160,8 +160,8 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
 
       it "redirects to the created event_activity_postulation" do
         post :create, params: { event_id: event.to_param, event_activity_postulation: valid_attributes }, session: valid_session
-        last_postulation = Event::Activity::Postulation.last
-        expect(response).to redirect_to(event_activities_postulation_path(event_id: last_postulation.event.to_param, id: last_postulation.to_param))
+        # last_postulation = Event::Activity::Postulation.last
+        expect(response).to redirect_to(event)
       end
     end
 

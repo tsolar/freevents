@@ -34,8 +34,8 @@ table
         td = event_activity_postulation.activity_estimated_duration
         td = event_activity_postulation.activity_difficulty_level
         td = event_activity_postulation.activity_preferred_time
-        td = link_to 'Show', event_activity_postulation
-        td = link_to 'Edit', edit_event_activity_postulation_path(event_activity_postulation)
+        td = link_to "#{t('actions.show')}", event_activity_postulation
+        td = link_to "#{t('actions.edit')}", edit_event_activity_postulation_path(event_activity_postulation)
         td = link_to 'Destroy', event_activity_postulation, data: { confirm: 'Are you sure?' }, method: :delete
 
 br

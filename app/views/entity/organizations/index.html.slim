@@ -14,8 +14,8 @@ table
       tr
         td = entity_organization.type
         td = entity_organization.name
-        td = link_to 'Show', entity_organization
-        td = link_to 'Edit', edit_entity_organization_path(entity_organization)
+        td = link_to "#{t('actions.show')}", entity_organization
+        td = link_to "#{t('actions.edit')}", edit_entity_organization_path(entity_organization)
         td = link_to 'Destroy', entity_organization, data: { confirm: 'Are you sure?' }, method: :delete
 
 br

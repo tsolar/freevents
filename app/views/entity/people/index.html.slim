@@ -18,8 +18,8 @@ table
         td = entity_person.lastname
         td = entity_person.dob
         td = entity_person.bio
-        td = link_to 'Show', entity_person
-        td = link_to 'Edit', edit_entity_person_path(entity_person)
+        td = link_to "#{t('actions.show')}", entity_person
+        td = link_to "#{t('actions.edit')}", edit_entity_person_path(entity_person)
         td = link_to 'Destroy', entity_person, data: { confirm: 'Are you sure?' }, method: :delete
 
 br

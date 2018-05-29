@@ -1,4 +1,5 @@
-h1 Listing events
+h1
+  => Event.model_name.human(count: 2)
 
 .events
   - @events.each do |event|
@@ -13,10 +14,11 @@ h1 Listing events
 
       .actions.btn-group role="group"
         - if policy(event).edit?
-          = link_to 'Edit', edit_event_path(event), class: "btn btn-secondary"
+          = link_to "#{t('actions.edit')}", edit_event_path(event), class: "btn btn-secondary"
         - if policy(event).destroy?
           = link_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-secondary"
 
 br
 
-= link_to 'New Event', new_event_path
+- if policy(Event).new?
+  = link_to "#{t('actions.new')} #{Event.model_name.human.downcase}", new_event_path

@@ -1,0 +1,10 @@
+h3 = Event::Activity.model_name.human(count: event.activities.count)
+
+- if event.activities.empty?
+  p = t('event.activities.empty')
+- else
+  ul
+    - event.activities.each do |activity|
+      li
+        = link_to activity.title, event_activity_path(event_id: event.to_param, id: activity.to_param)
+p = link_to t('event.activities.postulations.invite_to_create_one'), new_event_activities_postulation_path(event_id: event.to_param)

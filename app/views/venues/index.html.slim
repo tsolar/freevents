@@ -20,8 +20,8 @@ table
         td = venue.address
         td = venue.lat
         td = venue.lng
-        td = link_to 'Show', venue
-        td = link_to 'Edit', edit_venue_path(venue)
+        td = link_to "#{t('actions.show')}", venue
+        td = link_to "#{t('actions.edit')}", edit_venue_path(venue)
         td = link_to 'Destroy', venue, data: { confirm: 'Are you sure?' }, method: :delete
 
 br

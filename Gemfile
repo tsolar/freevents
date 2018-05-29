@@ -43,7 +43,7 @@ gem "jbuilder", "~> 2.5"
 gem "slim-rails"
 
 # Let's use bootstrap 4
-gem "bootstrap", "~> 4.0.0"
+gem "bootstrap", "~> 4.1.1"
 gem "jquery-rails"
 
 # forms and nested attributes

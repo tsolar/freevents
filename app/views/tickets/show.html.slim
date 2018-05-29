@@ -17,6 +17,6 @@ h2 Code
 = link_to "Download ticket", ticket_url(@ticket.token, format: :pdf), class: "btn btn-info"
 br
 
-=> link_to 'Edit', edit_event_path(@event)
+=> link_to "#{t('actions.edit')}", edit_event_path(@event)
 '|
-=< link_to 'Back', events_path
+=< link_to "#{t('actions.back')}", events_path

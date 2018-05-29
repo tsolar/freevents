@@ -31,5 +31,6 @@ $('.datetimepicker').datetimepicker(datetimepickerDefaults);
 
 $('.container').on('cocoon:after-insert', function() {
   $('.datetimepicker').datetimepicker(datetimepickerDefaults);
-})
+});
+
 $.datetimepicker.setLocale('en');

@@ -37,6 +37,6 @@ p
   strong Activity preferred time:
   = @event_activity_postulation.activity_preferred_time
 
-=> link_to 'Edit', edit_event_activity_postulation_path(@event_activity_postulation)
+=> link_to "#{t('actions.edit')}", edit_event_activity_postulation_path(@event_activity_postulation)
 '|
-=< link_to 'Back', event_activity_postulations_path
+=< link_to "#{t('actions.back')}", event_activity_postulations_path

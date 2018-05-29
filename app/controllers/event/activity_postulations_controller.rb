@@ -34,7 +34,7 @@ class Event::ActivityPostulationsController < ApplicationController
 
     respond_to do |format|
       if @event_activity_postulation.save
-        format.html { redirect_to event_activities_postulation_path(event_id: @event_activity_postulation.event.to_param, id: @event_activity_postulation.to_param), notice: 'Activity postulation was successfully created.' }
+        format.html { redirect_to @event, notice: 'Activity postulation was successfully created.' }
         format.json { render :show, status: :created, location: @event_activity_postulation }
       else
         format.html { render :new }
