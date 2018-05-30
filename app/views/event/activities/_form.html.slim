@@ -6,8 +6,8 @@
     = f.association :event_day, include_blank: false
     = f.input :title
     = f.input :description
-    = f.input :starts_at
-    = f.input :ends_at
+    = f.input :starts_at, as: :datetimepicker, readonly: true
+    = f.input :ends_at, as: :datetimepicker, readonly: true
 
   .form-actions
     = f.button :submit
