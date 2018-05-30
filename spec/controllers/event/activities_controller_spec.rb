@@ -234,7 +234,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
           it "redirects to the event_activity" do
             activity = Event::Activity.create! valid_attributes
             put :update, params: { event_id: event.to_param, id: activity.to_param, event_activity: valid_attributes }, session: valid_session
-            expect(response).to redirect_to(activity)
+            expect(response).to redirect_to(event_activity_path(event_id: event.to_param, id: activity.to_param))
           end
         end
 

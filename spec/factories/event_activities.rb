@@ -4,11 +4,10 @@ FactoryBot.define do
     event_day_id { Event::Day.where(event: Event.last).last.try(:id) || FactoryBot.create(:event_day).id }
     title { FFaker::HipsterIpsum.sentence }
     description { FFaker::HipsterIpsum.paragraph }
-    starts_at { Time.now }
-    ends_at { Time.now + 30.minutes }
+    starts_at { Event::Day.find_by(id: event_day_id).try(:starts_at) }
+    ends_at { Event::Day.find_by(id: event_day_id).try(:ends_at) }
 
     trait :invalid do
-      event_day_id nil
       title nil
     end
   end

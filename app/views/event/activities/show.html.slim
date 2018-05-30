@@ -18,11 +18,11 @@ p
 p
   strong = Event::Activity.human_attribute_name(:starts_at)
   | :
-  =< @event_activity.starts_at || t('tbd')
+  =< @event_activity.starts_at.present? ? l(@event_activity.starts_at, format: :event_day_with_time) : t('tbd')
 p
   strong = Event::Activity.human_attribute_name(:ends_at)
   | :
-  =< @event_activity.ends_at || t('tbd')
+  =< @event_activity.ends_at.present? ? l(@event_activity.ends_at, format: :event_day_with_time) : t('tbd')
 
 => link_to "#{t('actions.edit')}", edit_event_activity_path(event_id: @event.to_param, id: @event_activity.to_param)
 '|

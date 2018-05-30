@@ -2,3 +2,4 @@ en:
   time:
     formats:
       event_day: "%a, %b %e %Y"
+      event_day_with_time: "%a, %b %e %Y %H:%M"
