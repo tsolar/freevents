@@ -46,6 +46,9 @@ gem "slim-rails"
 gem "bootstrap", "~> 4.1.1"
 gem "jquery-rails"
 
+# let's use this gem until webpacker is used
+gem 'rails-assets-datetimepicker', source: 'https://rails-assets.org'
+
 # forms and nested attributes
 gem "simple_form"
 gem "cocoon"
