@@ -59,4 +59,9 @@ p
     | :
   = @event_activity_postulation.activity_preferred_time.present? ? t(@event_activity_postulation.activity_preferred_time) : t("doesnt_matter")
 
-=> link_to t('actions.edit'), edit_event_activities_postulation_path(event_id: @event.to_param, id: @event_activity_postulation.to_param)
+/ TODO: check if activity exists in policy
+- if policy(@event_activity_postulation).approve? && @event_activity_postulation.event_activity.nil?
+  => link_to 'Approve', approve_event_activities_postulation_path(event_id: @event.to_param, id: @event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :post
+  '|
+- if policy(@event_activity_postulation).edit?
+  => link_to t('actions.edit'), edit_event_activities_postulation_path(event_id: @event.to_param, id: @event_activity_postulation.to_param)

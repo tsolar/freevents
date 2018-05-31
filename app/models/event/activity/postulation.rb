@@ -1,5 +1,6 @@
 class Event::Activity::Postulation < ApplicationRecord
   belongs_to :event
+  has_many :event_days, through: :event, source: :days
   has_one :event_activity,
     class_name: "Event::Activity",
     foreign_key: :event_activity_postulation_id
@@ -18,12 +19,15 @@ class Event::Activity::Postulation < ApplicationRecord
   validates :activity_difficulty_level,
     inclusion: { in: ACTIVITY_DIFFICULTY_LEVELS }
 
+  after_commit :send_postulation_to_event_owner, on: :create
+  after_commit :send_postulation_to_postulant, on: :create
+
   def approve
     # TODO: to prevent create a duplicated activity
     # first, find an activity by postulation (self)
     # and if exists, use that activity, else create a new one
     activity = Event::Activity.create(
-      event_day: self.event.days.first,
+      event_day: self.event_days.first,
       title: self.activity_title,
       description: self.activity_description,
       postulation: self
@@ -51,5 +55,16 @@ class Event::Activity::Postulation < ApplicationRecord
       event_activity: activity,
       event_participation: event_participation
     )
+
+    Event::Activity::PostulationMailer.send_approve_notification_to_postulant(self).deliver_later
   end
+
+  private
+    def send_postulation_to_postulant
+      Event::Activity::PostulationMailer.send_postulation_to_postulant(self).deliver_later
+    end
+
+    def send_postulation_to_event_owner
+      Event::Activity::PostulationMailer.send_postulation_to_event_owner(self).deliver_later
+    end
 end

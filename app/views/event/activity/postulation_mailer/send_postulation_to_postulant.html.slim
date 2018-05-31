@@ -1,0 +1,68 @@
+h1
+  | #{@greeting} #{@postulation.postulant_firstname}
+
+p
+  | Your postulation for the event #{@postulation.event.title} has been received.
+
+p
+  | Here is what you sent:
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:event)
+    | :
+  = @postulation.event
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_firstname)
+    | :
+  = @postulation.postulant_firstname
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_lastname)
+    | :
+  = @postulation.postulant_lastname
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_email)
+    | :
+  = @postulation.postulant_email
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_phone_number)
+    | :
+  = @postulation.postulant_phone_number
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:postulant_bio)
+    | :
+  = @postulation.postulant_bio
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_type)
+    | :
+  = @postulation.activity_type
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_title)
+    | :
+  = @postulation.activity_title
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_description)
+    | :
+  = @postulation.activity_description
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_estimated_duration)
+    | :
+  = @postulation.activity_estimated_duration
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_difficulty_level)
+    | :
+  = @postulation.activity_difficulty_level
+p
+  strong>
+    = Event::Activity::Postulation.human_attribute_name(:activity_preferred_time)
+    | :
+  = @postulation.activity_preferred_time.present? ? t(@postulation.activity_preferred_time) : t("doesnt_matter")

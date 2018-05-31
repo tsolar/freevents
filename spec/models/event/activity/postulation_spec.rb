@@ -23,6 +23,7 @@ RSpec.describe Event::Activity::Postulation, type: :model do
 
   describe "Relationships" do
     it { should belong_to :event }
+    it { should have_many(:event_days).through(:event).source(:days) }
     it { should have_one(:event_activity)
                  .class_name("Event::Activity")
                  .with_foreign_key(:event_activity_postulation_id) }
@@ -63,12 +64,15 @@ RSpec.describe Event::Activity::Postulation, type: :model do
       it "creates the speaker and the activity" do
         postulation = FactoryBot.create(:event_activity_postulation)
 
+        expect(Event::Activity::PostulationMailer).to receive(:send_approve_notification_to_postulant).with(postulation).once.and_call_original
+
         expect {
           postulation.approve
         }.to change(Event::Activity::Participation, :count).by(1)
           .and change(Event::Activity, :count).by(1)
           .and change(Event::Participation, :count).by(1)
           .and change(Entity::Person, :count).by(1)
+          .and have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers").exactly(:once)
 
         ea = Event::Activity.last
         expect(ea.title).to eq postulation.activity_title
@@ -88,7 +92,6 @@ RSpec.describe Event::Activity::Postulation, type: :model do
         expect(eap.event_activity).to eq ea
         expect(eap.event_participation).to eq ep
         expect(eap.type).to eq "Event::Activity::Speaker"
-
       end
     end
 
@@ -106,6 +109,8 @@ RSpec.describe Event::Activity::Postulation, type: :model do
           postulant_email: person.emails.first
         )
 
+        expect(Event::Activity::PostulationMailer).to receive(:send_approve_notification_to_postulant).with(postulation).once.and_call_original
+
         expect {
           postulation.approve
         }.to change(Event::Activity::Participation, :count).by(1)
@@ -113,6 +118,7 @@ RSpec.describe Event::Activity::Postulation, type: :model do
           .and change(Event::Participation, :count).by(1)
           .and change(Entity::Person, :count).by(0)
           .and change(Email, :count).by(0)
+          .and have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers").exactly(:once)
 
         ea = Event::Activity.last
         expect(ea.title).to eq postulation.activity_title

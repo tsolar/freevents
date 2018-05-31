@@ -1,0 +1,10 @@
+en:
+  event:
+    activity:
+      postulation_mailer:
+        send_postulation_to_event_owner:
+          subject: New postulation to event %{event_title}
+        send_postulation_to_postulant:
+          subject: Your postulation to event %{event_title}
+        send_approve_notification_to_postulant:
+          subject: Your postulation to event %{event_title} has been approved!

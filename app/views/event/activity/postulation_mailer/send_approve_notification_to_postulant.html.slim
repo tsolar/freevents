@@ -1,0 +1,9 @@
+h1
+  | #{@greeting} #{@postulation.postulant_firstname}
+
+p
+  | Your postulation for the event #{@postulation.event.title} has been approved.
+
+p
+  | You can see your activity
+  =< link_to "here", event_activity_url(event_id: @postulation.event.to_param, id: @postulation.event_activity.to_param)

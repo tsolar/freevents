@@ -7,4 +7,5 @@ class Event::Activity::Participation < ApplicationRecord
 
   validates :event_activity, presence: true
   validates :event_participation, presence: true
+
 end
