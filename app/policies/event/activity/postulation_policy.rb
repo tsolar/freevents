@@ -12,7 +12,7 @@ class Event::Activity::PostulationPolicy < ApplicationPolicy
   end
 
   def approve?
-    show? # if can see postulation, should be able to delete it
+    show? # if can see postulation, should be able to approve it
   end
 
   class Scope < Scope
