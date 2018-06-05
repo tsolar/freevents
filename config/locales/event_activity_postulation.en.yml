@@ -1,4 +1,7 @@
 en:
+  event/activity/postulation:
+    messages:
+      mailer
   activerecord:
     models:
       event/activity/postulation:

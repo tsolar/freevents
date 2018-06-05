@@ -2,9 +2,8 @@ h1
   | #{@greeting} #{@postulation.event.owner.name}
 
 p
-  | There's a new activity postulation for your event
-  =< link_to @postulation.event.title, event_url(@postulation.event)
+  = t('.messages.theres_a_new_postulation_for_your_event_html', event_title: link_to(@postulation.event.title, event_url(@postulation.event)))
 
 p
-  | To see the activity postulation, please
-  =< link_to "click here", event_activities_postulation_url(event_id: @postulation.event.to_param, id: @postulation.to_param), target: "_blank", rel: "noreferrer"
+  = t('.messages.to_see_the_activity_postulation_please')
+  =< link_to t('actions.click_here'), event_activities_postulation_url(event_id: @postulation.event.to_param, id: @postulation.to_param), target: "_blank", rel: "noreferrer"

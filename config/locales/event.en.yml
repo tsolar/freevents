@@ -1,7 +1,7 @@
 en:
   event:
     activities:
-      empty: There's no activities registered yet. Stay tuned!
+      empty: There's no registered activities yet. Stay tuned!
       postulations:
         invite_to_create_one: Wanna present an activity for this event?
   activerecord:

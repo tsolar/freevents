@@ -2,8 +2,10 @@ h1
   | #{@greeting} #{@postulation.postulant_firstname}
 
 p
-  | Your postulation for the event #{@postulation.event.title} has been approved.
+  = t(".messages.your_postulation_has_been_approved_html", event_title: @postulation.event.title)
 
 p
-  | You can see your activity
-  =< link_to "here", event_activity_url(event_id: @postulation.event.to_param, id: @postulation.event_activity.to_param)
+  = t('.messages.you_can_see_your_activity')
+  =< link_to t("here").downcase, event_activity_url(event_id: @postulation.event.to_param, id: @postulation.event_activity.to_param)
+
+= render partial: "event/activity/postulation_mailer/here_is_what_you_sent", locals: { postulation: @postulation }

@@ -1,0 +1,52 @@
+' =======
+= "\r\n" * 2
+= t("event.activity.postulation_mailer.send_postulation_to_postulant.messages.here_is_what_you_sent")
+' :
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:event)
+' :
+= @postulation.event
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:postulant_firstname)
+' :
+= @postulation.postulant_firstname
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:postulant_lastname)
+' :
+= @postulation.postulant_lastname
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:postulant_email)
+' :
+= @postulation.postulant_email
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:postulant_phone_number)
+' :
+= @postulation.postulant_phone_number
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:postulant_bio)
+' :
+= raw(@postulation.postulant_bio)
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:activity_type)
+' :
+= @postulation.activity_type
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:activity_title)
+' :
+= raw(@postulation.activity_title)
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:activity_description)
+' :
+= raw(@postulation.activity_description)
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:activity_estimated_duration)
+' :
+= @postulation.activity_estimated_duration
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:activity_difficulty_level)
+' :
+= @postulation.activity_difficulty_level
+= "\r\n" * 2
+= Event::Activity::Postulation.human_attribute_name(:activity_preferred_time)
+' :
+= @postulation.activity_preferred_time.present? ? t(@postulation.activity_preferred_time) : raw(t("doesnt_matter"))
