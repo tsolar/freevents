@@ -68,4 +68,22 @@ RSpec.describe Event::Day, type: :model do
       expect(event_day.date).to eq event_day.starts_at.to_date
     end
   end
+
+  describe "#to_s" do
+    context "when starts_at is present" do
+      it "should return formatted start_date" do
+        event_day = FactoryBot.create(:event_day)
+        expect("#{event_day}").to eq I18n.l(event_day.starts_at, format: :event_day)
+      end
+    end
+
+    context "when it is built but not saved yet" do
+      context "when starts_at is nil" do
+        it "returns TBD" do
+          event_day = FactoryBot.build(:event_day, starts_at: nil)
+          expect("#{event_day}").to eq I18n.t("tbd")
+        end
+      end
+    end
+  end
 end

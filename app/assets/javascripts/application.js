@@ -15,7 +15,8 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
-//= require jquery-datetimepicker/build/jquery.datetimepicker.full.js
+//  require jquery-datetimepicker/build/jquery.datetimepicker.full.js
+//= require datetimepicker
 //= require cocoon
 //= require_tree .
 
@@ -31,5 +32,6 @@ $('.datetimepicker').datetimepicker(datetimepickerDefaults);
 
 $('.container').on('cocoon:after-insert', function() {
   $('.datetimepicker').datetimepicker(datetimepickerDefaults);
-})
+});
+
 $.datetimepicker.setLocale('en');

@@ -13,4 +13,9 @@ class Event::Day < ApplicationRecord
   def date
     starts_at.to_date if starts_at.present?
   end
+
+  def to_s
+    return I18n.t("tbd") unless starts_at.present?
+    I18n.l(starts_at, format: :event_day)
+  end
 end

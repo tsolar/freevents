@@ -1,4 +1,4 @@
-p#notice = notice
+/p#notice = notice
 
 p
   strong Name:
@@ -16,6 +16,6 @@ p
   strong Lng:
   = @venue.lng
 
-=> link_to 'Edit', edit_venue_path(@venue)
+=> link_to "#{t('actions.edit')}", edit_venue_path(@venue)
 '|
-=< link_to 'Back', venues_path
+=< link_to "#{t('actions.back')}", venues_path

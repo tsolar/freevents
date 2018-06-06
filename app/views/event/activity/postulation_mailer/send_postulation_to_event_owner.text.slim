@@ -1,0 +1,7 @@
+' #{@greeting} #{@postulation.postulant_firstname}
+= "\r\n" * 2
+= raw(t('.messages.theres_a_new_postulation_for_your_event', event_title: @postulation.event.title))
+= "\r\n" * 2
+= t('.messages.to_see_the_activity_postulation_please')
+=< t('actions.visit_the_following_link')
+=< event_activities_postulation_url(event_id: @postulation.event.to_param, id: @postulation.to_param)

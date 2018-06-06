@@ -1,10 +1,14 @@
 class Event::ActivitiesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_event
   before_action :set_event_activity, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
 
   # GET /event/activities
   # GET /event/activities.json
   def index
-    @event_activities = Event::Activity.all
+    @event_activities = @event.activities
+    authorize Event::Activity
   end
 
   # GET /event/activities/1
@@ -15,6 +19,8 @@ class Event::ActivitiesController < ApplicationController
   # GET /event/activities/new
   def new
     @event_activity = Event::Activity.new
+    @event_activity.event_day = @event.days.last
+    authorize @event_activity
   end
 
   # GET /event/activities/1/edit
@@ -25,10 +31,12 @@ class Event::ActivitiesController < ApplicationController
   # POST /event/activities.json
   def create
     @event_activity = Event::Activity.new(event_activity_params)
+    @event_activity.event_day = @event.days.last if @event_activity.event_day.nil?
+    authorize @event_activity
 
     respond_to do |format|
       if @event_activity.save
-        format.html { redirect_to @event_activity, notice: "Activity was successfully created." }
+        format.html { redirect_to event_activity_path(event_id: @event.to_param, id: @event_activity.to_param), notice: "Activity was successfully created." }
         format.json { render :show, status: :created, location: @event_activity }
       else
         format.html { render :new }
@@ -42,7 +50,7 @@ class Event::ActivitiesController < ApplicationController
   def update
     respond_to do |format|
       if @event_activity.update(event_activity_params)
-        format.html { redirect_to @event_activity, notice: "Activity was successfully updated." }
+        format.html { redirect_to event_activity_path(event_id: @event.to_param, id: @event_activity.to_param), notice: "Activity was successfully updated." }
         format.json { render :show, status: :ok, location: @event_activity }
       else
         format.html { render :edit }
@@ -64,7 +72,19 @@ class Event::ActivitiesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event_activity
-      @event_activity = Event::Activity.find(params[:id])
+      @event_activity = Event::Activity.joins(:event_day)
+        .where(event_days: { event_id: @event.to_param }).find_by(id: params[:id])
+      if @event_activity.present?
+        authorize @event_activity
+      else
+        render_404
+      end
+    end
+
+    def set_event
+      @event = Event.find(params[:event_id])
+    rescue
+      render_404
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

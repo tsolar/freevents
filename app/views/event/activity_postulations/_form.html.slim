@@ -1,0 +1,23 @@
+- if @event_activity_postulation.new_record?
+  - url = event_activities_postulations_path(event_id: @event.to_param)
+- else
+  - url = event_activities_postulation_path(@event)
+
+= simple_form_for(@event_activity_postulation, url: url, html: { class: "form-horizontal", role: "form" }, wrapper: :horizontal_form) do|f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :postulant_firstname
+    = f.input :postulant_lastname
+    = f.input :postulant_email
+    = f.input :postulant_phone_number
+    = f.input :postulant_bio
+    = f.input :activity_type, collection: Event::Activity::Postulation::ACTIVITY_TYPES.map { |x| [t(x), x] }
+    = f.input :activity_title
+    = f.input :activity_description
+    = f.input :activity_estimated_duration
+    = f.input :activity_difficulty_level, collection: Event::Activity::Postulation::ACTIVITY_DIFFICULTY_LEVELS.map { |x| [t(x), x] }
+    = f.input :activity_preferred_time, collection: ["am", "pm"].map { |x| [t(x), x] }, include_blank: t("doesnt_matter")
+
+  .form-actions
+    = f.button :submit

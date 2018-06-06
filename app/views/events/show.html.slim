@@ -1,15 +1,24 @@
-p#notice = notice
+/p#notice = notice
 
-p
-  strong Title:
+h1
   = @event.title
 p
-  strong Description:
+  strong> = Event.human_attribute_name(:description)
   = @event.description
 p
-  strong Date:
+  strong> = Event.human_attribute_name(:date)
   = @event.dates
 
-=> link_to 'Edit', edit_event_path(@event)
-'|
-=< link_to 'Back', events_path
+= render partial: "events/activities", locals: { event: @event }
+
+- if policy(@event).update?
+  = link_to Event::Activity::Postulation.model_name.human(count: 2), event_activities_postulations_path(event_id: @event.to_param)
+  br/
+- if policy(Event::Activity).index?
+  = link_to Event::Activity.model_name.human(count: 2), event_activities_path(event_id: @event.to_param)
+  br/
+
+- if policy(@event).edit?
+  => link_to t('actions.edit'), edit_event_path(@event)
+  '|
+=< link_to t('back'), events_path

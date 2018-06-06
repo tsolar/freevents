@@ -1,0 +1,10 @@
+' #{@greeting} #{@postulation.postulant_firstname}
+= "\r\n" * 2
+= t(".messages.your_postulation_has_been_approved", event_title: @postulation.event.title)
+= "\r\n" * 2
+= t('.messages.you_can_see_your_activity')
+=< t('actions.visiting_the_following_link')
+=< event_activity_url(event_id: @postulation.event.to_param, id: @postulation.event_activity.to_param)
+
+= "\r\n" * 2
+= render partial: "event/activity/postulation_mailer/here_is_what_you_sent", locals: { postulation: @postulation }

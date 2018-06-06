@@ -1,24 +1,29 @@
-p#notice = notice
+/p#notice = notice
 
-p
-  strong Type:
-  = @event_activity.type
-p
-  strong Event day:
-  = @event_activity.event_day
-p
-  strong Title:
+h1
   = @event_activity.title
 p
-  strong Description:
-  = @event_activity.description
+  strong = Event::Activity.human_attribute_name(:type)
+  | :
+  =< @event_activity.type || Event::Activity.model_name.human
 p
-  strong Starts at:
-  = @event_activity.starts_at
-p
-  strong Ends at:
-  = @event_activity.ends_at
+  strong = Event::Activity.human_attribute_name(:event_day)
+  | :
+  =< @event_activity.event_day
 
-=> link_to 'Edit', edit_event_activity_path(@event_activity)
+p
+  strong = Event::Activity.human_attribute_name(:description)
+  | :
+  =< @event_activity.description
+p
+  strong = Event::Activity.human_attribute_name(:starts_at)
+  | :
+  =< @event_activity.starts_at.present? ? l(@event_activity.starts_at, format: :event_day_with_time) : t('tbd')
+p
+  strong = Event::Activity.human_attribute_name(:ends_at)
+  | :
+  =< @event_activity.ends_at.present? ? l(@event_activity.ends_at, format: :event_day_with_time) : t('tbd')
+
+=> link_to "#{t('actions.edit')}", edit_event_activity_path(event_id: @event.to_param, id: @event_activity.to_param)
 '|
-=< link_to 'Back', event_activities_path
+=< link_to "#{t('actions.back')}", event_activities_path

@@ -1,0 +1,15 @@
+en:
+  activerecord:
+    models:
+      event/activity:
+        one: Activity
+        other: Activities
+    attributes:
+      event/activity:
+        event_day: :activerecord.models.event/day.one
+        event_day_id: :activerecord.models.event/day.one
+        type: Type
+        title: Title
+        description: Description
+        starts_at: Starts at
+        ends_at: Ends at

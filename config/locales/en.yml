@@ -32,3 +32,9 @@
 en:
   hello: "Hello world"
   unauthorized: You are not allowed to perform this action
+  doesnt_matter: Doesn't matter
+  am: In the morning (AM)
+  pm: After lunch (PM)
+  for: for
+  tbd: TBD
+  here: here

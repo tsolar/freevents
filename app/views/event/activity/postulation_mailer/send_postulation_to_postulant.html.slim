@@ -1,0 +1,7 @@
+h1
+  | #{@greeting} #{@postulation.postulant_firstname}
+
+p
+  = t(".messages.your_postulation_has_been_received_html", event_title: @postulation.event.title)
+
+= render partial: "event/activity/postulation_mailer/here_is_what_you_sent", locals: { postulation: @postulation }

@@ -1,13 +1,18 @@
-= simple_form_for(@event_activity) do |f|
+- if @event_activity.new_record?
+  - url = event_activities_path(event_id: @event.to_param)
+- else
+  - url = event_activity_path(event_id: @event.to_param, id: @event_activity.to_param)
+
+= simple_form_for(@event_activity, url: url, html: { class: "form-horizontal", role: "form" }, wrapper: :horizontal_form) do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :type
-    = f.association :event_day
+    = f.association :event_day, include_blank: false
     = f.input :title
     = f.input :description
-    = f.input :starts_at
-    = f.input :ends_at
+    = f.input :starts_at, as: :datetimepicker, readonly: true
+    = f.input :ends_at, as: :datetimepicker, readonly: true
 
   .form-actions
     = f.button :submit

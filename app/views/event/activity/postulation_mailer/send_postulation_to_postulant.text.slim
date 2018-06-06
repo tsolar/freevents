@@ -1,0 +1,6 @@
+' #{@greeting} #{@postulation.postulant_firstname}
+= "\r\n" * 2
+= t(".messages.your_postulation_has_been_received", event_title: @postulation.event.title)
+= "\r\n" * 2
+
+= render partial: "event/activity/postulation_mailer/here_is_what_you_sent", locals: { postulation: @postulation }

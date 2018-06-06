@@ -16,8 +16,8 @@ table
         td = event_activity_participation.event_activity
         td = event_activity_participation.event_participation
         td = event_activity_participation.type
-        td = link_to 'Show', event_activity_participation
-        td = link_to 'Edit', edit_event_activity_participation_path(event_activity_participation)
+        td = link_to "#{t('actions.show')}", event_activity_participation
+        td = link_to "#{t('actions.edit')}", edit_event_activity_participation_path(event_activity_participation)
         td = link_to 'Destroy', event_activity_participation, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
