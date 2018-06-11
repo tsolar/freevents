@@ -1,0 +1,20 @@
+en:
+  ticket:
+    scanned:
+      success: Ticket successfully scanned
+  activerecord:
+    models:
+      ticket:
+        one: Ticket
+        other: Tickets
+    attributes:
+      ticket:
+        holder: Holder
+        scanned: Scanned?
+        scanned_at: Scanned at
+    errors:
+      models:
+        ticket:
+          attributes:
+            scanned:
+              already_scanned: Ticket was already scanned

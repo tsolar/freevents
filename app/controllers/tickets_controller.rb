@@ -24,10 +24,10 @@ class TicketsController < ApplicationController
   end
 
   def scan
-    if ticket.scan # scan sets scanned=true and scanned_at
-      flash[:notice] = "ok"
+    if @ticket.scan # scan sets scanned=true and scanned_at
+      flash.now[:notice] = I18n.t("ticket.scanned.success")
     else
-      flash[:error] = "could not scan ticket, please try again"
+      flash.now[:error] = @ticket.errors.messages # "could not scan ticket, please try again"
     end
   end
 

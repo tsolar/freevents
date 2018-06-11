@@ -65,4 +65,38 @@ RSpec.describe Ticket, type: :model do
       }.not_to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
     end
   end
+
+  describe "#scan" do
+    let(:ticket) { FactoryBot.create(:ticket) }
+
+    context "when ticket is already scanned" do
+      before :each do
+        expect(ticket.scan).to be true
+        expect(ticket.scanned).to be true
+        expect(ticket.scanned?).to be true
+        expect(ticket.scanned_at).to be_present
+      end
+
+      it "should return false" do
+        expect(ticket.scan).to be false
+        expect(ticket.errors).to be_any
+        expect(ticket.errors[:scanned]).to include I18n.t("activerecord.errors.models.ticket.attributes.scanned.already_scanned") # "Ticket was already scanned"
+      end
+    end
+
+    context "when ticket is not scanned" do
+      before :each do
+        expect(ticket.scanned).to be_nil
+        expect(ticket.scanned?).to be false
+        expect(ticket.scanned_at).to be_nil
+      end
+
+      it "should return true and set scanned to true and scanned_at to current time" do
+        expect(ticket.scan).to be true
+        expect(ticket.errors).to be_empty
+        expect(ticket.scanned?).to be true
+        expect(ticket.scanned_at).to be_present
+      end
+    end
+  end
 end

@@ -8,6 +8,14 @@ class Ticket < ApplicationRecord
 
   after_commit :send_to_holder, on: :create
 
+  def scan
+    if scanned?
+      errors.add(:scanned, :already_scanned)
+      return false
+    end
+    update_columns(scanned: true, scanned_at: Time.current)
+  end
+
   private
     def send_to_holder
       TicketMailer.send_to_holder(self).deliver_later
