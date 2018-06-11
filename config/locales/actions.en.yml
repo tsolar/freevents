@@ -1,9 +1,23 @@
 en:
   actions:
+    add: Add
+    remove: Remove
     new: New
+    new_f: New
     show: Show
     edit: Edit
     back: Back
+    download: Download
     click_here: click here
     visit_the_following_link: visit the following link
     visiting_the_following_link: visiting the following link
+    messages:
+      success:
+        registered: was successfully registered
+        registered_f: :actions.messages.success.registered
+        created: was successfully created
+        created_f: :actions.messages.success.created
+        updated: was successfully updated
+        updated_f: :actions.messages.success.updated
+        destroyed: was successfully destroyed
+        destroyed_f: :actions.messages.success.destroyed

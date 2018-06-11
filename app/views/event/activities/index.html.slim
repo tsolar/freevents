@@ -28,11 +28,11 @@ table
         td = event_activity.ends_at || t("tbd")
         td = link_to "#{t('actions.show')}", event_activity_path(event_id: @event.to_param, id: event_activity.to_param)
         td = link_to "#{t('actions.edit')}", edit_event_activity_path(event_id: @event.to_param, id: event_activity.to_param)
-        td = link_to 'Destroy', event_activity_path(event_id: @event.to_param, id: event_activity.to_param), data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to  "#{t('actions.destroy')}", event_activity_path(event_id: @event.to_param, id: event_activity.to_param), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
 - if policy(@event).update?
-  => link_to "#{t('actions.new')} #{Event::Activity.model_name.human.downcase}", new_event_activity_path(event_id: @event.to_param)
+  => link_to "#{t('actions.new_f')} #{Event::Activity.model_name.human.downcase}", new_event_activity_path(event_id: @event.to_param)
   '|
 =< link_to "#{t('actions.show')} #{Event.model_name.human.downcase}", @event

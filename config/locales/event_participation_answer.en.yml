@@ -1,0 +1,12 @@
+en:
+  event/participation/answer:
+    messages:
+      there_was_a_problem: There was an problem registering your answer. Please, try again
+  activerecord:
+    models:
+      event/participation/answer:
+        one: Event participation answer
+        other: Event participation answers
+    attributes:
+      event/participation/answer:
+        will_attend: Will attend?

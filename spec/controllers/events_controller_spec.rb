@@ -321,9 +321,9 @@ RSpec.describe EventsController, type: :controller do
             expect(@user.person.lastname).to eq nil
 
             # expect(response).to redirect_to root_path
-            notice = "Your answer was successfully registered"
-            expect(flash[:alert]).to eq nil # I18n.t("unauthorized")
-            expect(flash[:notice]).to eq notice # I18n.t("unauthorized")
+            notice = "#{Event::Participation::Answer.model_name.human} #{I18n.t('actions.messages.success.registered_f')}."
+            expect(flash[:alert]).to eq nil
+            expect(flash[:notice]).to eq notice
           end
         end
 

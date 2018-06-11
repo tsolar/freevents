@@ -34,7 +34,7 @@ class EventsController < ApplicationController
     authorize @event
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: "Event was successfully created." }
+        format.html { redirect_to @event, notice: "#{Event.model_name.human} #{t('actions.messages.success.created')}." }
         format.json { render :show, status: :created, location: @event }
       else
         format.html {
@@ -51,7 +51,7 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: "Event was successfully updated." }
+        format.html { redirect_to @event, notice: "#{Event.model_name.human} #{t('actions.messages.success.updated')}." }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
@@ -65,7 +65,7 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
+      format.html { redirect_to events_url, notice: "#{Event.model_name.human} #{t('actions.messages.success.destroyed')}." }
       format.json { head :no_content }
     end
   end
@@ -84,14 +84,14 @@ class EventsController < ApplicationController
     ).first_or_create
 
     if participation.answer.update(will_attend: answer)
-      notice = "Your answer was successfully registered"
+      notice = "#{Event::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."
       respond_to do |format|
         format.html { redirect_to events_url, notice: notice }
         format.json { render json: @event, notice: notice }
       end
     else
       respond_to do |format|
-        format.html { redirect_to events_url, notice: "There was an problem registering your answer. Please, try again" }
+        format.html { redirect_to events_url, notice: t("event/participation/answer.messages.there_was_a_problem") }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end

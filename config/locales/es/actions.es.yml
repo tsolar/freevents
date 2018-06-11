@@ -1,0 +1,26 @@
+es:
+  actions:
+    add: Agregar
+    remove: Eliminar
+    destroy: Eliminar
+    new: Nuevo
+    new_f: Nueva
+    show: Ver
+    edit: Editar
+    editing: Editando
+    approve: Aprobar
+    back: Volver
+    download: Descargar
+    click_here: clic aquí
+    visit_the_following_link: visita el siguiente enlace
+    visiting_the_following_link: visitando el siguiente enlace
+    messages:
+      success:
+        registered: registrado exitosamente
+        registered_f: registrada exitosamente
+        created: creado exitosamente
+        created_f: creado exitosamente
+        updated: actualizado exitosamente
+        updated_f: actualizada exitosamente
+        destroyed: eliminado exitosamente
+        destroyed_f: eliminada exitosamente

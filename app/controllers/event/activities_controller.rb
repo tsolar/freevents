@@ -36,7 +36,7 @@ class Event::ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @event_activity.save
-        format.html { redirect_to event_activity_path(event_id: @event.to_param, id: @event_activity.to_param), notice: "Activity was successfully created." }
+        format.html { redirect_to event_activity_path(event_id: @event.to_param, id: @event_activity.to_param), notice: "#{Event::Activity.model_name.human} #{t('actions.messages.success.created_f')}." }
         format.json { render :show, status: :created, location: @event_activity }
       else
         format.html { render :new }
@@ -50,7 +50,7 @@ class Event::ActivitiesController < ApplicationController
   def update
     respond_to do |format|
       if @event_activity.update(event_activity_params)
-        format.html { redirect_to event_activity_path(event_id: @event.to_param, id: @event_activity.to_param), notice: "Activity was successfully updated." }
+        format.html { redirect_to event_activity_path(event_id: @event.to_param, id: @event_activity.to_param), notice: "#{Event::Activity.model_name.human} #{t('actions.messages.success.updated_f')}." }
         format.json { render :show, status: :ok, location: @event_activity }
       else
         format.html { render :edit }
@@ -64,7 +64,7 @@ class Event::ActivitiesController < ApplicationController
   def destroy
     @event_activity.destroy
     respond_to do |format|
-      format.html { redirect_to event_activities_url, notice: "Activity was successfully destroyed." }
+      format.html { redirect_to event_activities_url, notice: "#{Event::Activity.model_name.human} #{t('actions.messages.success.destroyed_f')}." }
       format.json { head :no_content }
     end
   end

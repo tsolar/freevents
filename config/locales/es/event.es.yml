@@ -1,0 +1,16 @@
+es:
+  event:
+    activities:
+      empty: No hay actividades registradas aún. Mantente pendiente!
+      postulations:
+        invite_to_create_one: ¿Quieres presentar una actividad en este evento?
+  activerecord:
+    models:
+      event:
+        one: Evento
+        other: Eventos
+    attributes:
+      event:
+        title: Título
+        description: Descripción
+        date: Fecha

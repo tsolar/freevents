@@ -3,10 +3,14 @@
 h1
   = @event.title
 p
-  strong> = Event.human_attribute_name(:description)
+  strong>
+    = Event.human_attribute_name(:description)
+    | :
   = @event.description
 p
-  strong> = Event.human_attribute_name(:date)
+  strong>
+    = Event.human_attribute_name(:date)
+    | :
   = @event.dates
 
 = render partial: "events/activities", locals: { event: @event }
@@ -21,4 +25,4 @@ p
 - if policy(@event).edit?
   => link_to t('actions.edit'), edit_event_path(@event)
   '|
-=< link_to t('back'), events_path
+=< link_to t('actions.back'), events_path
