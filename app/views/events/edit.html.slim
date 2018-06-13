@@ -1,4 +1,6 @@
-h1 Editing event
+h1
+  | #{t('actions.editing')} #{Event.model_name.human.downcase}
+  strong =< @event.title
 
 == render 'form'
 

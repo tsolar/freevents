@@ -1,0 +1,23 @@
+es:
+  event:
+    activity:
+      postulation_mailer:
+        send_postulation_to_event_owner:
+          subject: Nueva postulación para el evento %{event_title}
+          messages:
+            theres_a_new_postulation_for_your_event: Hay una nueva postulación de actividad para tu evento %{event_title}
+            theres_a_new_postulation_for_your_event_html: Hay una nueva postulación de actividad para tu evento <strong>%{event_title}</strong>
+            to_see_the_activity_postulation_please: Para ver la postulación de actividad, por favor
+        send_postulation_to_postulant:
+          subject: Tu postulación al evento %{event_title}
+          messages:
+            your_postulation_has_been_received: Tu postulación al evento %{event_title} ha sido recibida.
+            your_postulation_has_been_received_html: Tu postulación al evento  <strong>%{event_title}</strong> ha sido recibida.
+            here_is_what_you_sent: Aquí está lo que enviaste
+        send_approve_notification_to_postulant:
+          subject: Tu postulación al evento %{event_title} ha sido aprobada!
+          messages:
+            your_postulation_has_been_approved: Tu postulación al evento %{event_title} ha sido aprobada.
+            your_postulation_has_been_approved_html: Tu postulación al evento <strong>%{event_title}</strong> ha sido aprobada.
+            you_can_see_your_activity: Puedes ver tu actividad
+            here_is_what_you_sent: Aquí está lo que enviaste

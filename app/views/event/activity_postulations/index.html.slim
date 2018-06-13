@@ -19,12 +19,12 @@ table
         td = event_activity_postulation.activity_title
         td = link_to "#{t('actions.show')}", event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param)
         td = link_to "#{t('actions.edit')}", edit_event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param)
-        td = link_to 'Destroy', event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to "#{t('actions.destroy')}", event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :delete
         - if event_activity_postulation.event_activity.present?
-          td = link_to 'Show activity', event_activity_path(event_id: @event.to_param, id: event_activity_postulation.event_activity.to_param)
+          td = link_to "#{t('actions.show')} #{Event::Activity.model_name.human.downcase}", event_activity_path(event_id: @event.to_param, id: event_activity_postulation.event_activity.to_param)
         - else
-          td = link_to 'Approve', approve_event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :post
+          td = link_to "#{t('actions.approve')}", approve_event_activities_postulation_path(event_id: @event.to_param, id: event_activity_postulation.to_param), data: { confirm: 'Are you sure?' }, method: :post
 
 br
 
-= link_to 'New Activity postulation', new_event_activities_postulation_path(event_id: @event.to_param)
+= link_to "#{t('actions.new_f')} #{Event::Activity::Postulation.model_name.human.downcase}", new_event_activities_postulation_path(event_id: @event.to_param)

@@ -3,9 +3,9 @@
   / TODO: use/define delegates in model
   - answer = participation.try(:answer).try(:will_attend)
   .actions.btn-group role="group"
-    = link_to 'Interested', respond_attendance_event_path(event, will_attend: "maybe"), method: :put, class: "btn #{answer == 'maybe' ? 'btn-primary' : 'btn-secondary'}"
-    = link_to 'Going', respond_attendance_event_path(event, will_attend: "yes"), method: :put, class: "btn #{answer == 'yes' ? 'btn-primary' : 'btn-secondary'}"
-    = link_to 'Not going', respond_attendance_event_path(event, will_attend: "no"), method: :put, class: "btn #{answer == 'no' ? 'btn-primary' : 'btn-secondary'}"
+    = link_to t('event/participation/answer.will_attend.interested'), respond_attendance_event_path(event, will_attend: "maybe"), method: :put, class: "btn #{answer == 'maybe' ? 'btn-primary' : 'btn-secondary'}"
+    = link_to t('event/participation/answer.will_attend.going'), respond_attendance_event_path(event, will_attend: "yes"), method: :put, class: "btn #{answer == 'yes' ? 'btn-primary' : 'btn-secondary'}"
+    = link_to t('event/participation/answer.will_attend.not_going'), respond_attendance_event_path(event, will_attend: "no"), method: :put, class: "btn #{answer == 'no' ? 'btn-primary' : 'btn-secondary'}"
   - if participation.present? && participation.ticket.present? && answer == "yes"
     br/
-    = link_to "Show ticket", ticket_path(token: participation.ticket.token), class: "btn btn-success"
+    = link_to "#{t('actions.show')} #{Ticket.model_name.human.downcase}", ticket_path(token: participation.ticket.token), class: "btn btn-success"

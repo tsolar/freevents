@@ -16,6 +16,7 @@ en:
         postulant_phone_number: Postulant phone number
         postulant_bio: Postulant bio (description, brief)
         activity_type: Activity type
+        activity_title: Activity title
         activity_description: Activity description
         activity_estimated_duration: Activity estimated duration
         activity_difficulty_level: Activity difficulty level

@@ -4,18 +4,22 @@ html
     title PDF
 
   body[]
-    /p#notice = notice
-
     p
-      strong Title:
+      strong>
+        = Event.human_attribute_name(:title)
+        | :
       = @event.title
     p
-      strong Description:
+      strong>
+        = Event.human_attribute_name(:description)
+        | :
       = @event.description
     p
-      strong Date:
+      strong>
+        = Event.human_attribute_name(:date)
+        | :
       = @event.dates
 
-    h2 Code
+    h2 = Ticket.human_attribute_name(:code)
     .code
       img src=generate_qr(scan_ticket_url(@ticket.token)) class="qr-code"

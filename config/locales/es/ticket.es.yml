@@ -1,0 +1,21 @@
+es:
+  ticket:
+    scanned:
+      success: Ticket escaneado satisfactoriamente
+  activerecord:
+    models:
+      ticket:
+        one: Ticket
+        other: Tickets
+    attributes:
+      ticket:
+        holder: Poseedor
+        scanned: ¿Escaneado?
+        scanned_at: Escaneado en
+        code: Código
+    errors:
+      models:
+        ticket:
+          attributes:
+            scanned:
+              already_scanned: El ticket ya fue escaneado

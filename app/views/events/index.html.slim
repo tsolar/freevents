@@ -16,7 +16,7 @@ h1
         - if policy(event).edit?
           = link_to "#{t('actions.edit')}", edit_event_path(event), class: "btn btn-secondary"
         - if policy(event).destroy?
-          = link_to 'Destroy', event, data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-secondary"
+          = link_to "#{t('actions.destroy')}", event, data: { confirm: 'Are you sure?' }, method: :delete, class: "btn btn-secondary"
 
 br
 

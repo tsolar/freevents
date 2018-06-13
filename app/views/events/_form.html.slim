@@ -11,11 +11,11 @@
     = f.input :description
 
     fieldset
-      legend Days
+      legend = Event::Day.model_name.human(count: 2)
       = f.simple_fields_for :days do |day|
         = render 'day_fields', f: day
       .links
-        = link_to_add_association 'add day', f, :days, class: "btn btn-secondary btn-md"
+        = link_to_add_association "#{t('actions.add')} #{Event::Day.model_name.human.downcase}", f, :days, class: "btn btn-secondary btn-md"
 
   .form-actions
     = f.button :submit, class: "btn-primary"

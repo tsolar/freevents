@@ -1,0 +1,16 @@
+es:
+  event/participation/answer:
+    will_attend:
+      interested: Me interesa
+      going: Asistiré
+      not_going: No asistiré
+    messages:
+      there_was_a_problem: Hubo un problema registrando tu respuesta. Por favor, intenta nuevamente
+  activerecord:
+    models:
+      event/participation/answer:
+        one: Respuesta
+        other: Respuestas
+    attributes:
+      event/participation/answer:
+        will_attend: Asistirá?

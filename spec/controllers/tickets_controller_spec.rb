@@ -30,7 +30,7 @@ RSpec.describe TicketsController, type: :controller do
           get :show, params: { token: ticket.token }, session: valid_session
           expect(response.status).not_to eq 200
           expect(response).to redirect_to(root_path)
-          expect(flash[:alert]).to eq("You are not allowed to perform this action")
+          expect(flash[:alert]).to eq(I18n.t("unauthorized"))
         end
       end
     end
