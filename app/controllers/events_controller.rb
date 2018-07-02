@@ -118,6 +118,15 @@ class EventsController < ApplicationController
           :_destroy,
           :starts_at,
           :ends_at
+        ],
+        venues_attributes: [
+          :id,
+          :_destroy,
+          :name,
+          :description,
+          :address,
+          :lat,
+          :lng
         ]
       )
     end
