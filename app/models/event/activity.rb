@@ -17,11 +17,14 @@ class Event::Activity < ApplicationRecord
     foreign_key: :event_activity_id,
     dependent: :destroy
 
-  delegate :event, to: :event_day
+  has_one :event, through: :event_day
   delegate :starts_at, to: :event_day, prefix: true, allow_nil: true
   delegate :ends_at, to: :event_day, prefix: true, allow_nil: true
 
   validates :event_day, presence: true
+  # TODO: maybe it'd be needed to save the event to validate the event day
+  # belongs to the same event
+
   validates :title, presence: true
 
   validates :starts_at, timeliness: { on_or_before: :ends_at, on_or_after: :event_day_starts_at }, if: Proc.new { |x| x.starts_at.present? }
