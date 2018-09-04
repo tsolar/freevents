@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  namespace :venue do
+    resources :rooms
+  end
   devise_for :users
   root "events#index"
 

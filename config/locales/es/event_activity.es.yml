@@ -13,3 +13,11 @@ es:
         description: Descripción
         starts_at: Empieza a las
         ends_at: Termina a las
+    errors:
+      models:
+        event/activity:
+          attributes:
+            starts_at:
+              must_be_on_event_day_date: Debe ser en la misma fecha que la jornada seleccionada
+            ends_at:
+              must_be_on_event_day_date: Debe ser en la misma fecha que la jornada seleccionada

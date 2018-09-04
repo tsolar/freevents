@@ -1,10 +1,12 @@
 class Venue < ApplicationRecord
   has_many :event_venues,
-           class_name: "Event::Venue"
+    class_name: "Event::Venue"
   has_many :events,
-           class_name: "Event",
-           through: :event_venues
-
+    class_name: "Event",
+    through: :event_venues
+  has_many :rooms,
+    class_name: "Venue::Room",
+    inverse_of: :venue
   validates :name, presence: true
   validates :address, presence: true
 end
