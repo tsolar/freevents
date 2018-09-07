@@ -1,0 +1,10 @@
+es:
+  activerecord:
+    models:
+      venue/room:
+        one: Lugar del evento
+        other: Lugares del evento
+    attributes:
+      venue:
+        name: Nombre
+        capacity: Capacidad

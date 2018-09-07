@@ -12,6 +12,11 @@ p
   =< @event_activity.event_day
 
 p
+  strong = Event::Activity.human_attribute_name(:venue_room)
+  | :
+  =< @event_activity.venue_room
+
+p
   strong = Event::Activity.human_attribute_name(:description)
   | :
   =< @event_activity.description

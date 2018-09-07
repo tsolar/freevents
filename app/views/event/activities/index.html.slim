@@ -4,11 +4,12 @@ h1
   => Event.model_name.human.downcase
   strong = @event
 
-table
+table.table.table-bordered
   thead
     tr
       th = Event::Activity.human_attribute_name(:type)
       th = Event::Day.model_name.human
+      th = Venue::Room.model_name.human
       th = Event::Activity.human_attribute_name(:title)
       th = Event::Activity.human_attribute_name(:description)
       th = Event::Activity.human_attribute_name(:starts_at)
@@ -22,6 +23,7 @@ table
       tr
         td = event_activity.type || Event::Activity.model_name.human
         td = event_activity.event_day
+        td = event_activity.venue_room || t("tbd")
         td = event_activity.title
         td = event_activity.description
         td = event_activity.starts_at || t("tbd")

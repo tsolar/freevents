@@ -89,6 +89,6 @@ class Event::ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_activity_params
-      params.require(:event_activity).permit(:type, :event_day_id, :title, :description, :starts_at, :ends_at)
+      params.require(:event_activity).permit(:type, :event_day_id, :title, :description, :starts_at, :ends_at, :venue_room_id)
     end
 end

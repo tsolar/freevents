@@ -18,6 +18,10 @@ class Event::Activity < ApplicationRecord
     dependent: :destroy
 
   has_one :event, through: :event_day
+
+  # TODO: test
+  belongs_to :venue_room, class_name: "Venue::Room", optional: true
+
   delegate :starts_at, to: :event_day, prefix: true, allow_nil: true
   delegate :ends_at, to: :event_day, prefix: true, allow_nil: true
 
@@ -36,16 +40,16 @@ class Event::Activity < ApplicationRecord
   private
 
   def starts_at_event_day_date
+    # TODO: rename this method to check activity is starts on or after event day started
     if starts_at.to_date != event_day_starts_at.to_date
       errors.add(:starts_at, :must_be_on_event_day_date)
     end
   end
 
   def ends_at_event_day_date
-    debugger
-    if ends_at.to_date != event_day_ends_at.to_date
+    # TODO: rename this method to check activity is ending before event day ends
+    if ends_at.to_date > event_day_ends_at.to_date
       errors.add(:ends_at, :must_be_on_event_day_date)
     end
   end
-
 end

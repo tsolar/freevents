@@ -13,6 +13,7 @@ es:
         description: Descripción
         starts_at: Empieza a las
         ends_at: Termina a las
+        venue_room: :activerecord.models.venue/room.one
     errors:
       models:
         event/activity:
