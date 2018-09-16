@@ -14,7 +14,7 @@ p
 p
   strong = Event::Activity.human_attribute_name(:venue_room)
   | :
-  =< @event_activity.venue_room
+  =< @event_activity.venue_room || t('tbd')
 
 p
   strong = Event::Activity.human_attribute_name(:description)

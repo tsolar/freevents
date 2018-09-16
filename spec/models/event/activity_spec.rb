@@ -105,6 +105,11 @@ RSpec.describe Event::Activity, type: :model do
     it { should belong_to(:event_day)
               .class_name("Event::Day") }
 
+    it { should belong_to(:venue_room)
+        .class_name("Venue::Room")
+      # .optional
+    }
+
     it { should have_many(:participations)
               .class_name("Event::Activity::Participation")
               .with_foreign_key(:event_activity_id)

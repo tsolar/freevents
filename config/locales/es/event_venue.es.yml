@@ -1,0 +1,10 @@
+es:
+  activerecord:
+    models:
+      event/venue:
+        one: Lugar del evento
+        other: Lugares del evento
+    attributes:
+      event/venue:
+        event: :activerecord.models.event.one
+        venue: :activerecord.models.venue.one

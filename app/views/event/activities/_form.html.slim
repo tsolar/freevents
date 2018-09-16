@@ -7,6 +7,7 @@
   = f.error_notification
 
   .form-inputs
+    /= f.input :type , prompt: 'Elija...', collection: Event::Activity::Postulation::ACTIVITY_TYPES.map { |x| [t(x), x] }
     = f.input :type
     = f.association :event_day, include_blank: false, collection: @event.days
     = f.input :title
