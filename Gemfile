@@ -61,7 +61,7 @@ gem "validates_timeliness", "~> 4.0"
 
 # Follow coding standards!
 gem "rubocop", require: false
-gem "rubocop-rails"
+gem "rubocop-rails_config"
 gem "rubocop-rspec"
 
 # User authentication

@@ -280,9 +280,9 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    rubocop-rails (1.4.0)
+    rubocop-rails_config (0.2.3)
       railties (>= 3.0)
-      rubocop (~> 0.53)
+      rubocop (~> 0.56)
     rubocop-rspec (1.25.1)
       rubocop (>= 0.53.0)
     ruby-progressbar (1.9.0)
@@ -407,7 +407,7 @@ DEPENDENCIES
   rqrcode
   rspec-rails (~> 3.5)
   rubocop
-  rubocop-rails
+  rubocop-rails_config
   rubocop-rspec
   sass-rails (~> 5.0)
   seed_migration
