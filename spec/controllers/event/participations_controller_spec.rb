@@ -42,7 +42,7 @@ RSpec.describe Event::ParticipationsController, type: :controller do
 
   let(:event) {
     skip "not yet implemented"
-    FactoryBot.create(:event)
+    create(:event)
   }
 
   describe "GET #index" do

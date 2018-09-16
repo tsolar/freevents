@@ -4,7 +4,7 @@ RSpec.describe "events/show", type: :view do
   include Pundit
 
   before(:each) do
-    @event = assign(:event, FactoryBot.create(:event))
+    @event = assign(:event, create(:event))
 
     # This is added because I get this exception
     # *** NoMethodError Exception: undefined method `policy' for #<#<Class:0x00557ec8942360>:0x00557ec89247c0>

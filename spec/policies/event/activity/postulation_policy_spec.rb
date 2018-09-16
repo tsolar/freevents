@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Event::Activity::PostulationPolicy do
 
-  let(:user) { FactoryBot.create(:user) }
-  let(:event_activity_postulation) { FactoryBot.create(:event_activity_postulation) }
+  let(:user) { create(:user) }
+  let(:event_activity_postulation) { create(:event_activity_postulation) }
 
   subject { described_class.new(user, event_activity_postulation) }
 
@@ -24,8 +24,8 @@ RSpec.describe Event::Activity::PostulationPolicy do
 
     context "when user is event owner" do
       let(:event_activity_postulation) {
-        event = FactoryBot.create(:event, owner: user)
-        FactoryBot.create(:event_activity_postulation, event: event)
+        event = create(:event, owner: user)
+        create(:event_activity_postulation, event: event)
       }
       it { is_expected.to forbid_action(:index) }
       it { is_expected.to permit_actions([:show, :destroy, :approve]) }

@@ -11,7 +11,7 @@ RSpec.describe Ticket, type: :model do
 
   describe "Create" do
     it "should create a valid Ticket and send email to holder" do
-      ticket = FactoryBot.build(:ticket)
+      ticket = build(:ticket)
       expect(ticket).to be_valid
       expect {
         expect(ticket.save).to be true
@@ -22,7 +22,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     it "should not create an invalid Ticket" do
-      ticket = FactoryBot.build(:ticket, :invalid)
+      ticket = build(:ticket, :invalid)
       expect(ticket).not_to be_valid
       expect(ticket.save).to be false
       expect(ticket.token).to be nil
@@ -32,14 +32,14 @@ RSpec.describe Ticket, type: :model do
 
     it "should not create a ticket if using a existing token" do
       token = SecureRandom.base58(24)
-      ticket1 = FactoryBot.create(:ticket, token: token)
+      ticket1 = create(:ticket, token: token)
       expect(ticket1).to be_persisted
       ticket1.reload
       expect(ticket1.token).to eq token
       expect(ticket1.scanned).to be nil
       expect(ticket1.scanned_at).to be nil
 
-      ticket2 = FactoryBot.build(:ticket, token: token)
+      ticket2 = build(:ticket, token: token)
       expect(ticket2.save).to be false
       expect(ticket2.errors[:token]).to be_present
       expect(ticket2.token).to eq token
@@ -58,7 +58,7 @@ RSpec.describe Ticket, type: :model do
 
   describe "update" do
     it "should not send any email" do
-      ticket = FactoryBot.create(:ticket)
+      ticket = create(:ticket)
 
       expect {
         expect(ticket.update(scanned: true, scanned_at: Time.now)).to be true
@@ -67,7 +67,7 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "#scan" do
-    let(:ticket) { FactoryBot.create(:ticket) }
+    let(:ticket) { create(:ticket) }
 
     context "when ticket is already scanned" do
       before :each do

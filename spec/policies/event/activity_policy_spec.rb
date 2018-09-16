@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Event::ActivityPolicy do
 
-  let(:user) { FactoryBot.create(:user) }
-  let(:event_activity) { FactoryBot.create(:event_activity) }
+  let(:user) { create(:user) }
+  let(:event_activity) { create(:event_activity) }
 
   subject { described_class.new(user, event_activity) }
 
@@ -26,10 +26,10 @@ RSpec.describe Event::ActivityPolicy do
 
     context "when user is event owner" do
       let(:event_activity) {
-        event = FactoryBot.create(:event, owner: user)
-        FactoryBot.create(
+        event = create(:event, owner: user)
+        create(
           :event_activity,
-          event_day: FactoryBot.create(:event_day, event: event)
+          event_day: create(:event_day, event: event)
         )
       }
       it { is_expected.to permit_actions([:index, :show, :destroy]) }

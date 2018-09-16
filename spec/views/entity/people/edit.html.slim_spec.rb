@@ -4,7 +4,7 @@ RSpec.describe "entity/people/edit", type: :view do
   before(:each) do
     @entity_person = assign(
       :entity_person,
-      FactoryBot.create(:entity_person)
+      create(:entity_person)
     )
   end
 

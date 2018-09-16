@@ -41,7 +41,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
   # Event::ActivityPostulationsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  let(:event) { Event.last || FactoryBot.create(:event) }
+  let(:event) { Event.last || create(:event) }
 
   describe "GET #index" do
     context "when user is not logged in" do
@@ -62,7 +62,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when user is owner of the event (when user can update event)" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
 
         it "returns a success response" do
           get :index, params: { event_id: event.to_param }, session: valid_session
@@ -102,7 +102,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
 
         it "returns a success response" do
           get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
@@ -111,7 +111,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when event in params is not the postulation event" do
-        let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes.merge(event: FactoryBot.create(:event, owner: @user)) }
+        let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes.merge(event: create(:event, owner: @user)) }
 
         it "renders 404" do
           get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
@@ -226,8 +226,8 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    let(:activity_postulation) { FactoryBot.build(:event_activity_postulation, event: event) }
-    let(:event) { FactoryBot.create(:event) }
+    let(:activity_postulation) { build(:event_activity_postulation, event: event) }
+    let(:event) { create(:event) }
 
     context "when user is not logged in" do
       it "redirects to new_user_session_path" do
@@ -255,7 +255,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
 
         it "destroys the requested event_activity_postulation" do
           activity_postulation.save

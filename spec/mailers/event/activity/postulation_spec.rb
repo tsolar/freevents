@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Event::Activity::PostulationMailer, type: :mailer do
-  let(:postulation) { FactoryBot.create(:event_activity_postulation) }
+  let(:postulation) { create(:event_activity_postulation) }
 
   describe "send_postulation_to_event_owner" do
     let(:mail) { Event::Activity::PostulationMailer.send_postulation_to_event_owner(postulation) }

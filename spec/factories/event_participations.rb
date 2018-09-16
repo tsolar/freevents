@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :event_participation, class: "Event::Participation" do
-    event { Event.last || FactoryBot.create(:event) }
+    event { Event.last || create(:event) }
     # type ""
-    participant { FactoryBot.create(:entity_person) }
+    participant { create(:entity_person) }
     # association :participant, factory: :entity_person # , strategy: :build
     description { FFaker::Lorem.paragraph }
 

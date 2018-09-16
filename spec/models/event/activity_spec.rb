@@ -8,8 +8,8 @@ RSpec.describe Event::Activity, type: :model do
     it "should validate starts_at date is the same of event_day.starts_at date" do
       now = Time.current
       tomorrow = Time.current + 1.day
-      event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-      activity = FactoryBot.build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minute)
+      event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
+      activity = build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minute)
       expect(activity).to be_invalid
       expect(activity.save).to be false
       expect(activity).not_to be_persisted
@@ -19,8 +19,8 @@ RSpec.describe Event::Activity, type: :model do
     it "should validate ends_at date is the same of event_day.ends_at date" do
       now = Time.current
       tomorrow = Time.current + 1.day
-      event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-      activity = FactoryBot.build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minute)
+      event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
+      activity = build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minute)
       expect(activity).to be_invalid
       expect(activity.save).to be false
       expect(activity).not_to be_persisted
@@ -31,8 +31,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when activity ends before event_day.ends_at" do
         it "should create the activity" do
           now = Time.current
-          event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-          activity = FactoryBot.build(:event_activity, event_day_id: event_day.id,  starts_at: now + 1.hour, ends_at: now + 1.hour + 30.minute)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
+          activity = build(:event_activity, event_day_id: event_day.id,  starts_at: now + 1.hour, ends_at: now + 1.hour + 30.minute)
           expect(activity).to be_valid
           expect(activity.save).to be true
           expect(activity).to be_persisted
@@ -43,9 +43,9 @@ RSpec.describe Event::Activity, type: :model do
         it "should create the activity" do
           now = Time.current
           ends_at = now + 2.hour
-          event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: ends_at)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: ends_at)
           # it only passes the test if it ends a second before...
-          activity = FactoryBot.build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: ends_at - 1.second)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: ends_at - 1.second)
           expect(activity).to be_valid
           expect(activity.save).to be true
           expect(activity).to be_persisted
@@ -55,8 +55,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when activity ends after event_day.ends_at" do
         it "should not create the activity" do
           now = Time.current
-          event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-          activity = FactoryBot.build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: now + 3.hour)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: now + 3.hour)
           expect(activity).not_to be_valid
           expect(activity.save).to be false
           expect(activity).not_to be_persisted
@@ -68,8 +68,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when ends before event_day.ends_at" do
         it "should create the activity" do
           now = Time.current
-          event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hour)
-          activity = FactoryBot.build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hour, ends_at: now + 11.hour + 30.minute)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hour)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hour, ends_at: now + 11.hour + 30.minute)
           expect(activity).to be_valid
           expect(activity.save).to be true
           expect(activity).to be_persisted
@@ -79,8 +79,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when ends after event_day.ends_at" do
         it "should not create the activity" do
           now = Time.current
-          event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hour)
-          activity = FactoryBot.build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hour, ends_at: now + 21.hour)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hour)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hour, ends_at: now + 21.hour)
           expect(activity).not_to be_valid
           expect(activity.save).to be false
           expect(activity).not_to be_persisted
@@ -91,8 +91,8 @@ RSpec.describe Event::Activity, type: :model do
     context "when activity starts after event_day.starts_at and after event_day.ends_at" do
       it "should not create the activity" do
         now = Time.current
-        event_day = FactoryBot.create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-        activity = FactoryBot.build(:event_activity, event_day_id: event_day.id, starts_at: now + 3.hour, ends_at: now + 3.hour + 30.minute)
+        event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
+        activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 3.hour, ends_at: now + 3.hour + 30.minute)
         expect(activity).not_to be_valid
         expect(activity.save).to be false
         expect(activity).not_to be_persisted
@@ -128,14 +128,14 @@ RSpec.describe Event::Activity, type: :model do
 
   describe "Create" do
     it "should create a valid event_activity" do
-      activity = FactoryBot.build(:event_activity)
+      activity = build(:event_activity)
       expect(activity).to be_valid
       expect(activity.save).to be true
       expect(activity).to be_persisted
     end
 
     it "should create an invalid event_activity" do
-      activity = FactoryBot.build(:event_activity, :invalid)
+      activity = build(:event_activity, :invalid)
       expect(activity).not_to be_valid
       expect(activity.save).to be false
       expect(activity).not_to be_persisted

@@ -271,7 +271,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "PUT #respond_attendance" do
-    let!(:event) { FactoryBot.create(:event) }
+    let!(:event) { create(:event) }
 
     context "when user is not logged in" do
       it "redirects to new user session path" do
@@ -290,7 +290,7 @@ RSpec.describe EventsController, type: :controller do
       login_user
 
       context "and when user is event owner" do
-        # let(:event) { FactoryBot.create(:event, owner: @user) }
+        # let(:event) { create(:event, owner: @user) }
 
         it "should not create an event participation" do
           skip "Not sure if deny or not to event owner to be a participant"
@@ -331,9 +331,9 @@ RSpec.describe EventsController, type: :controller do
           context "and user is already registered to event (participation exists)" do
             before :each do
               # User is already registered to event if exists an Event::Participation related
-              FactoryBot.create(
+              create(
                 :event_attendee,
-                participant: FactoryBot.create(:entity_person, user: @user)
+                participant: create(:entity_person, user: @user)
               )
               expect(@user.person).to be_a(Entity::Person)
               expect(@user.person).to be_present
@@ -409,7 +409,7 @@ RSpec.describe EventsController, type: :controller do
 
           context "and user is not registered to event (participation does not exist)" do
             before :each do
-              @user.person = FactoryBot.create(:entity_person)
+              @user.person = create(:entity_person)
               expect(@user.person).to be_a(Entity::Person)
               expect(@user.person).to be_present
             end

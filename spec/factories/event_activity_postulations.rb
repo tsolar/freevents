@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :event_activity_postulation, class: "Event::Activity::Postulation" do
-    event_id { Event.last.try(:id) || FactoryBot.create(:event).id }
+    event_id { Event.last.try(:id) || create(:event).id }
     postulant_firstname { FFaker::NameMX.first_name }
     postulant_lastname { FFaker::NameMX.last_name }
     postulant_email { FFaker::Internet.email }

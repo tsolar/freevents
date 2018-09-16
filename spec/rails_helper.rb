@@ -63,6 +63,8 @@ RSpec.configure do |config|
 
   # to prevent ActiveRecord::AssociationTypeMismatch when running tests
   config.before(:suite) { FactoryBot.reload }
+
+  config.include FactoryBot::Syntax::Methods
 end
 
 Shoulda::Matchers.configure do |config|

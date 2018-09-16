@@ -2,14 +2,14 @@ require "rails_helper"
 
 RSpec.describe EventPolicy do
 
-  let(:user) { FactoryBot.create(:user) }
-  let(:event) { FactoryBot.create(:event, owner: user) }
+  let(:user) { create(:user) }
+  let(:event) { create(:event, owner: user) }
 
   subject { described_class.new(user, event) }
 
   context "user is not logged in" do
     let(:user) { nil }
-    let(:event) { FactoryBot.create(:event) }
+    let(:event) { create(:event) }
 
     it { is_expected.to permit_actions([:index, :show]) }
     it { is_expected.to forbid_action(:destroy) }
@@ -28,12 +28,12 @@ RSpec.describe EventPolicy do
     end
 
     context "user is not the event owner" do
-      let(:other_person) { FactoryBot.create(:entity_person) }
+      let(:other_person) { create(:entity_person) }
       let(:other_user) { other_person.user }
       let(:event) {
-        FactoryBot.create(:event, owner: other_user)
+        create(:event, owner: other_user)
       }
-      let(:person) { FactoryBot.create(:entity_person) }
+      let(:person) { create(:entity_person) }
       let(:user) { person.user }
 
       it { is_expected.to permit_actions([:index, :show, :respond_attendance]) }

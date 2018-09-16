@@ -26,14 +26,14 @@ RSpec.describe User, type: :model do
 
   describe "#to_s" do
     it "returns user email" do
-      user = FactoryBot.create(:user)
+      user = create(:user)
       expect("#{user}").to eq user.email
     end
   end
 
   describe "#name" do
-    let(:user) { FactoryBot.create(:user) }
-    let(:person) { FactoryBot.create(:entity_person, user: user) }
+    let(:user) { create(:user) }
+    let(:person) { create(:entity_person, user: user) }
 
     context "when person.firstname and lastname are present" do
       before :each do
@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do
 
     context "when only person firstname is present" do
       let(:person) {
-        FactoryBot.create(:entity_person, user: user, lastname: nil)
+        create(:entity_person, user: user, lastname: nil)
       }
       before :each do
         expect(person.firstname).to be_present

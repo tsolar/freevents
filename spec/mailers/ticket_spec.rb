@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe TicketMailer, type: :mailer do
   describe "send_to_holder" do
-    let(:ticket) { FactoryBot.create(:ticket) }
+    let(:ticket) { create(:ticket) }
     let(:mail) { TicketMailer.send_to_holder(ticket) }
 
     it "renders the headers" do

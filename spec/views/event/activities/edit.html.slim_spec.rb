@@ -4,7 +4,7 @@ RSpec.describe "event/activities/edit", type: :view do
   before { skip("Not yet implemented") }
 
   before(:each) do
-    @event_activity = assign(:event_activity, FactoryBot.create(:event_activity))
+    @event_activity = assign(:event_activity, create(:event_activity))
   end
 
   it "renders the edit event_activity form" do

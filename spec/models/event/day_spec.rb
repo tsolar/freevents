@@ -10,7 +10,7 @@ RSpec.describe Event::Day, type: :model do
       context "starts_at is after ends_at" do
         it "should validate starts_at" do
           now = Time.current
-          day = FactoryBot.build(
+          day = build(
             :event_day,
             starts_at: now,
             ends_at: now - 1.hour)
@@ -22,7 +22,7 @@ RSpec.describe Event::Day, type: :model do
 
       context "starts_at is before ends_at" do
         it "should validate starts_at" do
-          day = FactoryBot.build(
+          day = build(
             :event_day,
             starts_at: "14:00",
             ends_at: "15:00")
@@ -35,7 +35,7 @@ RSpec.describe Event::Day, type: :model do
       context "starts_at is equal to ends_at" do
         it "should validate starts_at" do
           now = Time.current
-          day = FactoryBot.build(:event_day, starts_at: now, ends_at: now )
+          day = build(:event_day, starts_at: now, ends_at: now )
           expect(day.valid?).to be true
           expect(day.save).to be true
           expect(day.errors[:starts_at]).to be_empty
@@ -56,7 +56,7 @@ RSpec.describe Event::Day, type: :model do
 
   describe "Create" do
     it "should create a valid Event Day" do
-      event_day = FactoryBot.create(:event_day)
+      event_day = create(:event_day)
       expect(event_day.valid?).to be true
       expect(event_day.persisted?).to be true
     end
@@ -64,7 +64,7 @@ RSpec.describe Event::Day, type: :model do
 
   describe "#date" do
     it "should return starts_at as date" do
-      event_day = FactoryBot.create(:event_day)
+      event_day = create(:event_day)
       expect(event_day.date).to eq event_day.starts_at.to_date
     end
   end
@@ -72,7 +72,7 @@ RSpec.describe Event::Day, type: :model do
   describe "#to_s" do
     context "when starts_at is present" do
       it "should return formatted start_date" do
-        event_day = FactoryBot.create(:event_day)
+        event_day = create(:event_day)
         expect("#{event_day}").to eq I18n.l(event_day.starts_at, format: :event_day)
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe Event::Day, type: :model do
     context "when it is built but not saved yet" do
       context "when starts_at is nil" do
         it "returns TBD" do
-          event_day = FactoryBot.build(:event_day, starts_at: nil)
+          event_day = build(:event_day, starts_at: nil)
           expect("#{event_day}").to eq I18n.t("tbd")
         end
       end

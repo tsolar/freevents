@@ -40,7 +40,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
   # Event::ActivitiesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  let(:event) { FactoryBot.create(:event) }
+  let(:event) { create(:event) }
 
   describe "GET #index" do
     it "returns a success response" do
@@ -50,7 +50,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
     end
 
     it "assigns only activities of the event" do
-      other_event = FactoryBot.create(:event)
+      other_event = create(:event)
       activity1 = Event::Activity.create! valid_attributes
       activity2 = Event::Activity.create! valid_attributes.merge!(event_day_id: other_event.days.last.id)
       get :index, params: { event_id: event.to_param }, session: valid_session
@@ -77,7 +77,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
 
     context "when event hasn't the activity on its days" do
       it "renders 404" do
-        other_event = FactoryBot.create(:event)
+        other_event = create(:event)
         activity = Event::Activity.create! valid_attributes.merge!(event_day_id: other_event.days.last.id)
         get :show, params: { event_id: event.to_param, id: activity.to_param }, session: valid_session
         expect(response.status).to eq 404
@@ -106,7 +106,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
 
         it "returns a success response" do
           get :new, params: { event_id: event.to_param }, session: valid_session
@@ -139,7 +139,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
 
         it "returns a success response" do
           get :edit, params: { event_id: event.to_param, id: activity.to_param }, session: valid_session
@@ -173,7 +173,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "When user is event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
 
         context "with valid params" do
           it "creates a new Event::Activity" do
@@ -221,7 +221,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let!(:event) { FactoryBot.create(:event, owner: @user) }
+        let!(:event) { create(:event, owner: @user) }
 
         context "with valid params" do
           it "updates the requested event_activity" do
@@ -281,7 +281,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
 
         it "destroys the requested event_activity" do
           event

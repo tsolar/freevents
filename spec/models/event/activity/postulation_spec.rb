@@ -31,7 +31,7 @@ RSpec.describe Event::Activity::Postulation, type: :model do
 
   describe "Create" do
     it "should create a valid Event::Activity::Postulation, and nothing else" do
-      postulation = FactoryBot.build(:event_activity_postulation)
+      postulation = build(:event_activity_postulation)
       expect {
         postulation.save
       }.to change(Event::Activity::Participation, :count).by(0)
@@ -45,7 +45,7 @@ RSpec.describe Event::Activity::Postulation, type: :model do
     end
 
     it "should not create an invalid Event::Activity::Postulation" do
-      postulation = FactoryBot.build(:event_activity_postulation, :invalid)
+      postulation = build(:event_activity_postulation, :invalid)
       expect {
         expect(postulation.save).to be false
       }.to change(Event::Activity::Participation, :count).by(0)
@@ -62,7 +62,7 @@ RSpec.describe Event::Activity::Postulation, type: :model do
   describe "#approve" do
     context "speaker does not exists (identified by email)" do
       it "creates the speaker and the activity" do
-        postulation = FactoryBot.create(:event_activity_postulation)
+        postulation = create(:event_activity_postulation)
 
         expect(Event::Activity::PostulationMailer).to receive(:send_approve_notification_to_postulant).with(postulation).once.and_call_original
 
@@ -97,11 +97,11 @@ RSpec.describe Event::Activity::Postulation, type: :model do
 
     context "speaker already exists (identified by email)" do
       it "should create the activity and assign speaker to it" do
-        person = FactoryBot.create(:entity_person)
+        person = create(:entity_person)
         person.emails.create(address: "person@example.com")
 
         # creates a postulation with a postulant that have an existing email
-        postulation = FactoryBot.create(
+        postulation = create(
           :event_activity_postulation,
           postulant_firstname: person.firstname,
           postulant_lastname: person.lastname,

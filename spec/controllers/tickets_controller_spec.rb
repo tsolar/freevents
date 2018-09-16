@@ -4,21 +4,21 @@ RSpec.describe TicketsController, type: :controller do
   let(:valid_session) { {} }
 
   let(:user_person) {
-    FactoryBot.create(:entity_person, user: FactoryBot.create(:user))
+    create(:entity_person, user: create(:user))
   }
   let(:holder) {
-    FactoryBot.create(
+    create(
       :event_attendee,
       participant: user_person
     )
   }
-  let(:ticket) { FactoryBot.create(:ticket, holder: holder) }
+  let(:ticket) { create(:ticket, holder: holder) }
 
   describe "GET #show" do
     context "when user is logged in" do
       login_user
       context "when user is ticket holder" do
-        let(:user_person) { FactoryBot.create(:entity_person, user: @user) }
+        let(:user_person) { create(:entity_person, user: @user) }
         it "returns a success response" do
           get :show, params: { token: ticket.token }, session: valid_session
           expect(response.status).to eq 200
@@ -49,9 +49,9 @@ RSpec.describe TicketsController, type: :controller do
       login_user
 
       context "when user is ticket.event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
+        let(:event) { create(:event, owner: @user) }
         let(:holder) {
-          FactoryBot.create(
+          create(
             :event_attendee,
             event: event,
             participant: user_person

@@ -20,7 +20,7 @@ RSpec.describe Event::Attendee, type: :model do
   describe "Create" do
     it "should create a valid Event::Attendee and an Event::Participation::Confirmation" do
       expect {
-        attendee = FactoryBot.create(:event_attendee)
+        attendee = create(:event_attendee)
         expect(attendee.valid?).to be true
         expect(attendee).to be_persisted
         expect(attendee.answer).to be_a Event::Participation::Answer
@@ -31,7 +31,7 @@ RSpec.describe Event::Attendee, type: :model do
 
     context "when attributes are invalid" do
       it "should not create the Event::Attendee nor an Event::Participation::Confirmation" do
-        attendee_invalid = FactoryBot.build(:event_attendee, :invalid)
+        attendee_invalid = build(:event_attendee, :invalid)
         expect(attendee_invalid.valid?).to be false
         expect(attendee_invalid.save).to be false
         expect(attendee_invalid.persisted?).to be false

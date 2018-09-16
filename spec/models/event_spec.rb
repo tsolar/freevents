@@ -39,14 +39,14 @@ RSpec.describe Event, type: :model do
   describe "to_s" do
     it "returns title" do
       event_title = FFaker::Lorem.sentence
-      event = FactoryBot.create(:event, title: event_title)
+      event = create(:event, title: event_title)
       expect("#{event}").to eq event_title
     end
   end
 
   describe "Create" do
     it "should create a valid Event" do
-      event = FactoryBot.create(:event)
+      event = create(:event)
       expect(event.valid?).to be true
       expect(event.persisted?).to be true
       expect(event.days.count).to be 1
@@ -57,7 +57,7 @@ RSpec.describe Event, type: :model do
 
   describe "#days" do
     let(:event) {
-      FactoryBot.create(
+      create(
         :event,
         days_attributes: days_attributes
       )
@@ -103,7 +103,7 @@ RSpec.describe Event, type: :model do
   end
 
   describe "#dates" do
-    let(:event) { FactoryBot.create(:event, days_attributes: [FactoryBot.attributes_for(:event_day)]) }
+    let(:event) { create(:event, days_attributes: [FactoryBot.attributes_for(:event_day)]) }
 
     context "when event has only one day" do
       before :each do
@@ -117,7 +117,7 @@ RSpec.describe Event, type: :model do
 
     context "when event has more than one day" do
       let(:event) {
-        FactoryBot.create(
+        create(
           :event,
           days_attributes:
           [

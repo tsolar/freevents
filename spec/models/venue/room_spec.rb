@@ -10,7 +10,7 @@ RSpec.describe Venue::Room, type: :model do
   it { should_not allow_value(-1).for(:capacity) }
 
   it "has a valid factory" do
-    room = FactoryBot.build(:venue_room)
+    room = build(:venue_room)
     expect(room).to be_valid
   end
 end

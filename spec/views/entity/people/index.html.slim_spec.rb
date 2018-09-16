@@ -4,7 +4,7 @@ RSpec.describe "entity/people/index", type: :view do
   before(:each) do
     assign(
       :entity_people,
-      FactoryBot.create_list(:entity_person, 2)
+      create_list(:entity_person, 2)
     )
   end
 
