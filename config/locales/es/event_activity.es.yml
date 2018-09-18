@@ -8,7 +8,7 @@ es:
       event/activity:
         event_day: :activerecord.models.event/day.one
         event_day_id: :activerecord.models.event/day.one
-        type: Tipo
+        activity_type: Tipo
         title: Título
         description: Descripción
         starts_at: Empieza a las

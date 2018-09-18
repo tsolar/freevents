@@ -8,7 +8,7 @@
 
   .form-inputs
     /= f.input :type , prompt: 'Elija...', collection: Event::Activity::Postulation::ACTIVITY_TYPES.map { |x| [t(x), x] }
-    = f.input :type
+    = f.input :activity_type, prompt: 'Elija...', collection: Event::Activity::ACTIVITY_TYPES.map { |x| [t(x), x] }
     = f.association :event_day, include_blank: false, collection: @event.days
     = f.input :title
     = f.input :description

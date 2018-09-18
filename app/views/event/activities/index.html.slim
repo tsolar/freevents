@@ -7,7 +7,7 @@ h1
 table.table.table-bordered
   thead
     tr
-      th = Event::Activity.human_attribute_name(:type)
+      th = Event::Activity.human_attribute_name(:activity_type)
       th = Event::Day.model_name.human
       th = Venue::Room.model_name.human
       th = Event::Activity.human_attribute_name(:title)
@@ -21,7 +21,7 @@ table.table.table-bordered
   tbody
     - @event_activities.each do |event_activity|
       tr
-        td = event_activity.type || Event::Activity.model_name.human
+        td = event_activity.activity_type || Event::Activity.model_name.human
         td = event_activity.event_day
         td = event_activity.venue_room || t("tbd")
         td = event_activity.title

@@ -3,9 +3,9 @@
 h1
   = @event_activity.title
 p
-  strong = Event::Activity.human_attribute_name(:type)
+  strong = Event::Activity.human_attribute_name(:activity_type)
   | :
-  =< @event_activity.type || Event::Activity.model_name.human
+  =< @event_activity.activity_type || Event::Activity.model_name.human
 p
   strong = Event::Activity.human_attribute_name(:event_day)
   | :
