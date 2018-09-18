@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe Event::Activity, type: :model do
   describe "Validations" do
+    it { should have_db_column(:activity_type).of_type(:string) }
+    it { should validate_inclusion_of(:activity_type).in_array(Event::Activity::ACTIVITY_TYPES) }
     it { should validate_presence_of :event_day }
     it { should validate_presence_of :title }
 

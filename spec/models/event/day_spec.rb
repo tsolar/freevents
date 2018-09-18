@@ -73,7 +73,15 @@ RSpec.describe Event::Day, type: :model do
     context "when starts_at is present" do
       it "should return formatted start_date" do
         event_day = create(:event_day)
-        expect("#{event_day}").to eq I18n.l(event_day.starts_at, format: :event_day)
+        expect("#{event_day}").to eq "#{I18n.l(event_day.starts_at, format: :event_day_with_time)} - #{I18n.l(event_day.ends_at, format: :only_time)}"
+      end
+
+      context "when ends_at next day" do
+        it "should return formatted including start date and end date" do
+          event_day = create(:event_day, starts_at: Time.current, ends_at: Time.current + 1.day - 1.minute)
+          expect("#{event_day}").to eq "#{I18n.l(event_day.starts_at, format: :event_day_with_time)} - #{I18n.l(event_day.ends_at, format: :event_day_with_time)}"
+        end
+
       end
     end
 

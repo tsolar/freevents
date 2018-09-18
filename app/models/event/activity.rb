@@ -1,4 +1,8 @@
 class Event::Activity < ApplicationRecord
+  ACTIVITY_TYPES = Event::Activity::Postulation::ACTIVITY_TYPES
+
+  validates :activity_type, inclusion: { in: ACTIVITY_TYPES }
+
   belongs_to :event_day,
     class_name: "Event::Day"
 

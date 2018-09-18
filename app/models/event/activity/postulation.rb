@@ -5,7 +5,7 @@ class Event::Activity::Postulation < ApplicationRecord
     class_name: "Event::Activity",
     foreign_key: :event_activity_postulation_id
 
-  ACTIVITY_TYPES = %w(workshop speech)
+  ACTIVITY_TYPES = %w(workshop speech other)
   ACTIVITY_DIFFICULTY_LEVELS = %w(everyone easy medium hard expert)
 
   validates :postulant_firstname, presence: true
@@ -27,6 +27,7 @@ class Event::Activity::Postulation < ApplicationRecord
     # first, find an activity by postulation (self)
     # and if exists, use that activity, else create a new one
     activity = Event::Activity.create(
+      activity_type: self.activity_type,
       event_day: self.event_days.first,
       title: self.activity_title,
       description: self.activity_description,

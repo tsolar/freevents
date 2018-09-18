@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :event_activity, class: "Event::Activity" do
-    type ""
+    activity_type { Event::Activity::Postulation::ACTIVITY_TYPES.sample }
     event_day_id { Event::Day.where(event: Event.last).last.try(:id) || create(:event_day).id }
     title { FFaker::HipsterIpsum.sentence }
     description { FFaker::HipsterIpsum.paragraph }

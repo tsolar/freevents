@@ -22,7 +22,7 @@ class Event::Day < ApplicationRecord
     if ends_at.to_date > starts_at.to_date
       "#{I18n.l(starts_at, format: :event_day_with_time)} - #{I18n.l(ends_at, format: :event_day_with_time)}"
     else
-      "#{I18n.l(starts_at, format: :event_day_with_time)}"
+      "#{I18n.l(starts_at, format: :event_day_with_time)} - #{I18n.l(ends_at, format: :only_time)}"
     end
   end
 
