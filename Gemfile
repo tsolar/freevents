@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 git_source(:github) do |repo_name|
@@ -47,11 +49,11 @@ gem "bootstrap", "~> 4.1.1"
 gem "jquery-rails"
 
 # let's use this gem until webpacker is used
-gem 'rails-assets-datetimepicker', source: 'https://rails-assets.org'
+gem "rails-assets-datetimepicker", source: "https://rails-assets.org"
 
 # forms and nested attributes
-gem "simple_form"
 gem "cocoon"
+gem "simple_form"
 
 # countries data
 gem "country_select", require: "country_select_without_sort_alphabetical"
@@ -61,7 +63,7 @@ gem "validates_timeliness", "~> 4.0"
 
 # Follow coding standards!
 gem "rubocop", require: false
-gem "rubocop-rails_config"
+gem "rubocop-rails", github: "rubocop-hq/rubocop-rails"
 gem "rubocop-rspec"
 
 # User authentication
@@ -72,8 +74,8 @@ gem "pundit"
 gem "pundit-matchers", "~> 1.4.1"
 
 # Queue jobs and emails
-gem "delayed_job_active_record"
 gem "daemons"
+gem "delayed_job_active_record"
 gem "mailgun-ruby", "~>1.1.6"
 
 gem "seed_migration"
@@ -85,12 +87,12 @@ gem "rqrcode"
 gem "wicked_pdf"
 
 # translations
-gem "rails-i18n", "~> 5.1"
 gem "devise-i18n"
+gem "rails-i18n", "~> 5.1"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", "~> 2.13"
   gem "selenium-webdriver"
@@ -110,21 +112,21 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
   gem "listen", ">= 3.0.5", "< 3.2"
+  gem "web-console", ">= 3.3.0"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
 
   # Use Capistrano for deployment
   gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-measure", require: false
   gem "capistrano-rails", "~> 1.3", require: false
   gem "capistrano-rvm"
-  gem "capistrano3-puma"
   gem "capistrano3-delayed-job"
   gem "capistrano3-postgres", require: false
-  gem "capistrano-measure", require: false
+  gem "capistrano3-puma"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]

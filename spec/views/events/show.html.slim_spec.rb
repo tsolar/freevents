@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "events/show", type: :view do
   include Pundit
 
-  before(:each) do
+  before do
     @event = assign(:event, create(:event))
 
     # This is added because I get this exception

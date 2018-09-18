@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "entity/people/show", type: :view do
-  before(:each) do
+  before do
     @entity_person = assign(
       :entity_person,
       create(:entity_person, bio: "asd")

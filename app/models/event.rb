@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event < ApplicationRecord
   has_many :days,
            -> { order("starts_at ASC") },
@@ -34,7 +36,7 @@ class Event < ApplicationRecord
   end
 
   def dates
-    dates = "#{days.first.starts_at.strftime('%F %R')}"
+    dates = days.first.starts_at.strftime("%F %R").to_s
 
     if days.count > 1
       dates = "#{dates} - #{days.last.ends_at.strftime('%F %R')}"

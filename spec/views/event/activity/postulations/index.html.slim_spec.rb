@@ -1,38 +1,40 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "event/activities/index", type: :view do
   before { skip("Not yet implemented") }
-  before(:each) do
+  before do
     assign(:event_activity_postulations, [
-      Event::Activity::Postulation.create!(
-        event: nil,
-        postulant_firstname: "Postulant Firstname",
-        postulant_lastname: "Postulant Lastname",
-        postulant_email: "Postulant Email",
-        postulant_phone_number: "Postulant Phone Number",
-        postulant_bio: "MyText",
-        activity_type: "Activity Type",
-        activity_title: "Activity Title",
-        activity_description: "MyText",
-        activity_estimated_duration: 2,
-        activity_difficulty_level: "Activity Difficulty Level",
-        activity_preferred_time: "Activity Preferred Time"
-      ),
-      Event::Activity::Postulation.create!(
-        event: nil,
-        postulant_firstname: "Postulant Firstname",
-        postulant_lastname: "Postulant Lastname",
-        postulant_email: "Postulant Email",
-        postulant_phone_number: "Postulant Phone Number",
-        postulant_bio: "MyText",
-        activity_type: "Activity Type",
-        activity_title: "Activity Title",
-        activity_description: "MyText",
-        activity_estimated_duration: 2,
-        activity_difficulty_level: "Activity Difficulty Level",
-        activity_preferred_time: "Activity Preferred Time"
-      )
-    ])
+             Event::Activity::Postulation.create!(
+               event: nil,
+               postulant_firstname: "Postulant Firstname",
+               postulant_lastname: "Postulant Lastname",
+               postulant_email: "Postulant Email",
+               postulant_phone_number: "Postulant Phone Number",
+               postulant_bio: "MyText",
+               activity_type: "Activity Type",
+               activity_title: "Activity Title",
+               activity_description: "MyText",
+               activity_estimated_duration: 2,
+               activity_difficulty_level: "Activity Difficulty Level",
+               activity_preferred_time: "Activity Preferred Time"
+             ),
+             Event::Activity::Postulation.create!(
+               event: nil,
+               postulant_firstname: "Postulant Firstname",
+               postulant_lastname: "Postulant Lastname",
+               postulant_email: "Postulant Email",
+               postulant_phone_number: "Postulant Phone Number",
+               postulant_bio: "MyText",
+               activity_type: "Activity Type",
+               activity_title: "Activity Title",
+               activity_description: "MyText",
+               activity_estimated_duration: 2,
+               activity_difficulty_level: "Activity Difficulty Level",
+               activity_preferred_time: "Activity Preferred Time"
+             )
+           ])
   end
 
   it "renders a list of event/activities" do

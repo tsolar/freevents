@@ -1,23 +1,25 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "event/activities/index", type: :view do
   before { skip("Not yet implemented") }
 
-  before(:each) do
+  before do
     assign(:event_activities, [
-      Event::Activity.create!(
-        type: "Type",
-        event_day: nil,
-        title: "Title",
-        description: "MyText"
-      ),
-      Event::Activity.create!(
-        type: "Type",
-        event_day: nil,
-        title: "Title",
-        description: "MyText"
-      )
-    ])
+             Event::Activity.create!(
+               type: "Type",
+               event_day: nil,
+               title: "Title",
+               description: "MyText"
+             ),
+             Event::Activity.create!(
+               type: "Type",
+               event_day: nil,
+               title: "Title",
+               description: "MyText"
+             )
+           ])
   end
 
   it "renders a list of event/activities" do

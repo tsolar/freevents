@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event::Venue < ApplicationRecord
   belongs_to :event, class_name: "Event"
   belongs_to :venue, class_name: "::Venue"

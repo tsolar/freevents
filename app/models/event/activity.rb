@@ -1,25 +1,27 @@
+# frozen_string_literal: true
+
 class Event::Activity < ApplicationRecord
   ACTIVITY_TYPES = Event::Activity::Postulation::ACTIVITY_TYPES
 
   validates :activity_type, inclusion: { in: ACTIVITY_TYPES }
 
   belongs_to :event_day,
-    class_name: "Event::Day"
+             class_name: "Event::Day"
 
   belongs_to :postulation,
-    class_name: "Event::Activity::Postulation",
-    foreign_key: :event_activity_postulation_id,
-    optional: true
+             class_name: "Event::Activity::Postulation",
+             foreign_key: :event_activity_postulation_id,
+             optional: true
 
   has_many :participations,
-    class_name: "Event::Activity::Participation",
-    foreign_key: :event_activity_id,
-    dependent: :destroy
+           class_name: "Event::Activity::Participation",
+           foreign_key: :event_activity_id,
+           dependent: :destroy
 
   has_many :speakers,
-    class_name: "Event::Activity::Speaker",
-    foreign_key: :event_activity_id,
-    dependent: :destroy
+           class_name: "Event::Activity::Speaker",
+           foreign_key: :event_activity_id,
+           dependent: :destroy
 
   has_one :event, through: :event_day
 
@@ -34,18 +36,18 @@ class Event::Activity < ApplicationRecord
 
   validates :title, presence: true
 
-  validates :starts_at, timeliness: { on_or_before: :ends_at, on_or_after: :event_day_starts_at }, if: Proc.new { |x| x.starts_at.present? }
-  validates :ends_at, timeliness: { on_or_before: :event_day_ends_at }, if: Proc.new { |x| x.ends_at.present? }
+  validates :starts_at, timeliness: { on_or_before: :ends_at, on_or_after: :event_day_starts_at }, if: proc { |x| x.starts_at.present? }
+  validates :ends_at, timeliness: { on_or_before: :event_day_ends_at }, if: proc { |x| x.ends_at.present? }
   # validates_date :starts_at, is_at: Proc.new { |x| x.event_day_starts_at.to_date }
-  validate :starts_at_event_day_date, if: Proc.new { |x| x.starts_at? && x.event_day_starts_at.present? }
-  validate :ends_at_event_day_date, if: Proc.new { |x| x.starts_at? && x.event_day_starts_at.present? }
+  validate :starts_at_event_day_date, if: proc { |x| x.starts_at? && x.event_day_starts_at.present? }
+  validate :ends_at_event_day_date, if: proc { |x| x.starts_at? && x.event_day_starts_at.present? }
 
   private
 
   def starts_at_event_day_date
     # TODO: rename this method to check activity is starts on or after event day started
     if starts_at.to_date < event_day_starts_at.to_date ||
-      starts_at > event_day_ends_at # if activity starts after event day ends
+       starts_at > event_day_ends_at # if activity starts after event day ends
       errors.add(:starts_at, :must_be_on_event_day_date)
     end
   end

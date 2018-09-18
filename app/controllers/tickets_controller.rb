@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TicketsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_ticket
@@ -8,10 +10,10 @@ class TicketsController < ApplicationController
     respond_to do |format|
       format.html {}
       format.pdf do
-        render pdf: "file_name"   # Excluding ".pdf" extension.
+        render pdf: "file_name" # Excluding ".pdf" extension.
       end
       format.png do
-        require 'barby/outputter/png_outputter'
+        require "barby/outputter/png_outputter"
         text = scan_ticket_url(@ticket.token)
         barcode = Barby::QrCode.new(
           text,
@@ -36,12 +38,13 @@ class TicketsController < ApplicationController
   end
 
   private
-    def set_event
-      @event = @ticket.holder.event
-    end
 
-    def set_ticket
-      @ticket = Ticket.find_by(token: params[:token])
-      authorize @ticket
-    end
+  def set_event
+    @event = @ticket.holder.event
+  end
+
+  def set_ticket
+    @ticket = Ticket.find_by(token: params[:token])
+    authorize @ticket
+  end
 end

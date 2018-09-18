@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This config for bootstrap4 was taken from https://raw.githubusercontent.com/printercu/rails_sf_bs4/master/config/initializers/simple_form_bootstrap.rb
 
 # Use this setup block to configure all options available in SimpleForm.
@@ -15,29 +17,30 @@ SimpleForm::Inputs::Base.prepend Module.new {
 }
 
 SimpleForm.setup do |config|
-  config.error_notification_class = 'alert alert-danger'
-  config.button_class = 'btn btn-default'
-  config.boolean_label_class = 'form-check-label'
+  config.error_notification_class = "alert alert-danger"
+  config.button_class = "btn btn-default"
+  config.boolean_label_class = "form-check-label"
   config.boolean_style = :nested
   config.item_wrapper_tag = :div
-  config.item_wrapper_class = 'form-check'
+  config.item_wrapper_class = "form-check"
 
   # Helpers
-  wrapper_options = {class: 'form-group'}
-  input_options = {error_class: 'is-invalid'}
-  label_class = 'col-form-label'
+  wrapper_options = { class: "form-group" }
+  input_options = { error_class: "is-invalid" }
+  label_class = "col-form-label"
 
-  horizontal_options = wrapper_options.merge(class: 'form-group row')
+  horizontal_options = wrapper_options.merge(class: "form-group row")
   horizontal_label_class = "col-sm-3 #{label_class}"
-  horizontal_right_class = 'col-sm-9'
-  horizontal_right_offset_class = 'offset-sm-3'
+  horizontal_right_class = "col-sm-9"
+  horizontal_right_offset_class = "offset-sm-3"
 
-  inline_class = 'mb-2 mr-sm-2 mb-sm-0'
+  inline_class = "mb-2 mr-sm-2 mb-sm-0"
 
-  basic_input = ->(b, type = :basic) do
+  basic_input = lambda do |b, type = :basic|
     b.use :html5
     b.use :placeholder
     break if type == :boolean
+
     b.optional :maxlength
     b.optional :minlength
     unless type == :file
@@ -47,36 +50,36 @@ SimpleForm.setup do |config|
     b.optional :readonly
   end
 
-  error_and_hint = ->(b) do
-    b.use :error, wrap_with: {tag: 'span', class: 'invalid-feedback'}
-    b.use :hint,  wrap_with: {tag: 'small', class: 'form-text text-muted'}
+  error_and_hint = lambda do |b|
+    b.use :error, wrap_with: { tag: "span", class: "invalid-feedback" }
+    b.use :hint,  wrap_with: { tag: "small", class: "form-text text-muted" }
   end
 
   # Vertical forms
   config.wrappers :vertical_form, **wrapper_options do |b|
     basic_input.call(b)
     b.use :label, class: label_class
-    b.use :input, **input_options, class: 'form-control'
+    b.use :input, **input_options, class: "form-control"
     error_and_hint.call(b)
   end
 
   config.wrappers :vertical_file_input, **wrapper_options do |b|
     basic_input.call(b, :file)
     b.use :label, class: label_class
-    b.use :input, **input_options, class: 'form-control-file'
+    b.use :input, **input_options, class: "form-control-file"
     error_and_hint.call(b)
   end
 
-  config.wrappers :vertical_boolean, **wrapper_options, class: 'form-check' do |b|
+  config.wrappers :vertical_boolean, **wrapper_options, class: "form-check" do |b|
     basic_input.call(b, :boolean)
-    b.use :label_input, class: 'form-check-input'
+    b.use :label_input, class: "form-check-input"
     error_and_hint.call(b)
   end
 
   config.wrappers :vertical_radio_and_checkboxes, **wrapper_options do |b|
     basic_input.call(b, :boolean)
     b.use :label, class: label_class
-    b.use :input, **input_options, class: 'form-check-input'
+    b.use :input, **input_options, class: "form-check-input"
     error_and_hint.call(b)
   end
 
@@ -85,7 +88,7 @@ SimpleForm.setup do |config|
     basic_input.call(b)
     b.use :label, class: horizontal_label_class
     b.wrapper class: horizontal_right_class do |ba|
-      ba.use :input, **input_options, class: 'form-control'
+      ba.use :input, **input_options, class: "form-control"
       error_and_hint.call(ba)
     end
   end
@@ -94,7 +97,7 @@ SimpleForm.setup do |config|
     basic_input.call(b, :file)
     b.use :label, class: horizontal_label_class
     b.wrapper class: horizontal_right_class do |ba|
-      ba.use :input, **input_options, class: 'form-control-file'
+      ba.use :input, **input_options, class: "form-control-file"
       error_and_hint.call(ba)
     end
   end
@@ -102,8 +105,8 @@ SimpleForm.setup do |config|
   config.wrappers :horizontal_boolean, **horizontal_options do |b|
     basic_input.call(b, :boolean)
     b.wrapper class: "#{horizontal_right_class} #{horizontal_right_offset_class}" do |wr|
-      wr.wrapper class: 'form-check' do |ba|
-        ba.use :label_input, class: 'form-check-input'
+      wr.wrapper class: "form-check" do |ba|
+        ba.use :label_input, class: "form-check-input"
       end
       error_and_hint.call(wr)
     end
@@ -113,7 +116,7 @@ SimpleForm.setup do |config|
     basic_input.call(b, :boolean)
     b.use :label, class: horizontal_label_class
     b.wrapper class: horizontal_right_class do |ba|
-      ba.use :input, **input_options, class: 'form-check-input'
+      ba.use :input, **input_options, class: "form-check-input"
       error_and_hint.call(ba)
     end
   end
@@ -121,14 +124,14 @@ SimpleForm.setup do |config|
   # Inline forms
   config.wrappers :inline_form, class: inline_class do |b|
     basic_input.call(b)
-    b.use :label, class: 'sr-only'
-    b.use :input, **input_options, class: 'form-control'
+    b.use :label, class: "sr-only"
+    b.use :input, **input_options, class: "form-control"
     error_and_hint.call(b)
   end
 
   config.wrappers :inline_boolean, class: "form-check #{inline_class}" do |b|
     basic_input.call(b, :boolean)
-    b.use :label_input, class: 'form-check-input'
+    b.use :label_input, class: "form-check-input"
     error_and_hint.call(b)
   end
 
@@ -136,8 +139,8 @@ SimpleForm.setup do |config|
   config.wrappers :multi_select, **wrapper_options do |b|
     basic_input.call(b, :boolean)
     b.use :label, class: label_class
-    b.wrapper class: 'multi-select d-flex' do |ba|
-      ba.use :input, **input_options, class: 'form-control'
+    b.wrapper class: "multi-select d-flex" do |ba|
+      ba.use :input, **input_options, class: "form-control"
     end
     error_and_hint.call(b)
   end
@@ -146,8 +149,8 @@ SimpleForm.setup do |config|
     basic_input.call(b, :boolean)
     b.use :label, class: horizontal_label_class
     b.wrapper class: horizontal_right_class do |wr|
-      wr.wrapper class: 'multi-select d-flex' do |ba|
-        ba.use :input, **input_options, class: 'form-control'
+      wr.wrapper class: "multi-select d-flex" do |ba|
+        ba.use :input, **input_options, class: "form-control"
       end
       error_and_hint.call(wr)
     end
@@ -165,7 +168,7 @@ SimpleForm.setup do |config|
     boolean: :vertical_boolean,
     datetime: :multi_select,
     date: :multi_select,
-    time: :multi_select,
+    time: :multi_select
   }
 end
 

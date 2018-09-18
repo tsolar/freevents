@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Event::ActivityPostulationsController, type: :routing do
   describe "routing" do
-
     it "routes to #index" do
       expect(get: "/events/1/activities/postulations").to route_to("event/activity_postulations#index", event_id: "1")
     end
@@ -34,6 +35,5 @@ RSpec.describe Event::ActivityPostulationsController, type: :routing do
     it "routes to #destroy" do
       expect(delete: "/events/1/activities/postulations/1").to route_to("event/activity_postulations#destroy", id: "1", event_id: "1")
     end
-
   end
 end

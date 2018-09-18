@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Event::Activity::PostulationsController < ApplicationController
-  before_action :set_event_activity_postulation, only: [:show, :edit, :update, :destroy]
+  before_action :set_event_activity_postulation, only: %i[show edit update destroy]
 
   # GET /event/activity/postulations
   # GET /event/activity/postulations.json
@@ -61,18 +63,18 @@ class Event::Activity::PostulationsController < ApplicationController
     end
   end
 
-
   def accept
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event_activity_postulation
-      @event_activity_postulation = Event::Activity::Postulation.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_activity_postulation_params
-      params.require(:event_activity_postulation).permit(:event_id, :postulant_firstname, :postulant_lastname, :postulant_email, :postulant_phone_number, :postulant_bio, :activity_type, :activity_title, :activity_description, :activity_estimated_duration, :activity_difficulty_level, :activity_preferred_time)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event_activity_postulation
+    @event_activity_postulation = Event::Activity::Postulation.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_activity_postulation_params
+    params.require(:event_activity_postulation).permit(:event_id, :postulant_firstname, :postulant_lastname, :postulant_email, :postulant_phone_number, :postulant_bio, :activity_type, :activity_title, :activity_description, :activity_estimated_duration, :activity_difficulty_level, :activity_preferred_time)
+  end
 end

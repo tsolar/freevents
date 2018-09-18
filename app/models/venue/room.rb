@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Venue::Room < ApplicationRecord
   belongs_to :venue, inverse_of: :rooms
 

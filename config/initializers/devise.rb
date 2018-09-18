@@ -9,7 +9,7 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '477e26f31dfea1cedb861baa80bcbfff960af0eb51c03739056982900d7b1fb7e4922d63fb15ecc5a3580162749052307919b5274a8cc210e1d5cfc8ba458212'
-  config.secret_key = ENV['SECRET_KEY_BASE'] if Rails.env.production? || Rails.env.staging?
+  config.secret_key = ENV["SECRET_KEY_BASE"] if Rails.env.production? || Rails.env.staging?
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -27,7 +27,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is

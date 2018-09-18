@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Entity::OrganizationsController < ApplicationController
-  before_action :set_entity_organization, only: [:show, :edit, :update, :destroy]
+  before_action :set_entity_organization, only: %i[show edit update destroy]
 
   # GET /entity/organizations
   # GET /entity/organizations.json
@@ -62,13 +64,14 @@ class Entity::OrganizationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_entity_organization
-      @entity_organization = Entity::Organization.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def entity_organization_params
-      params.require(:entity_organization).permit(:type, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_entity_organization
+    @entity_organization = Entity::Organization.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def entity_organization_params
+    params.require(:entity_organization).permit(:type, :name)
+  end
 end

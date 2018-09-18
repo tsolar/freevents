@@ -1,58 +1,62 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Event::Activity::Postulation, type: :model do
   describe "Validations" do
-    it { should validate_presence_of :postulant_firstname }
-    it { should validate_presence_of :postulant_lastname }
-    it { should validate_presence_of :postulant_email }
-    it { should validate_presence_of :activity_title }
-    it { should validate_presence_of :activity_description }
+    it { is_expected.to validate_presence_of :postulant_firstname }
+    it { is_expected.to validate_presence_of :postulant_lastname }
+    it { is_expected.to validate_presence_of :postulant_email }
+    it { is_expected.to validate_presence_of :activity_title }
+    it { is_expected.to validate_presence_of :activity_description }
 
-    it { should validate_length_of(:postulant_bio).is_at_most(300) }
+    it { is_expected.to validate_length_of(:postulant_bio).is_at_most(300) }
 
     it {
-      should validate_inclusion_of(:activity_type)
+      is_expected.to validate_inclusion_of(:activity_type)
         .in_array(Event::Activity::Postulation::ACTIVITY_TYPES)
     }
 
     it {
-      should validate_inclusion_of(:activity_difficulty_level)
+      is_expected.to validate_inclusion_of(:activity_difficulty_level)
         .in_array(Event::Activity::Postulation::ACTIVITY_DIFFICULTY_LEVELS)
     }
   end
 
   describe "Relationships" do
-    it { should belong_to :event }
-    it { should have_many(:event_days).through(:event).source(:days) }
-    it { should have_one(:event_activity)
-                 .class_name("Event::Activity")
-                 .with_foreign_key(:event_activity_postulation_id) }
+    it { is_expected.to belong_to :event }
+    it { is_expected.to have_many(:event_days).through(:event).source(:days) }
+    it {
+      is_expected.to have_one(:event_activity)
+        .class_name("Event::Activity")
+        .with_foreign_key(:event_activity_postulation_id)
+    }
   end
 
   describe "Create" do
-    it "should create a valid Event::Activity::Postulation, and nothing else" do
+    it "creates a valid Event::Activity::Postulation, and nothing else" do
       postulation = build(:event_activity_postulation)
-      expect {
+      expect do
         postulation.save
-      }.to change(Event::Activity::Participation, :count).by(0)
-        .and change(Event::Activity::Postulation, :count).by(1)
-        .and change(Event::Activity, :count).by(0)
-        .and change(Event::Participation, :count).by(0)
-        .and change(Entity::Person, :count).by(0)
+      end.to change(Event::Activity::Participation, :count).by(0)
+                                                           .and change(Event::Activity::Postulation, :count).by(1)
+                                                                                                            .and change(Event::Activity, :count).by(0)
+                                                                                                                                                .and change(Event::Participation, :count).by(0)
+                                                                                                                                                                                         .and change(Entity::Person, :count).by(0)
 
       expect(postulation.valid?).to be true
       expect(postulation.persisted?).to be true
     end
 
-    it "should not create an invalid Event::Activity::Postulation" do
+    it "does not create an invalid Event::Activity::Postulation" do
       postulation = build(:event_activity_postulation, :invalid)
-      expect {
+      expect do
         expect(postulation.save).to be false
-      }.to change(Event::Activity::Participation, :count).by(0)
-        .and change(Event::Activity::Postulation, :count).by(0)
-        .and change(Event::Activity, :count).by(0)
-        .and change(Event::Participation, :count).by(0)
-        .and change(Entity::Person, :count).by(0)
+      end.to change(Event::Activity::Participation, :count).by(0)
+                                                           .and change(Event::Activity::Postulation, :count).by(0)
+                                                                                                            .and change(Event::Activity, :count).by(0)
+                                                                                                                                                .and change(Event::Participation, :count).by(0)
+                                                                                                                                                                                         .and change(Entity::Person, :count).by(0)
 
       expect(postulation.valid?).to be false
       expect(postulation.persisted?).to be false
@@ -66,13 +70,13 @@ RSpec.describe Event::Activity::Postulation, type: :model do
 
         expect(Event::Activity::PostulationMailer).to receive(:send_approve_notification_to_postulant).with(postulation).once.and_call_original
 
-        expect {
+        expect do
           postulation.approve
-        }.to change(Event::Activity::Participation, :count).by(1)
-          .and change(Event::Activity, :count).by(1)
-          .and change(Event::Participation, :count).by(1)
-          .and change(Entity::Person, :count).by(1)
-          .and have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers").exactly(:once)
+        end.to change(Event::Activity::Participation, :count).by(1)
+                                                             .and change(Event::Activity, :count).by(1)
+                                                                                                 .and change(Event::Participation, :count).by(1)
+                                                                                                                                          .and change(Entity::Person, :count).by(1)
+                                                                                                                                                                             .and have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers").exactly(:once)
 
         ea = Event::Activity.last
         expect(ea.title).to eq postulation.activity_title
@@ -96,7 +100,7 @@ RSpec.describe Event::Activity::Postulation, type: :model do
     end
 
     context "speaker already exists (identified by email)" do
-      it "should create the activity and assign speaker to it" do
+      it "creates the activity and assign speaker to it" do
         person = create(:entity_person)
         person.emails.create(address: "person@example.com")
 
@@ -111,14 +115,14 @@ RSpec.describe Event::Activity::Postulation, type: :model do
 
         expect(Event::Activity::PostulationMailer).to receive(:send_approve_notification_to_postulant).with(postulation).once.and_call_original
 
-        expect {
+        expect do
           postulation.approve
-        }.to change(Event::Activity::Participation, :count).by(1)
-          .and change(Event::Activity, :count).by(1)
-          .and change(Event::Participation, :count).by(1)
-          .and change(Entity::Person, :count).by(0)
-          .and change(Email, :count).by(0)
-          .and have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers").exactly(:once)
+        end.to change(Event::Activity::Participation, :count).by(1)
+                                                             .and change(Event::Activity, :count).by(1)
+                                                                                                 .and change(Event::Participation, :count).by(1)
+                                                                                                                                          .and change(Entity::Person, :count).by(0)
+                                                                                                                                                                             .and change(Email, :count).by(0)
+                                                                                                                                                                                                       .and have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers").exactly(:once)
 
         ea = Event::Activity.last
         expect(ea.title).to eq postulation.activity_title
@@ -141,5 +145,4 @@ RSpec.describe Event::Activity::Postulation, type: :model do
       end
     end
   end
-
 end

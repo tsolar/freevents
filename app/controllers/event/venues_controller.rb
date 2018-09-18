@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Event::VenuesController < ApplicationController
-  before_action :set_event_venue, only: [:show, :edit, :update, :destroy]
+  before_action :set_event_venue, only: %i[show edit update destroy]
 
   # GET /event/venues
   # GET /event/venues.json
@@ -62,13 +64,14 @@ class Event::VenuesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event_venue
-      @event_venue = Event::Venue.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_venue_params
-      params.require(:event_venue).permit(:event_id, :venue_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event_venue
+    @event_venue = Event::Venue.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_venue_params
+    params.require(:event_venue).permit(:event_id, :venue_id)
+  end
 end

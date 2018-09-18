@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event::Day < ApplicationRecord
   belongs_to :event,
              inverse_of: :days
@@ -19,6 +21,7 @@ class Event::Day < ApplicationRecord
   # TODO: test when ends on next day
   def to_s
     return I18n.t("tbd") unless starts_at.present?
+
     if ends_at.to_date > starts_at.to_date
       "#{I18n.l(starts_at, format: :event_day_with_time)} - #{I18n.l(ends_at, format: :event_day_with_time)}"
     else

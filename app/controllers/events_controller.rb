@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class EventsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index]
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :respond_attendance]
+  before_action :authenticate_user!, except: %i[show index]
+  before_action :set_event, only: %i[show edit update destroy respond_attendance]
   after_action :verify_authorized
 
   # GET /events
@@ -37,10 +39,10 @@ class EventsController < ApplicationController
         format.html { redirect_to @event, notice: "#{Event.model_name.human} #{t('actions.messages.success.created')}." }
         format.json { render :show, status: :created, location: @event }
       else
-        format.html {
+        format.html do
           @event.days.build if @event.days.empty?
           render :new
-        }
+        end
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -98,36 +100,37 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find_by(id: params[:id])
-      if @event.present?
-        authorize @event
-      else
-        render_404
-      end
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
-      params.require(:event).permit(
-        :title,
-        :description,
-        days_attributes: [
-          :id,
-          :_destroy,
-          :starts_at,
-          :ends_at
-        ],
-        venues_attributes: [
-          :id,
-          :_destroy,
-          :name,
-          :description,
-          :address,
-          :lat,
-          :lng
-        ]
-      )
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find_by(id: params[:id])
+    if @event.present?
+      authorize @event
+    else
+      render_404
     end
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_params
+    params.require(:event).permit(
+      :title,
+      :description,
+      days_attributes: %i[
+        id
+        _destroy
+        starts_at
+        ends_at
+      ],
+      venues_attributes: %i[
+        id
+        _destroy
+        name
+        description
+        address
+        lat
+        lng
+      ]
+    )
+  end
 end

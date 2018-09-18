@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "entity/people/edit", type: :view do
-  before(:each) do
+  before do
     @entity_person = assign(
       :entity_person,
       create(:entity_person)
@@ -12,7 +14,6 @@ RSpec.describe "entity/people/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", entity_person_path(@entity_person), "post" do
-
       assert_select "input[name=?]", "entity_person[firstname]"
 
       assert_select "input[name=?]", "entity_person[lastname]"

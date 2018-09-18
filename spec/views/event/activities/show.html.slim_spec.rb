@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "event/activities/show", type: :view do
   before { skip("Not yet implemented") }
-  before(:each) do
+  before do
     @event_activity = assign(:event_activity, Event::Activity.create!(
                                                 type: "Type",
                                                 event_day: nil,
                                                 title: "Title",
                                                 description: "MyText"
-    ))
+                                              ))
   end
 
   it "renders attributes in <p>" do

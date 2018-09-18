@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Email, type: :model do
   describe "Validations" do
-    it { should validate_presence_of :address }
-    it { should validate_presence_of :emailable }
+    it { is_expected.to validate_presence_of :address }
+    it { is_expected.to validate_presence_of :emailable }
 
-    it "should validate address is a valid email address" do
+    it "validates address is a valid email address" do
       email = build :email, address: "email-no-valido"
       expect(email.valid?).to be false
       # expect(email.errors[:address]).to include I18n.t('activerecord.errors.models.email.attributes.address.invalid', default: I18n.t('errors.messages.invalid'))
@@ -33,11 +35,11 @@ RSpec.describe Email, type: :model do
   end
 
   describe "Relationships" do
-    it { should belong_to :emailable }
+    it { is_expected.to belong_to :emailable }
   end
 
   describe "Create" do
-    it "should create a valid email" do
+    it "creates a valid email" do
       email = create(:email)
       expect(email.valid?).to be true
       expect(email.persisted?).to be true
@@ -45,10 +47,10 @@ RSpec.describe Email, type: :model do
   end
 
   describe "#to_s" do
-    it "should return email address" do
+    it "returns email address" do
       address = FFaker::Internet.email
       email = create :email, address: address
-      expect("#{email}").to eq address
+      expect(email.to_s).to eq address
     end
   end
 end

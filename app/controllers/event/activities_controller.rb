@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Event::ActivitiesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_event
-  before_action :set_event_activity, only: [:show, :edit, :update, :destroy]
+  before_action :set_event_activity, only: %i[show edit update destroy]
   after_action :verify_authorized
 
   # GET /event/activities
@@ -70,25 +72,26 @@ class Event::ActivitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event_activity
-      @event_activity = Event::Activity.joins(:event_day)
-        .where(event_days: { event_id: @event.to_param }).find_by(id: params[:id])
-      if @event_activity.present?
-        authorize @event_activity
-      else
-        render_404
-      end
-    end
 
-    def set_event
-      @event = Event.find(params[:event_id])
-    rescue
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event_activity
+    @event_activity = Event::Activity.joins(:event_day)
+                                     .where(event_days: { event_id: @event.to_param }).find_by(id: params[:id])
+    if @event_activity.present?
+      authorize @event_activity
+    else
       render_404
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_activity_params
-      params.require(:event_activity).permit(:activity_type, :event_day_id, :title, :description, :starts_at, :ends_at, :venue_room_id)
-    end
+  def set_event
+    @event = Event.find(params[:event_id])
+  rescue StandardError
+    render_404
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_activity_params
+    params.require(:event_activity).permit(:activity_type, :event_day_id, :title, :description, :starts_at, :ends_at, :venue_room_id)
+  end
 end

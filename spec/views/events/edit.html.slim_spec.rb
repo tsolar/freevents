@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "events/edit", type: :view do
-  before(:each) do
+  before do
     @event = assign(:event, create(:event))
   end
 
@@ -9,7 +11,6 @@ RSpec.describe "events/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", event_path(@event), "post" do
-
       assert_select "input[name=?]", "event[title]"
 
       assert_select "textarea[name=?]", "event[description]"

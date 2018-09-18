@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include Pundit
 
@@ -12,8 +14,9 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def user_not_authorized
-      flash[:alert] = I18n.t("unauthorized")
-      redirect_to(request.referrer || root_path)
-    end
+
+  def user_not_authorized
+    flash[:alert] = I18n.t("unauthorized")
+    redirect_to(request.referrer || root_path)
+  end
 end

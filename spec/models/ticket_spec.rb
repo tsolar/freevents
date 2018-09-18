@@ -1,27 +1,29 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Ticket, type: :model do
   describe "relationships" do
-    it { should belong_to(:holder) }
+    it { is_expected.to belong_to(:holder) }
   end
 
   describe "validations" do
-    it { should validate_uniqueness_of(:token) }
+    it { is_expected.to validate_uniqueness_of(:token) }
   end
 
   describe "Create" do
-    it "should create a valid Ticket and send email to holder" do
+    it "creates a valid Ticket and send email to holder" do
       ticket = build(:ticket)
       expect(ticket).to be_valid
-      expect {
+      expect do
         expect(ticket.save).to be true
         expect(ticket.token).not_to be nil
         expect(ticket.scanned).to be nil
         expect(ticket.scanned_at).to be nil
-      }.to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
+      end.to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
     end
 
-    it "should not create an invalid Ticket" do
+    it "does not create an invalid Ticket" do
       ticket = build(:ticket, :invalid)
       expect(ticket).not_to be_valid
       expect(ticket.save).to be false
@@ -30,7 +32,7 @@ RSpec.describe Ticket, type: :model do
       expect(ticket.scanned_at).to be nil
     end
 
-    it "should not create a ticket if using a existing token" do
+    it "does not create a ticket if using a existing token" do
       token = SecureRandom.base58(24)
       ticket1 = create(:ticket, token: token)
       expect(ticket1).to be_persisted
@@ -57,12 +59,12 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "update" do
-    it "should not send any email" do
+    it "does not send any email" do
       ticket = create(:ticket)
 
-      expect {
+      expect do
         expect(ticket.update(scanned: true, scanned_at: Time.now)).to be true
-      }.not_to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
+      end.not_to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
     end
   end
 
@@ -70,14 +72,14 @@ RSpec.describe Ticket, type: :model do
     let(:ticket) { create(:ticket) }
 
     context "when ticket is already scanned" do
-      before :each do
+      before do
         expect(ticket.scan).to be true
         expect(ticket.scanned).to be true
         expect(ticket.scanned?).to be true
         expect(ticket.scanned_at).to be_present
       end
 
-      it "should return false" do
+      it "returns false" do
         expect(ticket.scan).to be false
         expect(ticket.errors).to be_any
         expect(ticket.errors[:scanned]).to include I18n.t("activerecord.errors.models.ticket.attributes.scanned.already_scanned") # "Ticket was already scanned"
@@ -85,13 +87,13 @@ RSpec.describe Ticket, type: :model do
     end
 
     context "when ticket is not scanned" do
-      before :each do
+      before do
         expect(ticket.scanned).to be_nil
         expect(ticket.scanned?).to be false
         expect(ticket.scanned_at).to be_nil
       end
 
-      it "should return true and set scanned to true and scanned_at to current time" do
+      it "returns true and set scanned to true and scanned_at to current time" do
         expect(ticket.scan).to be true
         expect(ticket.errors).to be_empty
         expect(ticket.scanned?).to be true

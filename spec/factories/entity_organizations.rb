@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :entity_organization, class: "Entity::Organization" do
     type ""

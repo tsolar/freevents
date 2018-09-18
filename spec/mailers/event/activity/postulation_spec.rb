@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Event::Activity::PostulationMailer, type: :mailer do
@@ -55,5 +57,4 @@ RSpec.describe Event::Activity::PostulationMailer, type: :mailer do
       expect(mail.body.encoded).to match("Hi")
     end
   end
-
 end

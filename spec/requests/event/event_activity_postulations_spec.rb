@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "Event::Activity::Postulations", type: :request do
   xdescribe "GET /event_activity_postulations" do

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Event::ParticipationsController < ApplicationController
-  before_action :set_event, only: [:show, :new, :create, :edit, :update, :destroy]
-  before_action :set_event_participation, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: %i[show new create edit update destroy]
+  before_action :set_event_participation, only: %i[show edit update destroy]
 
   # GET /event/participations
   # GET /event/participations.json
@@ -63,24 +65,25 @@ class Event::ParticipationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event_participation
-      @event_participation = Event::Participation.find(params[:id])
-    end
 
-    def set_event
-      @event = Event.find_by(id: params[:event_id])
-      # TODO: render 404 if not found?
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event_participation
+    @event_participation = Event::Participation.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_participation_params
-      params.require(:event_participation).permit(
-        :event_id,
-        :type,
-        :participant_id,
-        :participant_type,
-        :description
-      )
-    end
+  def set_event
+    @event = Event.find_by(id: params[:event_id])
+    # TODO: render 404 if not found?
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_participation_params
+    params.require(:event_participation).permit(
+      :event_id,
+      :type,
+      :participant_id,
+      :participant_type,
+      :description
+    )
+  end
 end

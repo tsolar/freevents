@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 RSpec.describe "events/index", type: :view do
   include Pundit
 
-  before(:each) do
+  before do
     @events = assign(:events, create_list(:event, 2))
 
     # This is added because I get this exception

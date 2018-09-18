@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Event::Activity::ParticipationsController < ApplicationController
-  before_action :set_event_activity_participation, only: [:show, :edit, :update, :destroy]
+  before_action :set_event_activity_participation, only: %i[show edit update destroy]
 
   # GET /event/activity/participations
   # GET /event/activity/participations.json
@@ -62,13 +64,14 @@ class Event::Activity::ParticipationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event_activity_participation
-      @event_activity_participation = Event::Activity::Participation.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_activity_participation_params
-      params.require(:event_activity_participation).permit(:event_activity_id, :event_participation_id, :type)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event_activity_participation
+    @event_activity_participation = Event::Activity::Participation.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_activity_participation_params
+    params.require(:event_activity_participation).permit(:event_activity_id, :event_participation_id, :type)
+  end
 end

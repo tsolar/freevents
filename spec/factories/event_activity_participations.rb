@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :event_activity_participation, class: "Event::Activity::Participation" do
     event_activity { create(:event_activity) }

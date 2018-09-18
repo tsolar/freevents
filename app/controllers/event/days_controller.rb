@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Event::DaysController < ApplicationController
-  before_action :set_event_day, only: [:show, :edit, :update, :destroy]
+  before_action :set_event_day, only: %i[show edit update destroy]
 
   # GET /event/days
   # GET /event/days.json
@@ -62,6 +64,7 @@ class Event::DaysController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_event_day
     @event_day = Event::Day.find(params[:id])

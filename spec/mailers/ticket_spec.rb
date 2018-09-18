@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TicketMailer, type: :mailer do
@@ -15,15 +17,15 @@ RSpec.describe TicketMailer, type: :mailer do
       # expect(mail.body.encoded).to match("Hi #{CGI.escapeHTML(ticket.holder.participant.full_name)}")
       ticket_link = ticket_url(ticket.token)
       ticket_pdf_link = ticket_url(ticket.token, format: :pdf)
-      expect(mail.body.encoded).to match("#{ticket_link}")
+      expect(mail.body.encoded).to match(ticket_link.to_s)
     end
 
     it "is sent to the right user" do
-      expect {
+      expect do
         perform_enqueued_jobs do
           ticket
         end
-      }.to change { ActionMailer::Base.deliveries.size }.by(1)
+      end.to change { ActionMailer::Base.deliveries.size }.by(1)
 
       mail = ActionMailer::Base.deliveries.last
       expect(mail.to[0]).to eq ticket.holder.participant.user.email
