@@ -11,18 +11,18 @@ RSpec.describe Venue, type: :model do
 
   describe "Relationships" do
     it {
-      is_expected.to have_many(:event_venues)
+      expect(subject).to have_many(:event_venues)
         .class_name("Event::Venue")
     }
 
     it {
-      is_expected.to have_many(:events)
+      expect(subject).to have_many(:events)
         .class_name("Event")
         .through(:event_venues)
     }
 
     it {
-      is_expected.to have_many(:rooms)
+      expect(subject).to have_many(:rooms)
         .class_name("Venue::Room")
       # .with_foreign_key(:venue_room_id)
     }

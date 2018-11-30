@@ -13,12 +13,12 @@ RSpec.describe Event::Activity::Postulation, type: :model do
     it { is_expected.to validate_length_of(:postulant_bio).is_at_most(300) }
 
     it {
-      is_expected.to validate_inclusion_of(:activity_type)
+      expect(subject).to validate_inclusion_of(:activity_type)
         .in_array(Event::Activity::Postulation::ACTIVITY_TYPES)
     }
 
     it {
-      is_expected.to validate_inclusion_of(:activity_difficulty_level)
+      expect(subject).to validate_inclusion_of(:activity_difficulty_level)
         .in_array(Event::Activity::Postulation::ACTIVITY_DIFFICULTY_LEVELS)
     }
   end
@@ -27,7 +27,7 @@ RSpec.describe Event::Activity::Postulation, type: :model do
     it { is_expected.to belong_to :event }
     it { is_expected.to have_many(:event_days).through(:event).source(:days) }
     it {
-      is_expected.to have_one(:event_activity)
+      expect(subject).to have_one(:event_activity)
         .class_name("Event::Activity")
         .with_foreign_key(:event_activity_postulation_id)
     }

@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "event/activities/new", type: :view do
   before { skip("Not yet implemented") }
+
   before do
     assign(:event_activity, Event::Activity.new(
                               type: "",

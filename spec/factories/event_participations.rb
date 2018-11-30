@@ -9,8 +9,8 @@ FactoryBot.define do
     description { FFaker::Lorem.paragraph }
 
     trait :invalid do
-      event nil
-      participant nil
+      event { nil }
+      participant { nil }
     end
 
     factory :event_attendee, class: "Event::Attendee" do

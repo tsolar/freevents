@@ -15,7 +15,7 @@ RSpec.describe Event::Venue, type: :model do
 
     it { is_expected.to belong_to(:event) }
     it {
-      is_expected.to belong_to(:venue)
+      expect(subject).to belong_to(:venue)
         .class_name("::Venue")
     }
   end

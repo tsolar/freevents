@@ -12,12 +12,12 @@ RSpec.describe Entity::Person, type: :model do
   describe "Relationships" do
     it {
       # these will be Event::Attendees, per example
-      is_expected.to have_many(:event_participations)
+      expect(subject).to have_many(:event_participations)
         .class_name("Event::Participation")
     }
 
     it {
-      is_expected.to have_many(:emails)
+      expect(subject).to have_many(:emails)
         .class_name("::Email")
     }
 

@@ -50,11 +50,11 @@ RSpec.describe Event::Day, type: :model do
 
   describe "Relationships" do
     it {
-      is_expected.to belong_to(:event)
+      expect(subject).to belong_to(:event)
         .inverse_of(:days)
     }
     it {
-      is_expected.to have_many(:activities)
+      expect(subject).to have_many(:activities)
         .class_name("Event::Activity")
         .with_foreign_key(:event_day_id)
     }

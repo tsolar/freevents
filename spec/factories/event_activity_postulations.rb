@@ -11,13 +11,13 @@ FactoryBot.define do
     activity_type { %w[speech workshop].sample }
     activity_title { FFaker::HipsterIpsum.sentence }
     activity_description { FFaker::HipsterIpsum.paragraphs.join(" ") }
-    activity_estimated_duration 120 # minutes
+    activity_estimated_duration { 120 } # minutes
     activity_difficulty_level { %w[easy medium hard expert].sample }
-    activity_preferred_time "am" # am, pm
+    activity_preferred_time { "am" } # am, pm
 
     trait :invalid do
-      event nil
-      postulant_firstname nil
+      event { nil }
+      postulant_firstname { nil }
     end
   end
 end

@@ -10,7 +10,7 @@ FactoryBot.define do
     ends_at { Event::Day.find_by(id: event_day_id).try(:ends_at) }
 
     trait :invalid do
-      title nil
+      title { nil }
     end
   end
 end

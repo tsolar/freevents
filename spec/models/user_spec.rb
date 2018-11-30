@@ -6,21 +6,21 @@ RSpec.describe User, type: :model do
   describe "Relationships" do
     it { is_expected.to have_many(:events).inverse_of(:owner) }
     it {
-      is_expected.to have_one(:person)
+      expect(subject).to have_one(:person)
         .inverse_of(:user)
         .class_name("Entity::Person")
     }
   end
 
   it {
-    is_expected.to delegate_method(:firstname)
+    expect(subject).to delegate_method(:firstname)
       .to(:person)
       .with_prefix(true)
     # .allow_nil(true)
   }
 
   it {
-    is_expected.to delegate_method(:lastname)
+    expect(subject).to delegate_method(:lastname)
       .to(:person)
       .with_prefix(true)
     # .allow_nil(true)

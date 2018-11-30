@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "event/activities/show", type: :view do
   before { skip("Not yet implemented") }
+
   before do
     @event_activity = assign(:event_activity, Event::Activity::Participation.create!(
                                                 event_activity: nil,

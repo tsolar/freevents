@@ -11,7 +11,7 @@ RSpec.describe Event::Attendee, type: :model do
     it { is_expected.to belong_to :event }
     it { is_expected.to belong_to :participant }
     it {
-      is_expected.to have_one(:answer)
+      expect(subject).to have_one(:answer)
         .class_name("Event::Participation::Answer")
         .with_foreign_key(:event_participation_id)
         .inverse_of(:attendee)

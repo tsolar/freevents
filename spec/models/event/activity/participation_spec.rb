@@ -10,12 +10,12 @@ RSpec.describe Event::Activity::Participation, type: :model do
 
   describe "Relationships" do
     it {
-      is_expected.to belong_to(:event_activity)
+      expect(subject).to belong_to(:event_activity)
         .class_name("Event::Activity")
     }
 
     it {
-      is_expected.to belong_to(:event_participation)
+      expect(subject).to belong_to(:event_participation)
         .class_name("Event::Participation")
     }
   end

@@ -106,32 +106,32 @@ RSpec.describe Event::Activity, type: :model do
 
   describe "Relationships" do
     it {
-      is_expected.to belong_to(:event_day)
+      expect(subject).to belong_to(:event_day)
         .class_name("Event::Day")
     }
 
     it {
-      is_expected.to belong_to(:venue_room)
+      expect(subject).to belong_to(:venue_room)
         .class_name("Venue::Room")
       # .optional
     }
 
     it {
-      is_expected.to have_many(:participations)
+      expect(subject).to have_many(:participations)
         .class_name("Event::Activity::Participation")
         .with_foreign_key(:event_activity_id)
         .dependent(:destroy)
     }
 
     it {
-      is_expected.to have_many(:speakers)
+      expect(subject).to have_many(:speakers)
         .class_name("Event::Activity::Speaker")
         .with_foreign_key(:event_activity_id)
         .dependent(:destroy)
     }
 
     it {
-      is_expected.to belong_to(:postulation)
+      expect(subject).to belong_to(:postulation)
         .class_name("Event::Activity::Postulation")
         .with_foreign_key(:event_activity_postulation_id)
       # .optional(true)

@@ -20,7 +20,7 @@ FactoryBot.define do
     # end
 
     trait :invalid do
-      title nil
+      title { nil }
     end
   end
 end

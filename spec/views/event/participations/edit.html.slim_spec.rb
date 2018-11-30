@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "event/participations/edit", type: :view do
   before { skip("Not yet implemented") }
+
   before do
     @event_participation = assign(:event_participation, Event::Participation.create!(
                                                           event: nil,

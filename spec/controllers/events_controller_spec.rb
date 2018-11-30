@@ -343,6 +343,22 @@ RSpec.describe EventsController, type: :controller do
             let(:ticket_count) { 0 }
 
             context "answer is an allowed answer" do
+              after do
+                expect do
+                  put :respond_attendance, params: { id: event.to_param, will_attend: answer }, session: valid_session
+                end.to change(Event::Participation, :count).by(0)
+                                                           .and change(Entity::Person, :count).by(0)
+                                                                                              .and change(User, :count).by(0)
+                                                                                                                       .and change(Ticket, :count).by(ticket_count)
+
+                event_participation = Event::Participation.where(
+                  event: event,
+                  participant: Entity::Person.where(user: @user).first
+                ).first
+
+                expect(event_participation.answer.will_attend).to eq answer
+              end
+
               context "and answer is yes" do
                 let(:answer) { "yes" }
                 let(:ticket_count) { 1 }
@@ -363,22 +379,6 @@ RSpec.describe EventsController, type: :controller do
 
                 it "saves the event participation" do
                 end
-              end
-
-              after do
-                expect do
-                  put :respond_attendance, params: { id: event.to_param, will_attend: answer }, session: valid_session
-                end.to change(Event::Participation, :count).by(0)
-                                                           .and change(Entity::Person, :count).by(0)
-                                                                                              .and change(User, :count).by(0)
-                                                                                                                       .and change(Ticket, :count).by(ticket_count)
-
-                event_participation = Event::Participation.where(
-                  event: event,
-                  participant: Entity::Person.where(user: @user).first
-                ).first
-
-                expect(event_participation.answer.will_attend).to eq answer
               end
             end
 
@@ -451,6 +451,7 @@ RSpec.describe EventsController, type: :controller do
                 expect(event_participation.answer.will_attend).to eq "no"
               end
             end
+
             context "and answer is maybe" do
               let(:answer) { "maybe" }
 
