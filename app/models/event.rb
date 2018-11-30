@@ -28,7 +28,7 @@ class Event < ApplicationRecord
   validates :title, uniqueness: true
   validates :days, presence: true
 
-  accepts_nested_attributes_for :venues
+  accepts_nested_attributes_for :venues, allow_destroy: true
   accepts_nested_attributes_for :days, allow_destroy: true
 
   def to_s

@@ -9,6 +9,6 @@ class Venue < ApplicationRecord
   has_many :rooms,
            class_name: "Venue::Room",
            inverse_of: :venue
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :address, presence: true
 end

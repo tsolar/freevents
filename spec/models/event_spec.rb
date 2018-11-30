@@ -14,6 +14,10 @@ RSpec.describe Event, type: :model do
       is_expected.to accept_nested_attributes_for(:days)
         .allow_destroy(true)
     }
+    it {
+      is_expected.to accept_nested_attributes_for(:venues)
+        .allow_destroy(true)
+    }
   end
 
   describe "Relationships" do
