@@ -63,7 +63,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when user is owner of the event (when user can update event)" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
 
         it "returns a success response" do
           get :index, params: { event_id: event.to_param }, session: valid_session
@@ -103,7 +103,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
 
         it "returns a success response" do
           get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
@@ -112,7 +112,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when event in params is not the postulation event" do
-        let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes.merge(event: create(:event, owner: @user)) }
+        let(:activity_postulation) { Event::Activity::Postulation.create! valid_attributes.merge(event: create(:event, owner: user)) }
 
         it "renders 404" do
           get :show, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
@@ -232,7 +232,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
 
     context "when user is not logged in" do
       it "redirects to new_user_session_path" do
-        activity_postulation.save # save must occur after login_user, to @user to be present
+        activity_postulation.save # save must occur after login_user, to user to be present
         expect do
           delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
         end.to change(Event::Activity::Postulation, :count).by(0)
@@ -245,7 +245,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
 
       context "when user is not logged in" do
         it "redirects to root_path with flash message" do
-          activity_postulation.save # save must occur after login_user, to @user to be present
+          activity_postulation.save # save must occur after login_user, to user to be present
           expect do
             delete :destroy, params: { event_id: event.to_param, id: activity_postulation.to_param }, session: valid_session
           end.to change(Event::Activity::Postulation, :count).by(0)
@@ -256,7 +256,7 @@ RSpec.describe Event::ActivityPostulationsController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
 
         it "destroys the requested event_activity_postulation" do
           activity_postulation.save

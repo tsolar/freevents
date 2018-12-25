@@ -107,9 +107,9 @@ RSpec.describe EventsController, type: :controller do
 
       context "when user is owner of the event" do
         it "returns a success response" do
-          event = Event.create! valid_attributes.merge(owner: @user)
+          event = Event.create! valid_attributes.merge(owner: user)
           get :edit, params: { id: event.to_param }, session: valid_session
-          expect(assigns(:event).owner).to eq @user
+          expect(assigns(:event).owner).to eq user
           expect(response.status).to eq 200
         end
       end
@@ -119,7 +119,7 @@ RSpec.describe EventsController, type: :controller do
           event = Event.create! valid_attributes
           event_owner = event.owner
           get :edit, params: { id: event.to_param }, session: valid_session
-          expect(assigns(:event).owner).not_to eq @user
+          expect(assigns(:event).owner).not_to eq user
           expect(assigns(:event).owner).to eq event_owner
           expect(response).to redirect_to root_path
           expect(flash[:alert]).to include(I18n.t("unauthorized"))
@@ -136,7 +136,7 @@ RSpec.describe EventsController, type: :controller do
           expect do
             post :create, params: { event: valid_attributes }, session: valid_session
           end.to change(Event, :count).by(1)
-          expect(Event.last.owner).to eq @user
+          expect(Event.last.owner).to eq user
         end
 
         it "redirects to the created event" do
@@ -186,7 +186,7 @@ RSpec.describe EventsController, type: :controller do
     context "when user is logged in" do
       login_user
 
-      let(:event) { Event.create! valid_attributes.merge(owner: @user) }
+      let(:event) { Event.create! valid_attributes.merge(owner: user) }
 
       context "with valid params" do
         it "updates the requested event" do
@@ -240,14 +240,14 @@ RSpec.describe EventsController, type: :controller do
         # Can't use `let!` because it runs before `login_user`,
         # and user is needed to create the event.
         # So let's create the `event` just like this.
-        event = Event.create! valid_attributes.merge(owner: @user)
+        event = Event.create! valid_attributes.merge(owner: user)
         expect do
           delete :destroy, params: { id: event.to_param }, session: valid_session
         end.to change(Event, :count).by(-1)
       end
 
       it "redirects to the events list" do
-        event = Event.create! valid_attributes.merge(owner: @user)
+        event = Event.create! valid_attributes.merge(owner: user)
         delete :destroy, params: { id: event.to_param }, session: valid_session
         expect(response).to redirect_to(events_url)
       end
@@ -290,7 +290,7 @@ RSpec.describe EventsController, type: :controller do
       login_user
 
       context "and when user is event owner" do
-        # let(:event) { create(:event, owner: @user) }
+        # let(:event) { create(:event, owner: user) }
 
         it "does not create an event participation" do
           skip "Not sure if deny or not to event owner to be a participant"
@@ -299,7 +299,7 @@ RSpec.describe EventsController, type: :controller do
 
       context "and when user is not event owner" do
         before do
-          expect(event.owner).not_to eq @user
+          expect(event.owner).not_to eq user
         end
 
         context "and when user.person does not exist" do
@@ -312,13 +312,13 @@ RSpec.describe EventsController, type: :controller do
                                                                                                                    .and change(Ticket, :count).by(1)
             event_participation = Event::Participation.where(
               event: event,
-              participant: Entity::Person.where(user: @user).first
+              participant: Entity::Person.where(user: user).first
             ).first
             expect(event_participation).not_to be nil
             expect(event_participation).to be_a Event::Participation
-            expect(event_participation.participant).to eq @user.person
-            expect(@user.person.firstname).to eq Mail::Address.new(@user.email).local
-            expect(@user.person.lastname).to eq nil
+            expect(event_participation.participant).to eq user.person
+            expect(user.person.firstname).to eq Mail::Address.new(user.email).local
+            expect(user.person.lastname).to eq nil
 
             # expect(response).to redirect_to root_path
             notice = "#{Event::Participation::Answer.model_name.human} #{I18n.t('actions.messages.success.registered_f')}."
@@ -333,10 +333,10 @@ RSpec.describe EventsController, type: :controller do
               # User is already registered to event if exists an Event::Participation related
               create(
                 :event_attendee,
-                participant: create(:entity_person, user: @user)
+                participant: create(:entity_person, user: user)
               )
-              expect(@user.person).to be_a(Entity::Person)
-              expect(@user.person).to be_present
+              expect(user.person).to be_a(Entity::Person)
+              expect(user.person).to be_present
             end
 
             let(:answer) { "who knows" }
@@ -353,7 +353,7 @@ RSpec.describe EventsController, type: :controller do
 
                 event_participation = Event::Participation.where(
                   event: event,
-                  participant: Entity::Person.where(user: @user).first
+                  participant: Entity::Person.where(user: user).first
                 ).first
 
                 expect(event_participation.answer.will_attend).to eq answer
@@ -386,7 +386,7 @@ RSpec.describe EventsController, type: :controller do
               it "does not save the event participation" do
                 event_participation_answer = Event::Participation.where(
                   event: event,
-                  participant: Entity::Person.where(user: @user).first
+                  participant: Entity::Person.where(user: user).first
                 ).first.answer
 
                 expect do
@@ -397,7 +397,7 @@ RSpec.describe EventsController, type: :controller do
 
                 event_participation = Event::Participation.where(
                   event: event,
-                  participant: Entity::Person.where(user: @user).first
+                  participant: Entity::Person.where(user: user).first
                 ).first
 
                 expect(event_participation.answer.will_attend).to eq event_participation_answer.will_attend
@@ -407,9 +407,9 @@ RSpec.describe EventsController, type: :controller do
 
           context "and user is not registered to event (participation does not exist)" do
             before do
-              @user.person = create(:entity_person)
-              expect(@user.person).to be_a(Entity::Person)
-              expect(@user.person).to be_present
+              user.person = create(:entity_person)
+              expect(user.person).to be_a(Entity::Person)
+              expect(user.person).to be_present
             end
 
             let(:answer) { "who knows" }
@@ -426,7 +426,7 @@ RSpec.describe EventsController, type: :controller do
 
                 event_participation = Event::Participation.where(
                   event: event,
-                  participant: Entity::Person.where(user: @user).first
+                  participant: Entity::Person.where(user: user).first
                 ).first
 
                 expect(event_participation.answer.will_attend).to eq "yes"
@@ -445,7 +445,7 @@ RSpec.describe EventsController, type: :controller do
 
                 event_participation = Event::Participation.where(
                   event: event,
-                  participant: Entity::Person.where(user: @user).first
+                  participant: Entity::Person.where(user: user).first
                 ).first
 
                 expect(event_participation.answer.will_attend).to eq "no"
@@ -464,7 +464,7 @@ RSpec.describe EventsController, type: :controller do
 
                 event_participation = Event::Participation.where(
                   event: event,
-                  participant: Entity::Person.where(user: @user).first
+                  participant: Entity::Person.where(user: user).first
                 ).first
 
                 expect(event_participation.answer.will_attend).to eq "maybe"
@@ -481,7 +481,7 @@ RSpec.describe EventsController, type: :controller do
 
                 event_participation = Event::Participation.where(
                   event: event,
-                  participant: Entity::Person.where(user: @user).first
+                  participant: Entity::Person.where(user: user).first
                 ).first
 
                 expect(event_participation.answer.will_attend).to eq nil

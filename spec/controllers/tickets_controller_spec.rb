@@ -19,8 +19,9 @@ RSpec.describe TicketsController, type: :controller do
   describe "GET #show" do
     context "when user is logged in" do
       login_user
+
       context "when user is ticket holder" do
-        let(:user_person) { create(:entity_person, user: @user) }
+        let(:user_person) { create(:entity_person, user: user) }
 
         it "returns a success response" do
           get :show, params: { token: ticket.token }, session: valid_session
@@ -52,7 +53,7 @@ RSpec.describe TicketsController, type: :controller do
       login_user
 
       context "when user is ticket.event owner" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
         let(:holder) do
           create(
             :event_attendee,

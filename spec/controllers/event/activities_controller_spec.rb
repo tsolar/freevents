@@ -108,7 +108,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
 
         it "returns a success response" do
           get :new, params: { event_id: event.to_param }, session: valid_session
@@ -140,7 +140,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
 
         it "returns a success response" do
           get :edit, params: { event_id: event.to_param, id: activity.to_param }, session: valid_session
@@ -174,7 +174,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "When user is event owner" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
 
         context "with valid params" do
           it "creates a new Event::Activity" do
@@ -222,7 +222,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let!(:event) { create(:event, owner: @user) }
+        let!(:event) { create(:event, owner: user) }
 
         context "with valid params" do
           it "updates the requested event_activity" do
@@ -281,7 +281,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
       end
 
       context "when user is event owner" do
-        let(:event) { create(:event, owner: @user) }
+        let(:event) { create(:event, owner: user) }
 
         it "destroys the requested event_activity" do
           event
