@@ -33,16 +33,33 @@ class Event::ActivitiesController < ApplicationController
   # POST /event/activities.json
   def create
     @event_activity = Event::Activity.new(event_activity_params)
-    @event_activity.event_day = @event.days.last if @event_activity.event_day.nil?
+    if @event_activity.event_day.nil?
+      @event_activity.event_day = @event.days.last
+    end
+
     authorize @event_activity
 
     respond_to do |format|
       if @event_activity.save
-        format.html { redirect_to event_activity_path(event_id: @event.to_param, id: @event_activity.to_param), notice: "#{Event::Activity.model_name.human} #{t('actions.messages.success.created_f')}." }
-        format.json { render :show, status: :created, location: @event_activity }
+        format.html do
+          notice = "#{Event::Activity.model_name.human} " \
+                   "#{t('actions.messages.success.created_f')}."
+          redirect_to(
+            event_activity_path(
+              event_id: @event.to_param,
+              id: @event_activity.to_param
+            ),
+            notice: notice
+          )
+        end
+        format.json do
+          render :show, status: :created, location: @event_activity
+        end
       else
         format.html { render :new }
-        format.json { render json: @event_activity.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @event_activity.errors, status: :unprocessable_entity
+        end
       end
     end
   end

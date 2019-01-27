@@ -23,6 +23,7 @@ AllCops:
     - 'db/migrate/*'
     - 'bin/setup'
     - 'bin/update'
+    - 'config/application.rb'
     - 'vendor/**/*'
     - 'lib/templates/**/*'
 
@@ -34,6 +35,9 @@ RSpec/FilePath:
 
 RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
 
 Style/DefWithParentheses:
   Enabled: true
@@ -54,3 +58,7 @@ Style/Documentation:
 Metrics/LineLength:
   Exclude:
     - 'app/views/**/*.jbuilder'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

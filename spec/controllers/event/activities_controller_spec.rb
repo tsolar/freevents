@@ -45,16 +45,22 @@ RSpec.describe Event::ActivitiesController, type: :controller do
   let(:event) { create(:event) }
 
   describe "GET #index" do
+    let(:other_event) { create(:event) }
+    let!(:activity1) { Event::Activity.create! valid_attributes }
+
+    before do
+      Event::Activity.create! valid_attributes.merge!(
+        event_day_id: other_event.days.last.id
+      )
+    end
+
     it "returns a success response" do
       get :index, params: { event_id: event.to_param }, session: valid_session
-      expect(assigns(:event_activities)).to eq []
       expect(response.status).to eq 200
     end
 
     it "assigns only activities of the event" do
-      other_event = create(:event)
-      activity1 = Event::Activity.create! valid_attributes
-      activity2 = Event::Activity.create! valid_attributes.merge!(event_day_id: other_event.days.last.id)
+
       get :index, params: { event_id: event.to_param }, session: valid_session
       expect(assigns(:event_activities)).to eq [activity1]
     end
@@ -69,21 +75,35 @@ RSpec.describe Event::ActivitiesController, type: :controller do
   end
 
   describe "GET #show" do
+    let(:activity) { Event::Activity.create! valid_attributes }
+
+    before do
+      get :show,
+          params: { event_id: event.to_param, id: activity.to_param },
+          session: valid_session
+    end
+
     context "when event has the activity on its days" do
       it "returns a success response" do
-        activity = Event::Activity.create! valid_attributes
-        get :show, params: { event_id: event.to_param, id: activity.to_param }, session: valid_session
         expect(response.status).to eq 200
       end
     end
 
     context "when event hasn't the activity on its days" do
-      it "renders 404" do
+      let(:activity) do
         other_event = create(:event)
-        activity = Event::Activity.create! valid_attributes.merge!(event_day_id: other_event.days.last.id)
-        get :show, params: { event_id: event.to_param, id: activity.to_param }, session: valid_session
+        Event::Activity.create!(
+          valid_attributes.merge!(
+            event_day_id: other_event.days.last.id
+          )
+        )
+      end
+
+      it "renders 404" do
         expect(response.status).to eq 404
-        expect(response).to render_template(file: "#{Rails.root}/public/404.html")
+        expect(response).to render_template(
+          file: "#{Rails.root}/public/404.html"
+        )
       end
     end
   end
@@ -173,7 +193,7 @@ RSpec.describe Event::ActivitiesController, type: :controller do
         end
       end
 
-      context "When user is event owner" do
+      context "when user is event owner" do
         let(:event) { create(:event, owner: user) }
 
         context "with valid params" do

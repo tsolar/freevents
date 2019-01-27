@@ -15,8 +15,8 @@ class Event::Participation::Answer < ApplicationRecord
   private
 
   def create_ticket
-    if will_attend == "yes" && attendee.ticket.nil?
-      Ticket.create(holder: attendee)
-    end
+    return unless will_attend == "yes" && attendee.ticket.nil?
+
+    Ticket.create(holder: attendee)
   end
 end

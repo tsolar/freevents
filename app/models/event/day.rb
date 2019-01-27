@@ -22,19 +22,28 @@ class Event::Day < ApplicationRecord
   def to_s
     return I18n.t("tbd") unless starts_at.present?
 
-    if ends_at.to_date > starts_at.to_date
-      "#{I18n.l(starts_at, format: :event_day_with_time)} - #{I18n.l(ends_at, format: :event_day_with_time)}"
-    else
-      "#{I18n.l(starts_at, format: :event_day_with_time)} - #{I18n.l(ends_at, format: :only_time)}"
-    end
+    formatted_date
+  end
+
+  def formatted_date
+    string = "#{I18n.l(starts_at, format: :event_day_with_time)} "
+    string += if ends_at.to_date > starts_at.to_date
+                "- #{I18n.l(ends_at, format: :event_day_with_time)}"
+              else
+                "- #{I18n.l(ends_at, format: :only_time)}"
+              end
+    string
   end
 
   private
 
   # TODO: test, there are some, but make some other more specific
   def ends_at_before_24_hours_since_starts_at
-    if ends_at.present? && starts_at.present? && ends_at > (starts_at + 24.hours)
-      errors.add(:ends_at, :must_be_before_24_hours_since_starts_at)
-    end
+    condition = ends_at.present? &&
+                starts_at.present? &&
+                ends_at > (starts_at + 24.hours)
+    return unless condition
+
+    errors.add(:ends_at, :must_be_before_24_hours_since_starts_at)
   end
 end
