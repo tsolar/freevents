@@ -5,6 +5,6 @@ es:
         one: Sala
         other: Salas
     attributes:
-      venue:
+      venue/room:
         name: Nombre
         capacity: Capacidad

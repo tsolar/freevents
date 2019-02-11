@@ -13,3 +13,4 @@ en:
       event:
         title: Title
         description: Description
+        venues: :activerecord.models.venue.other

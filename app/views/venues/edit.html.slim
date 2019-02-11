@@ -1,4 +1,6 @@
-h1 Editing venue
+h1
+  | #{t('actions.editing')} #{Venue.model_name.human.downcase}
+  strong =< @venue.name
 
 == render 'form'
 
