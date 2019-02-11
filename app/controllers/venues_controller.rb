@@ -17,10 +17,12 @@ class VenuesController < ApplicationController
   # GET /venues/new
   def new
     @venue = Venue.new
+    @venue.rooms.build
   end
 
   # GET /venues/1/edit
   def edit
+    @venue.rooms.build if @venue.rooms.empty?
   end
 
   # POST /venues
@@ -72,6 +74,18 @@ class VenuesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def venue_params
-    params.require(:venue).permit(:name, :description, :address, :lat, :lng)
+    params.require(:venue).permit(
+      :name,
+      :description,
+      :address,
+      :lat,
+      :lng,
+      rooms_attributes: [
+        :id,
+        :_destroy,
+        :name,
+        :capacity
+      ]
+    )
   end
 end

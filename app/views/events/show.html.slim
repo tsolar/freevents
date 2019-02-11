@@ -7,6 +7,17 @@ p
     = Event.human_attribute_name(:description)
     | :
   = @event.description
+
+p
+  strong>
+    = Event.human_attribute_name(:venues)
+    | :
+  - if @event.venues.any?
+    ul
+      - @event.venues.each do |venue|
+        li = link_to venue.name, venue
+  - else
+    = I18n.t("TBD")
 p
   strong>
     = Event.human_attribute_name(:date)

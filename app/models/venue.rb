@@ -11,4 +11,6 @@ class Venue < ApplicationRecord
            inverse_of: :venue
   validates :name, presence: true, uniqueness: true
   validates :address, presence: true
+
+  accepts_nested_attributes_for :rooms, allow_destroy: true
 end

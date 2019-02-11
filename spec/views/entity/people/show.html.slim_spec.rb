@@ -12,8 +12,8 @@ RSpec.describe "entity/people/show", type: :view do
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/#{@entity_person.firstname}/)
-    expect(rendered).to match(/#{@entity_person.lastname}/)
-    expect(rendered).to match(/#{@entity_person.bio}/)
+    expect(rendered).to match(/#{CGI.escapeHTML(@entity_person.firstname)}/)
+    expect(rendered).to match(/#{CGI.escapeHTML(@entity_person.lastname)}/)
+    expect(rendered).to match(/#{CGI.escapeHTML(@entity_person.bio)}/)
   end
 end

@@ -8,5 +8,12 @@
     = f.input :lat
     = f.input :lng
 
+    fieldset
+      legend = Venue::Room.model_name.human(count: 2)
+      = f.simple_fields_for :rooms do |room|
+        = render 'room_fields', f: room
+      .links
+        = link_to_add_association "#{t('actions.add')} #{Venue::Room.model_name.human.downcase}", f, :rooms, class: "btn btn-secondary btn-md"
+
   .form-actions
     = f.button :submit
