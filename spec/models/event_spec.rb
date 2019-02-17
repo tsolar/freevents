@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Event, type: :model do
+  subject(:event) { build(:event) }
+
   let(:today) { Date.today }
 
   describe "Validations" do
@@ -11,44 +13,49 @@ RSpec.describe Event, type: :model do
 
     it { is_expected.to validate_presence_of :days }
     it {
-      expect(subject).to accept_nested_attributes_for(:days)
+      expect(event).to accept_nested_attributes_for(:days)
         .allow_destroy(true)
     }
     it {
-      expect(subject).to accept_nested_attributes_for(:venues)
+      expect(event).to accept_nested_attributes_for(:venues)
         .allow_destroy(true)
     }
   end
 
   describe "Relationships" do
     it {
-      expect(subject).to have_many(:days)
+      expect(event).to have_many(:days)
         .inverse_of(:event)
         .dependent(:destroy)
     }
     it {
-      expect(subject).to have_many(:participations)
+      expect(event).to have_many(:participations)
         .dependent(:destroy)
     }
     it {
-      expect(subject).to have_many(:activities)
+      expect(event).to have_many(:activities)
         .class_name("Event::Activity")
         .through(:days)
         .dependent(:destroy)
     }
     it {
-      expect(subject).to have_many(:event_venues)
+      expect(event).to have_many(:activity_postulations)
+        .class_name("Event::Activity::Postulation")
+        .dependent(:destroy)
+    }
+    it {
+      expect(event).to have_many(:event_venues)
         .class_name("Event::Venue")
         .dependent(:destroy)
     }
     it {
-      expect(subject).to have_many(:venues)
+      expect(event).to have_many(:venues)
         .class_name("::Venue")
         .through(:event_venues)
     }
 
     it {
-      expect(subject).to belong_to(:owner)
+      expect(event).to belong_to(:owner)
         .inverse_of(:events)
         .class_name("User")
         .with_foreign_key(:owner_id)

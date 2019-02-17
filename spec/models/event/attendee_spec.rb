@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Event::Attendee, type: :model do
+  subject(:attendee) { create(:event_attendee) }
+
   describe "Validations" do
     it { is_expected.to validate_presence_of :event }
   end
@@ -11,12 +13,13 @@ RSpec.describe Event::Attendee, type: :model do
     it { is_expected.to belong_to :event }
     it { is_expected.to belong_to :participant }
     it {
-      expect(subject).to have_one(:answer)
+      expect(attendee).to have_one(:answer)
         .class_name("Event::Participation::Answer")
         .with_foreign_key(:event_participation_id)
         .inverse_of(:attendee)
+        .dependent(:destroy)
     }
-    it { is_expected.to have_one(:ticket) }
+    it { is_expected.to have_one(:ticket).dependent(:destroy) }
   end
 
   describe "Create" do
@@ -27,8 +30,9 @@ RSpec.describe Event::Attendee, type: :model do
         expect(attendee).to be_persisted
         expect(attendee.answer).to be_a Event::Participation::Answer
         expect(attendee.answer).to be_persisted
-      end.to change(Event::Participation, :count).by(1)
-                                                 .and change(Event::Participation::Answer, :count).by(1)
+      end.to change(Event::Participation, :count)
+        .by(1)
+        .and change(Event::Participation::Answer, :count).by(1)
     end
 
     context "when attributes are invalid" do

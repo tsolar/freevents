@@ -19,6 +19,10 @@ class Event < ApplicationRecord
            through: :event_venues,
            source: :venue
 
+  has_many :activity_postulations,
+           class_name: "Event::Activity::Postulation",
+           dependent: :destroy
+
   belongs_to :owner,
              inverse_of: :events,
              class_name: "User",
@@ -30,6 +34,9 @@ class Event < ApplicationRecord
 
   accepts_nested_attributes_for :venues, allow_destroy: true
   accepts_nested_attributes_for :days, allow_destroy: true
+
+  # TODO: notify attendees
+  # after_destroy :notify_attendees_event_was_canceled
 
   def to_s
     title

@@ -5,7 +5,8 @@ class Event::Day < ApplicationRecord
              inverse_of: :days
   has_many :activities,
            class_name: "Event::Activity",
-           foreign_key: :event_day_id
+           foreign_key: :event_day_id,
+           dependent: :destroy
 
   validates :event, presence: true
   validates :starts_at, presence: true
