@@ -11,6 +11,13 @@
     = f.input :description
 
     fieldset
+      legend = Venue.model_name.human(count: 2)
+      = f.simple_fields_for :venues do |venue|
+        = render 'venue_fields', f: venue
+      .links
+        = link_to_add_association "#{t('actions.add')} #{Venue.model_name.human.downcase}", f, :venues, class: "btn btn-secondary btn-md"
+
+    fieldset
       legend = Event::Day.model_name.human(count: 2)
       = f.simple_fields_for :days do |day|
         = render 'day_fields', f: day

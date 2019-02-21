@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -19,8 +21,8 @@ module Freevents
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
-    config.i18n.available_locales = [:es, :en]
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.available_locales = %i[es en]
     config.i18n.default_locale = :es
 
     config.active_job.queue_adapter = :delayed_job
@@ -36,7 +38,7 @@ module Freevents
       address: ENV["ACTION_MAILER_SMTP_ADDRESS"],
       port: ENV["ACTION_MAILER_SMTP_PORT"],
       authentication: ENV["ACTION_MAILER_SMTP_AUTHENTICATION"] || :plain,
-      enable_starttls_auto: ENV["ACTION_MAILER_ENABLE_STARTTLS_AUTO"] == "false" ? false : true
+      enable_starttls_auto: ENV["ACTION_MAILER_ENABLE_STARTTLS_AUTO"] != "false"
     }
 
     config.action_mailer.default_url_options = {

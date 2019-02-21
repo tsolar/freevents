@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Event::ActivityPostulationsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
+  before_action :authenticate_user!, except: %i[new create]
   before_action :set_event
-  before_action :set_event_activity_postulation, only: [:show, :edit, :update, :destroy, :approve]
+  before_action :set_event_activity_postulation, only: %i[show edit update destroy approve]
   after_action :verify_authorized
 
   # GET /event/activity_postulations
@@ -70,42 +72,43 @@ class Event::ActivityPostulationsController < ApplicationController
   def approve
     @event_activity_postulation.approve
     respond_to do |format|
-      format.html { redirect_to event_activities_postulations_url(event_id: @event.id), notice: 'Activity postulation was successfully approved.' }
+      format.html { redirect_to event_activities_postulations_url(event_id: @event.id), notice: "Activity postulation was successfully approved." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event_activity_postulation
-      @event_activity_postulation = Event::Activity::Postulation.find_by(id: params[:id], event_id: @event.to_param)
-      if @event_activity_postulation.present?
-        authorize @event_activity_postulation
-      else
-        render_404
-      end
-    end
 
-    def set_event
-      @event = Event.find(params[:event_id])
-    rescue
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event_activity_postulation
+    @event_activity_postulation = Event::Activity::Postulation.find_by(id: params[:id], event_id: @event.to_param)
+    if @event_activity_postulation.present?
+      authorize @event_activity_postulation
+    else
       render_404
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_activity_postulation_params
-      params.require(:event_activity_postulation).permit(
-        :postulant_firstname,
-        :postulant_lastname,
-        :postulant_email,
-        :postulant_phone_number,
-        :postulant_bio,
-        :activity_type,
-        :activity_title,
-        :activity_description,
-        :activity_estimated_duration,
-        :activity_difficulty_level,
-        :activity_preferred_time
-      ).merge!(event_id: @event.id)
-    end
+  def set_event
+    @event = Event.find(params[:event_id])
+  rescue StandardError
+    render_404
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_activity_postulation_params
+    params.require(:event_activity_postulation).permit(
+      :postulant_firstname,
+      :postulant_lastname,
+      :postulant_email,
+      :postulant_phone_number,
+      :postulant_bio,
+      :activity_type,
+      :activity_title,
+      :activity_description,
+      :activity_estimated_duration,
+      :activity_difficulty_level,
+      :activity_preferred_time
+    ).merge!(event_id: @event.id)
+  end
 end

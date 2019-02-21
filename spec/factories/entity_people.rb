@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :entity_person, class: "Entity::Person" do
     firstname { FFaker::NameMX.first_name }

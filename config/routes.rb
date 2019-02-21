@@ -1,5 +1,9 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
+  namespace :venue do
+    resources :rooms
+  end
   devise_for :users
   root "events#index"
 
@@ -10,7 +14,6 @@ Rails.application.routes.draw do
 
   resources :venues
   resources :events do
-
     # these routes are for receiving postulations for event activities
     namespace :activities do
       resources :postulations, controller: "/event/activity_postulations" do
@@ -25,7 +28,6 @@ Rails.application.routes.draw do
       # resources :participations
       resources :postulations, controller: "event/activity/postulations" # , except: [:new, :create, :destroy, :index]
     end
-
 
     member do
       put :respond_attendance

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event::Activity::PostulationMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -9,7 +11,7 @@ class Event::Activity::PostulationMailer < ApplicationMailer
     @postulation = postulation
 
     mail to: postulation.event.owner.email,
-      subject: default_i18n_subject(event_title: @postulation.event.title)
+         subject: default_i18n_subject(event_title: @postulation.event.title)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -22,7 +24,7 @@ class Event::Activity::PostulationMailer < ApplicationMailer
     @postulation = postulation
 
     mail to: postulation.postulant_email,
-      subject: default_i18n_subject(event_title: @postulation.event.title)
+         subject: default_i18n_subject(event_title: @postulation.event.title)
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -35,6 +37,6 @@ class Event::Activity::PostulationMailer < ApplicationMailer
     @postulation = postulation
 
     mail to: postulation.postulant_email,
-      subject: default_i18n_subject(event_title: @postulation.event.title)
+         subject: default_i18n_subject(event_title: @postulation.event.title)
   end
 end

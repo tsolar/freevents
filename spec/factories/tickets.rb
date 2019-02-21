@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :ticket do
-    holder { FactoryBot.create(:event_attendee) }
+    holder { create(:event_attendee) }
 
     trait :invalid do
-      holder nil
+      holder { nil }
     end
   end
 end

@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    models:
+      venue:
+        one: Venue
+        other: Venues
+    attributes:
+      venue:
+        address: Address
+        lat: Latitude
+        lng: Longitude

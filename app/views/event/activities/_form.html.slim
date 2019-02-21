@@ -7,12 +7,14 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :type
-    = f.association :event_day, include_blank: false
+    /= f.input :type , prompt: 'Elija...', collection: Event::Activity::Postulation::ACTIVITY_TYPES.map { |x| [t(x), x] }
+    = f.input :activity_type, prompt: 'Elija...', collection: Event::Activity::ACTIVITY_TYPES.map { |x| [t(x), x] }
+    = f.association :event_day, include_blank: false, collection: @event.days
     = f.input :title
     = f.input :description
     = f.input :starts_at, as: :datetimepicker, readonly: true
     = f.input :ends_at, as: :datetimepicker, readonly: true
+    = f.association :venue_room, prompt: 'Elija...', collection: @event.venues.flat_map(&:rooms)
 
   .form-actions
     = f.button :submit

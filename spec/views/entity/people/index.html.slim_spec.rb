@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "entity/people/index", type: :view do
-  before(:each) do
+  before do
     assign(
       :entity_people,
-      FactoryBot.create_list(:entity_person, 2)
+      create_list(:entity_person, 2)
     )
   end
 

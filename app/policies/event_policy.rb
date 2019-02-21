@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EventPolicy < ApplicationPolicy
   def index?
     true
@@ -28,7 +30,8 @@ class EventPolicy < ApplicationPolicy
   end
 
   private
-    def is_owner?
-      user.present? && user == record.owner
-    end
+
+  def is_owner?
+    user.present? && user == record.owner
+  end
 end

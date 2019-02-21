@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "event/activities/show", type: :view do
   before { skip("Not yet implemented") }
-  before(:each) do
+
+  before do
     @event_activity = assign(:event_activity, Event::Activity::Postulation.create!(
                                                 event: nil,
                                                 postulant_firstname: "Postulant Firstname",
@@ -16,7 +19,7 @@ RSpec.describe "event/activities/show", type: :view do
                                                 activity_estimated_duration: 2,
                                                 activity_difficulty_level: "Activity Difficulty Level",
                                                 activity_preferred_time: "Activity Preferred Time"
-    ))
+                                              ))
   end
 
   it "renders attributes in <p>" do

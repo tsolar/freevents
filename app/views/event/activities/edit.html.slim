@@ -2,9 +2,8 @@ h1
   => Event::Activity.model_name.human
   strong = @event_activity.title
 
-
 == render 'form'
 
-=> link_to "#{t('actions.show')}", @event_activity
+=> link_to "#{t('actions.show')}", event_activity_path(event_id: @event.to_param, id: @event_activity.to_param)
 '|
 =< link_to "#{t('actions.back')}", event_activities_path

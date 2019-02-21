@@ -1,0 +1,10 @@
+es:
+  activerecord:
+    models:
+      venue/room:
+        one: Sala
+        other: Salas
+    attributes:
+      venue/room:
+        name: Nombre
+        capacity: Capacidad

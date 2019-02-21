@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    models:
+      venue/room:
+        one: Room
+        other: Rooms
+    attributes:
+      venue/room:
+        name: Name
+        capacity: Capacity

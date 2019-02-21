@@ -14,3 +14,4 @@ es:
         title: Título
         description: Descripción
         date: Fecha
+        venues: :activerecord.models.venue.other

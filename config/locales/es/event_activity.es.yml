@@ -8,8 +8,17 @@ es:
       event/activity:
         event_day: :activerecord.models.event/day.one
         event_day_id: :activerecord.models.event/day.one
-        type: Tipo
+        activity_type: Tipo
         title: Título
         description: Descripción
         starts_at: Empieza a las
         ends_at: Termina a las
+        venue_room: :activerecord.models.venue/room.one
+    errors:
+      models:
+        event/activity:
+          attributes:
+            starts_at:
+              must_be_on_event_day_date: Debe ser en la misma fecha que la jornada seleccionada
+            ends_at:
+              must_be_on_event_day_date: Debe ser en la misma fecha que la jornada seleccionada

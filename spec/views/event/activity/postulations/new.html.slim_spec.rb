@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "event/activities/new", type: :view do
   before { skip("Not yet implemented") }
-  before(:each) do
+
+  before do
     assign(:event_activity, Event::Activity::Postulation.new(
                               event: nil,
                               postulant_firstname: "MyString",
@@ -16,14 +19,13 @@ RSpec.describe "event/activities/new", type: :view do
                               activity_estimated_duration: 1,
                               activity_difficulty_level: "MyString",
                               activity_preferred_time: "MyString"
-    ))
+                            ))
   end
 
   it "renders new event_activity form" do
     render
 
     assert_select "form[action=?][method=?]", event_activity_postulations_path, "post" do
-
       assert_select "input[name=?]", "event_activity[event_id]"
 
       assert_select "input[name=?]", "event_activity[postulant_firstname]"

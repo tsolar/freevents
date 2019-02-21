@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event::Activity::PostulationPolicy < ApplicationPolicy
   def show?
     super && user.present? && record.event.owner == user

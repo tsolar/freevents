@@ -1,6 +1,6 @@
 inherit_gem:
   rubocop-rails:
-    - config/rails.yml
+    - config/default.yml
 
 require: rubocop-rspec
 
@@ -18,12 +18,47 @@ AllCops:
     # If set Exclude in "AllCops", it checks "node_modules" folder too
     - 'node_modules/**/*'
 
-# rubocop-rails disables by default lots of Cops. Below are enabled cops we want to enable.
+    - 'db/seeds.rb'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'bin/setup'
+    - 'bin/update'
+    - 'config/application.rb'
+    - 'vendor/**/*'
+    - 'lib/templates/**/*'
 
-# Disable this check. Check again if we port to Ruby 3.0
-# see https://stackoverflow.com/questions/38325533/disable-frozen-string-literal-comment-checking
-Style/FrozenStringLiteralComment:
+RSpec/FilePath:
+  Exclude:
+    - 'spec/requests/*'
+    - 'spec/routing/*'
+    - 'spec/helpers/*'
+
+RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
 
 Style/DefWithParentheses:
   Enabled: true
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Exclude:
+    - 'app/views/**/*.jbuilder'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

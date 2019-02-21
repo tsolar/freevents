@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DatetimepickerInput < SimpleForm::Inputs::StringInput
   def input_html_classes
     super.push("datetimepicker")
@@ -17,15 +19,22 @@ class DatetimepickerInput < SimpleForm::Inputs::StringInput
 
   def value
     val = object.send(attribute_name)
-    return DateTime.new(val.year, val.month, val.day, val.hour, val.min).strftime("%Y-%m-%d %H:%M") if val.is_a?(Time)
+
     return val if val.nil?
+
+    if val.is_a?(Time)
+      time_val = Time.new(val.year, val.month, val.day, val.hour, val.min)
+      return time_val.strftime("%Y-%m-%d %H:%M")
+    end
+
     val.to_s
   end
 
   private
-    def datepicker_options
-      options = self.options.fetch(:datepicker_options, {})
-      options = Hash[options.map { |k, v| [k.to_s.camelcase(:lower), v] }]
-      { datepicker_options: options }
-    end
+
+  def datepicker_options
+    options = self.options.fetch(:datepicker_options, {})
+    options = Hash[options.map { |k, v| [k.to_s.camelcase(:lower), v] }]
+    { datepicker_options: options }
+  end
 end

@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.10.1"
+lock "3.11.0"
 
 set :application, "freevents"
 set :repo_url, "git@github.com:tsolar/freevents.git"
 
 set :rvm_type, :user
 set :rvm_ruby_version, "2.4.1@freevents"
-set :stages, %w(staging)
+set :stages, %w[staging]
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -25,7 +27,7 @@ set :format_options, command_output: true, log_file: "log/capistrano.log", color
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/database.yml", "config/secrets.yml",  "config/environments/production.rb"
+append :linked_files, "config/database.yml", "config/secrets.yml", "config/environments/production.rb"
 append :linked_files, ".env.production"
 
 # Default value for linked_dirs is []

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Entity::PeopleController < ApplicationController
-  before_action :set_entity_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_entity_person, only: %i[show edit update destroy]
 
   # GET /entity/people
   # GET /entity/people.json
@@ -62,13 +64,14 @@ class Entity::PeopleController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_entity_person
-      @entity_person = Entity::Person.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def entity_person_params
-      params.require(:entity_person).permit(:firstname, :lastname, :dob, :bio)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_entity_person
+    @entity_person = Entity::Person.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def entity_person_params
+    params.require(:entity_person).permit(:firstname, :lastname, :dob, :bio)
+  end
 end

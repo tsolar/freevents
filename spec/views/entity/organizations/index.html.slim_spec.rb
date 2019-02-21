@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "entity/organizations/index", type: :view do
-  before(:each) do
-    assign(:entity_organizations, FactoryBot.create_list(:entity_organization, 2))
+  before do
+    assign(:entity_organizations, create_list(:entity_organization, 2))
   end
 
   it "renders a list of entity/organizations" do

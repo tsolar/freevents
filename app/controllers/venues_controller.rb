@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class VenuesController < ApplicationController
-  before_action :set_venue, only: [:show, :edit, :update, :destroy]
+  before_action :set_venue, only: %i[show edit update destroy]
 
   # GET /venues
   # GET /venues.json
@@ -15,10 +17,12 @@ class VenuesController < ApplicationController
   # GET /venues/new
   def new
     @venue = Venue.new
+    @venue.rooms.build
   end
 
   # GET /venues/1/edit
   def edit
+    @venue.rooms.build if @venue.rooms.empty?
   end
 
   # POST /venues
@@ -62,13 +66,26 @@ class VenuesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_venue
-      @venue = Venue.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def venue_params
-      params.require(:venue).permit(:name, :description, :address, :lat, :lng)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_venue
+    @venue = Venue.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def venue_params
+    params.require(:venue).permit(
+      :name,
+      :description,
+      :address,
+      :lat,
+      :lng,
+      rooms_attributes: [
+        :id,
+        :_destroy,
+        :name,
+        :capacity
+      ]
+    )
+  end
 end

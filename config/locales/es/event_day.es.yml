@@ -13,3 +13,9 @@ es:
         description: Descripción
         starts_at: Empieza a las
         ends_at: Termina a las
+    errors:
+      models:
+        event/day:
+          attributes:
+            ends_at:
+              must_be_before_24_hours_since_starts_at: 24 horas o más luego de empezar

@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Venue:
+  = @venue_room.venue
+p
+  strong Name:
+  = @venue_room.name
+p
+  strong Capacity:
+  = @venue_room.capacity
+
+=> link_to 'Edit', edit_venue_room_path(@venue_room)
+'|
+=< link_to 'Back', venue_rooms_path

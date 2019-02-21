@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe "Event::Activity::Postulations", type: :request do
-  let(:event_activity) { FactoryBot.create(:event_activity) }
+  let(:event_activity) { create(:event_activity) }
 
   describe "GET /event_activity_postulations" do
     it "works! (now write some real specs)" do

@@ -13,3 +13,4 @@ en:
         description: Description
         starts_at: Starts at
         ends_at: Ends at
+        venue_room: Venue room

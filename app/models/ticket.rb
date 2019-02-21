@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Ticket < ApplicationRecord
   # ticket holder is tipically an Attendee (Event::Attendee)
   # but it could be an Event::Activity::Attendee or something
@@ -17,7 +19,8 @@ class Ticket < ApplicationRecord
   end
 
   private
-    def send_to_holder
-      TicketMailer.send_to_holder(self).deliver_later
-    end
+
+  def send_to_holder
+    TicketMailer.send_to_holder(self).deliver_later
+  end
 end

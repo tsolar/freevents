@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_31_024551) do
+ActiveRecord::Schema.define(version: 2018_09_17_233927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2018_03_31_024551) do
   end
 
   create_table "event_activities", force: :cascade do |t|
-    t.string "type"
+    t.string "activity_type"
     t.bigint "event_day_id"
     t.string "title"
     t.text "description"
@@ -68,8 +68,10 @@ ActiveRecord::Schema.define(version: 2018_03_31_024551) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "event_activity_postulation_id"
+    t.bigint "venue_room_id"
     t.index ["event_activity_postulation_id"], name: "index_event_activities_on_event_activity_postulation_id"
     t.index ["event_day_id"], name: "index_event_activities_on_event_day_id"
+    t.index ["venue_room_id"], name: "index_event_activities_on_venue_room_id"
   end
 
   create_table "event_activity_participations", force: :cascade do |t|
@@ -180,6 +182,15 @@ ActiveRecord::Schema.define(version: 2018_03_31_024551) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "venue_rooms", force: :cascade do |t|
+    t.bigint "venue_id"
+    t.string "name"
+    t.integer "capacity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["venue_id"], name: "index_venue_rooms_on_venue_id"
+  end
+
   create_table "venues", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -193,6 +204,7 @@ ActiveRecord::Schema.define(version: 2018_03_31_024551) do
   add_foreign_key "entity_people", "users"
   add_foreign_key "event_activities", "event_activity_postulations"
   add_foreign_key "event_activities", "event_days"
+  add_foreign_key "event_activities", "venue_rooms"
   add_foreign_key "event_activity_participations", "event_activities"
   add_foreign_key "event_activity_participations", "event_participations"
   add_foreign_key "event_activity_postulations", "events"
@@ -202,4 +214,5 @@ ActiveRecord::Schema.define(version: 2018_03_31_024551) do
   add_foreign_key "event_venues", "events"
   add_foreign_key "event_venues", "venues"
   add_foreign_key "events", "users", column: "owner_id"
+  add_foreign_key "venue_rooms", "venues"
 end

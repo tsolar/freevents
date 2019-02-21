@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :event do
     title { FFaker::Lorem.sentence }
@@ -5,7 +7,7 @@ FactoryBot.define do
 
     days_attributes { [FactoryBot.attributes_for(:event_day)] }
 
-    owner { FactoryBot.create(:user) }
+    owner { create(:user) }
 
     # transient do
     #   # days_count 1
@@ -18,7 +20,7 @@ FactoryBot.define do
     # end
 
     trait :invalid do
-      title nil
+      title { nil }
     end
   end
 end

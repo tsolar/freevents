@@ -1,24 +1,28 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe TicketsController, type: :controller do
   let(:valid_session) { {} }
 
-  let(:user_person) {
-    FactoryBot.create(:entity_person, user: FactoryBot.create(:user))
-  }
-  let(:holder) {
-    FactoryBot.create(
+  let(:user_person) do
+    create(:entity_person, user: create(:user))
+  end
+  let(:holder) do
+    create(
       :event_attendee,
       participant: user_person
     )
-  }
-  let(:ticket) { FactoryBot.create(:ticket, holder: holder) }
+  end
+  let(:ticket) { create(:ticket, holder: holder) }
 
   describe "GET #show" do
     context "when user is logged in" do
       login_user
+
       context "when user is ticket holder" do
-        let(:user_person) { FactoryBot.create(:entity_person, user: @user) }
+        let(:user_person) { create(:entity_person, user: user) }
+
         it "returns a success response" do
           get :show, params: { token: ticket.token }, session: valid_session
           expect(response.status).to eq 200
@@ -26,7 +30,7 @@ RSpec.describe TicketsController, type: :controller do
       end
 
       context "when user is not ticket holder" do
-        it "should not allow to perform this action" do
+        it "does not allow to perform this action" do
           get :show, params: { token: ticket.token }, session: valid_session
           expect(response.status).not_to eq 200
           expect(response).to redirect_to(root_path)
@@ -36,7 +40,7 @@ RSpec.describe TicketsController, type: :controller do
     end
 
     context "when user is not logged in" do
-      it "should redirect to new user session path" do
+      it "redirects to new user session path" do
         get :show, params: { token: ticket.token }, session: valid_session
         expect(response.status).not_to eq 200
         expect(response).to redirect_to(new_user_session_path)
@@ -49,23 +53,23 @@ RSpec.describe TicketsController, type: :controller do
       login_user
 
       context "when user is ticket.event owner" do
-        let(:event) { FactoryBot.create(:event, owner: @user) }
-        let(:holder) {
-          FactoryBot.create(
+        let(:event) { create(:event, owner: user) }
+        let(:holder) do
+          create(
             :event_attendee,
             event: event,
             participant: user_person
           )
-        }
+        end
 
         context "when ticket was already scanned" do
-          before :each do
+          before do
             expect(ticket.scan).to be true
             expect(ticket.scanned?).to be true
             expect(ticket.scanned_at).to be_present
           end
 
-          it "should call Ticket#scan and show already scanned message" do
+          it "calls Ticket#scan and show already scanned message" do
             # expect(ticket).to receive(:scan).with(no_args).once.and_call_original
             expect_any_instance_of(Ticket).to receive(:scan).with(no_args).once.and_call_original
 
@@ -85,12 +89,12 @@ RSpec.describe TicketsController, type: :controller do
         end
 
         context "when ticket was not scanned yet" do
-          before :each do
+          before do
             expect(ticket.scanned).to be_nil
             expect(ticket.scanned_at).to be_nil
           end
 
-          it "should call Ticket#scan and show success message" do
+          it "calls Ticket#scan and show success message" do
             # expect(ticket).to receive(:scan).with(no_args).once.and_call_original
             expect_any_instance_of(Ticket).to receive(:scan).with(no_args).once.and_call_original
 
@@ -110,7 +114,7 @@ RSpec.describe TicketsController, type: :controller do
       end
 
       context "when user is not ticket.event owner" do
-        it "should not to call scan and redirect to root path with flash message" do
+        it "does not to call scan and redirect to root path with flash message" do
           expect_any_instance_of(Ticket).not_to receive(:scan)
 
           get :scan, params: { token: ticket.token }, session: valid_session
@@ -131,7 +135,7 @@ RSpec.describe TicketsController, type: :controller do
     end
 
     context "when user is not logged in" do
-      it "should redirect to new user session path" do
+      it "redirects to new user session path" do
         expect_any_instance_of(Ticket).not_to receive(:scan)
         get :scan, params: { token: ticket.token }, session: valid_session
         expect(response.status).not_to eq 200
