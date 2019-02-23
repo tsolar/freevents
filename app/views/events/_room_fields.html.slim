@@ -1,0 +1,7 @@
+.nested-fields.card.bg-light.p-4
+  /= f.input :id
+  = f.input :name
+  = f.input :capacity
+
+  .col-xs-2
+    = link_to_remove_association "#{t('actions.remove')} #{Venue::Room.model_name.human.downcase}", f, class: "btn btn-danger btn-sm"

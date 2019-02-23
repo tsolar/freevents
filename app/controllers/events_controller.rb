@@ -21,7 +21,9 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @event.days.build
-    authorize Event
+    venue = @event.venues.build
+    venue.rooms.build
+    authorize @event
   end
 
   # GET /events/1/edit
@@ -130,7 +132,7 @@ class EventsController < ApplicationController
         address
         lat
         lng
-      ]
+      ].push(rooms_attributes: %i[id _destroy name capacity])
     )
   end
 end

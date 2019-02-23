@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  namespace :venue do
-    resources :rooms
-  end
   devise_for :users
   root "events#index"
 
@@ -12,7 +9,6 @@ Rails.application.routes.draw do
     resources :people
   end
 
-  resources :venues
   resources :events do
     # these routes are for receiving postulations for event activities
     namespace :activities do

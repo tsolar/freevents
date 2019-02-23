@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "venues/show", type: :view do
+RSpec.xdescribe "venues/show", type: :view do
   before do
     @venue = assign(:venue, Venue.create!(
                               name: "Name",

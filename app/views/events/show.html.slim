@@ -15,7 +15,12 @@ p
   - if @event.venues.any?
     ul
       - @event.venues.each do |venue|
-        li = link_to venue.name, venue
+        li
+          = venue
+          br/
+          = Venue.human_attribute_name(:address)
+          | :
+          =< venue.address
   - else
     = I18n.t("tbd")
 p

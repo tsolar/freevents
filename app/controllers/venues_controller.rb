@@ -2,6 +2,7 @@
 
 class VenuesController < ApplicationController
   before_action :set_venue, only: %i[show edit update destroy]
+  after_action :verify_authorized
 
   # GET /venues
   # GET /venues.json

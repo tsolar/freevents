@@ -13,4 +13,8 @@ class Venue < ApplicationRecord
   validates :address, presence: true
 
   accepts_nested_attributes_for :rooms, allow_destroy: true
+
+  def to_s
+    name
+  end
 end

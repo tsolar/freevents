@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Venue::RoomsController, type: :routing do
+RSpec.xdescribe Venue::RoomsController, type: :routing do
   describe "routing" do
     it "routes to #index" do
       expect(get: "/venue/rooms").to route_to("venue/rooms#index")
