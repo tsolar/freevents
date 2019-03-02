@@ -10,6 +10,7 @@ class TicketMailer < ApplicationMailer
   #
   def send_to_holder(ticket)
     @ticket = ticket
+    @activity = ticket.holder.activity
     @greeting = "Hi #{ticket.holder.participant.full_name}"
     mail to: ticket.holder.participant.user.email
   end

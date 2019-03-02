@@ -23,6 +23,9 @@ Rails.application.routes.draw do
     resources :activities, controller: "event/activities" do
       # resources :participations
       resources :postulations, controller: "event/activity/postulations" # , except: [:new, :create, :destroy, :index]
+      member do
+        put :respond_attendance
+      end
     end
 
     member do

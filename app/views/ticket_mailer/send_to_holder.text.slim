@@ -1,19 +1,19 @@
 = @greeting
 = "\r\n" * 2
 
-| Event information
+| #{@activity.class.model_name.human} information
 = "\r\n"
 | Title:
 = "\r\n"
-|  #{@ticket.holder.event.title}
+|  #{@activity.title}
 = "\r\n"
 | Description:
 = "\r\n"
-|  #{@ticket.holder.event.description}
+|  #{@activity.description}
 = "\r\n"
 | Date:
 = "\r\n"
-|  #{@ticket.holder.event.dates}
+|  #{@activity.dates}
 
 = "\r\n" * 2
 

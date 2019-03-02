@@ -1,0 +1,8 @@
+- activity_participation = activity.attendees.joins(:event_participation).exists?(event_participations: { event: event, participant: current_user.try(:person) })
+
+- if activity_participation
+  p
+    = link_to t('event/participation/answer.will_attend.not_going'), respond_attendance_event_activity_path(event_id: event.id, id: activity.id, will_attend: "no"), method: :put, class: "btn btn-sm btn-secondary"
+- else
+  p
+    = link_to t('event/participation/answer.will_attend.going'), respond_attendance_event_activity_path(event_id: event.id, id: activity.id, will_attend: "yes"), method: :put, class: "btn btn-sm btn-success"

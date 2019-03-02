@@ -1,5 +1,5 @@
 h1
-  | Ticket for event #{@ticket.holder.event}
+  | Ticket for #{@activity.class.model_name.human.downcase} #{@activity}
 
 p = @greeting
 
@@ -9,22 +9,22 @@ p
     img src=ticket_url(@ticket.token, format: :png) class="qr-code png"
 
 h2
-  | Event information
+  | #{@activity.class.model_name.human} information
 p
   strong
     | Title:
   span
-    |  #{@ticket.holder.event.title}
+    |  #{@activity.title}
 p
   strong
     | Description:
   span
-    |  #{@ticket.holder.event.description}
+    |  #{@activity.description}
 p
   strong
     | Date:
   span
-    |  #{@ticket.holder.event.dates}
+    |  #{@activity.dates}
 
 p
   | If you do not see any QR code, you can&nbsp;

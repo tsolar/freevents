@@ -3,7 +3,9 @@
 class Event::ActivitiesController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_event
-  before_action :set_event_activity, only: %i[show edit update destroy]
+  before_action :set_event_activity, only: %i[
+    show edit update destroy respond_attendance
+  ]
   after_action :verify_authorized
 
   # GET /event/activities
@@ -85,6 +87,47 @@ class Event::ActivitiesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to event_activities_url, notice: "#{Event::Activity.model_name.human} #{t('actions.messages.success.destroyed_f')}." }
       format.json { head :no_content }
+    end
+  end
+
+  def respond_attendance
+    answer = params[:will_attend]
+    person = current_user.person
+    if person.nil?
+      person = current_user.create_person(
+        firstname: Mail::Address.new(current_user.email).local
+      )
+    end
+    participation = Event::Attendee.where(
+      event: @event,
+      participant: person # person must exist!
+    ).first_or_create
+
+    if answer == "yes"
+      @event_activity.attendees.create(event_participation: participation)
+      respond_to do |format|
+        url = event_activity_path(
+          event_id: @event.to_param, id: @event_activity.to_param
+        )
+        notice = "#{Event::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."
+
+        # notice = "asistencia registrada"
+        format.html { redirect_back(fallback_location: url, notice: notice) }
+        format.json { render json: @event_activity, notice: notice }
+      end
+    elsif answer == "no"
+      @event_activity.attendees.find_by(
+        event_participation: participation
+      ).destroy
+      respond_to do |format|
+        url = event_activity_path(
+          event_id: @event.to_param, id: @event_activity.to_param
+        )
+        notice = "#{Event::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."
+        # notice = "asistencia eliminada"
+        format.html { redirect_back(fallback_location: url, notice: notice) }
+        format.json { render json: @event_activity, notice: notice }
+      end
     end
   end
 

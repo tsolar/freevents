@@ -13,7 +13,7 @@ server "freevents.tsolar.cl", user: "deploy", roles: %w[app db web], my_property
 
 set :linked_files, ["config/database.yml", "config/secrets.yml", "config/environments/staging.rb", ".env.staging"]
 
-set :branch, "develop"
+set :branch, "activity-participation-attendance"
 set :rails_env, "staging"
 
 # role-based syntax

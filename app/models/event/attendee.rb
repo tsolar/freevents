@@ -10,4 +10,8 @@ class Event::Attendee < Event::Participation
   has_one :ticket, as: :holder, dependent: :destroy
 
   after_create :create_answer
+
+  def activity
+    event
+  end
 end
