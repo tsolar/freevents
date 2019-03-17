@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_17_233927) do
+ActiveRecord::Schema.define(version: 2019_03_17_175843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 2018_09_17_233927) do
     t.index ["event_activity_postulation_id"], name: "index_event_activities_on_event_activity_postulation_id"
     t.index ["event_day_id"], name: "index_event_activities_on_event_day_id"
     t.index ["venue_room_id"], name: "index_event_activities_on_venue_room_id"
+  end
+
+  create_table "event_activity_participation_answers", force: :cascade do |t|
+    t.bigint "event_activity_participation_id"
+    t.string "will_attend"
+    t.boolean "did_attend"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_activity_participation_id"], name: "index_event_activity_participation"
   end
 
   create_table "event_activity_participations", force: :cascade do |t|
@@ -205,6 +214,7 @@ ActiveRecord::Schema.define(version: 2018_09_17_233927) do
   add_foreign_key "event_activities", "event_activity_postulations"
   add_foreign_key "event_activities", "event_days"
   add_foreign_key "event_activities", "venue_rooms"
+  add_foreign_key "event_activity_participation_answers", "event_activity_participations"
   add_foreign_key "event_activity_participations", "event_activities"
   add_foreign_key "event_activity_participations", "event_participations"
   add_foreign_key "event_activity_postulations", "events"

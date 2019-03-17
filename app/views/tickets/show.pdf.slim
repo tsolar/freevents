@@ -6,19 +6,19 @@ html
   body[]
     p
       strong>
-        = Event.human_attribute_name(:title)
+        = @activity.class.human_attribute_name(:title)
         | :
-      = @event.title
+      = @activity.title
     p
       strong>
-        = Event.human_attribute_name(:description)
+        = @activity.class.human_attribute_name(:description)
         | :
-      = @event.description
+      = @activity.description
     p
       strong>
-        = Event.human_attribute_name(:date)
+        = @activity.class.human_attribute_name(:date)
         | :
-      = @event.dates
+      = @activity.dates
 
     h2 = Ticket.human_attribute_name(:code)
     .code

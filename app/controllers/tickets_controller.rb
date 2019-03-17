@@ -4,6 +4,7 @@ class TicketsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_ticket
   before_action :set_event
+  before_action :set_activity
   after_action :verify_authorized
 
   def show
@@ -46,5 +47,9 @@ class TicketsController < ApplicationController
   def set_ticket
     @ticket = Ticket.find_by(token: params[:token])
     authorize @ticket
+  end
+
+  def set_activity
+    @activity = @ticket.holder.activity
   end
 end

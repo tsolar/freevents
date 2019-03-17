@@ -1,18 +1,18 @@
 p
   strong>
-    = Event.human_attribute_name(:title)
+    = @activity.class.human_attribute_name(:title)
     | :
-  = @event.title
+  = @activity.title
 p
   strong>
-    = Event.human_attribute_name(:description)
+    = @activity.class.human_attribute_name(:description)
     | :
-  = @event.description
+  = @activity.description
 p
   strong>
-    = Event.human_attribute_name(:date)
+    = @activity.class.human_attribute_name(:date)
     | :
-  = @event.dates
+  = @activity.dates
 
 h2 = Ticket.human_attribute_name(:code)
 .code
@@ -21,6 +21,6 @@ h2 = Ticket.human_attribute_name(:code)
 = link_to "#{t('actions.download')} #{Ticket.model_name.human.downcase}", ticket_url(@ticket.token, format: :pdf), class: "btn btn-info"
 br
 
-=> link_to "#{t('actions.edit')}", edit_event_path(@event)
-'|
-=< link_to "#{t('actions.back')}", events_path
+/=> link_to "#{t('actions.edit')}", edit_event_path(@event)
+/'|
+/=< link_to "#{t('actions.back')}", events_path

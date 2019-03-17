@@ -98,35 +98,32 @@ class Event::ActivitiesController < ApplicationController
         firstname: Mail::Address.new(current_user.email).local
       )
     end
+
     participation = Event::Attendee.where(
       event: @event,
       participant: person # person must exist!
     ).first_or_create
 
-    if answer == "yes"
-      @event_activity.attendees.create(event_participation: participation)
-      respond_to do |format|
-        url = event_activity_path(
-          event_id: @event.to_param, id: @event_activity.to_param
-        )
-        notice = "#{Event::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."
+    activity_participation = @event_activity.attendees.where(
+      event_participation: participation
+    ).first_or_create
 
-        # notice = "asistencia registrada"
-        format.html { redirect_back(fallback_location: url, notice: notice) }
-        format.json { render json: @event_activity, notice: notice }
-      end
-    elsif answer == "no"
-      @event_activity.attendees.find_by(
-        event_participation: participation
-      ).destroy
+    activity_participation.create_answer unless activity_participation.answer.present?
+
+    if activity_participation.answer.update(will_attend: answer)
+      notice = "#{Event::Activity::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."
+      url = event_activity_path(
+        event_id: @event.to_param, id: @event_activity.to_param
+      )
+
       respond_to do |format|
-        url = event_activity_path(
-          event_id: @event.to_param, id: @event_activity.to_param
-        )
-        notice = "#{Event::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."
-        # notice = "asistencia eliminada"
         format.html { redirect_back(fallback_location: url, notice: notice) }
-        format.json { render json: @event_activity, notice: notice }
+        format.json { render json: @event, notice: notice }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: url, notice: t("event/participation/answer.messages.there_was_a_problem")) }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
   end
