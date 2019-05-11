@@ -2,7 +2,9 @@ inherit_gem:
   rubocop-rails:
     - config/default.yml
 
-require: rubocop-rspec
+require: 
+  - rubocop-rspec
+  - rubocop-performance
 
 AllCops:
   # Override rubocop-rails target version
