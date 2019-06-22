@@ -23,7 +23,9 @@ class DatetimepickerInput < SimpleForm::Inputs::StringInput
     return val if val.nil?
 
     if val.is_a?(Time)
-      time_val = Time.new(val.year, val.month, val.day, val.hour, val.min)
+      time_val = Time.new(
+        val.year, val.month, val.day, val.hour, val.min
+      ).in_time_zone
       return time_val.strftime("%Y-%m-%d %H:%M")
     end
 

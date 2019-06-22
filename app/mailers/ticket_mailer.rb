@@ -16,6 +16,5 @@ class TicketMailer < ApplicationMailer
          subject: default_i18n_subject(
            activity_title: @activity.title
          )
-
   end
 end

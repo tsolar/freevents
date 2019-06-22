@@ -108,7 +108,7 @@ class Event::ActivitiesController < ApplicationController
       event_participation: participation
     ).first_or_create
 
-    activity_participation.create_answer unless activity_participation.answer.present?
+    activity_participation.create_answer if activity_participation.answer.blank?
 
     if activity_participation.answer.update(will_attend: answer)
       notice = "#{Event::Activity::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event::Activity::Participation::Answer < ApplicationRecord
   belongs_to :attendee,
              class_name: "Event::Activity::Attendee",

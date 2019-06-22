@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ticketable
   extend ActiveSupport::Concern
 
@@ -5,8 +7,8 @@ module Ticketable
     after_save :create_ticket
 
     validates :will_attend,
-      inclusion: { in: %w[yes no maybe] },
-      allow_nil: true
+              inclusion: { in: %w[yes no maybe] },
+              allow_nil: true
   end
 
   private
