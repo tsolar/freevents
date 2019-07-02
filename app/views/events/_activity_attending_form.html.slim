@@ -1,0 +1,10 @@
+- activity_participation = activity.attendees.joins(:event_participation).find_by(event_participations: { event: event, participant: current_user.try(:person) })
+
+- answer = activity_participation.try(:answer).try(:will_attend)
+.actions.btn-group role="group"
+  = link_to t('event/participation/answer.will_attend.interested'), respond_attendance_event_activity_path(event_id: event.id, id: activity.id, will_attend: "maybe"), method: :put, class: "btn #{answer == 'maybe' ? 'btn-primary' : 'btn-secondary'}"
+  = link_to t('event/participation/answer.will_attend.going'), respond_attendance_event_activity_path(event_id: event.id, id: activity.id, will_attend: "yes"), method: :put, class: "btn #{answer == 'yes' ? 'btn-primary' : 'btn-secondary'}"
+  = link_to t('event/participation/answer.will_attend.not_going'), respond_attendance_event_activity_path(event_id: event.id, id: activity.id, will_attend: "no"), method: :put, class: "btn #{answer == 'no' ? 'btn-primary' : 'btn-secondary'}"
+- if activity_participation.present? && activity_participation.ticket.present? && answer == "yes"
+  br/
+  = link_to "#{t('actions.show')} #{Ticket.model_name.human.downcase}", ticket_path(token: activity_participation.ticket.token), class: "btn btn-success"

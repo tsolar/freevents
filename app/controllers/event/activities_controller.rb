@@ -3,7 +3,9 @@
 class Event::ActivitiesController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_event
-  before_action :set_event_activity, only: %i[show edit update destroy]
+  before_action :set_event_activity, only: %i[
+    show edit update destroy respond_attendance
+  ]
   after_action :verify_authorized
 
   # GET /event/activities
@@ -88,17 +90,51 @@ class Event::ActivitiesController < ApplicationController
     end
   end
 
+  def respond_attendance
+    answer = params[:will_attend]
+    person = current_user.person
+    if person.nil?
+      person = current_user.create_person(
+        firstname: Mail::Address.new(current_user.email).local
+      )
+    end
+
+    participation = Event::Attendee.where(
+      event: @event,
+      participant: person # person must exist!
+    ).first_or_create
+
+    activity_participation = @event_activity.attendees.where(
+      event_participation: participation
+    ).first_or_create
+
+    activity_participation.create_answer if activity_participation.answer.blank?
+
+    if activity_participation.answer.update(will_attend: answer)
+      notice = "#{Event::Activity::Participation::Answer.model_name.human} #{t('actions.messages.success.registered_f')}."
+      url = event_activity_path(
+        event_id: @event.to_param, id: @event_activity.to_param
+      )
+
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: url, notice: notice) }
+        format.json { render json: @event, notice: notice }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: url, notice: t("event/participation/answer.messages.there_was_a_problem")) }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event_activity
-    @event_activity = Event::Activity.joins(:event_day)
-                                     .where(event_days: { event_id: @event.to_param }).find_by(id: params[:id])
-    if @event_activity.present?
-      authorize @event_activity
-    else
-      render_404
-    end
+    @event_activity = @event.activities.find(params[:id])
+
+    authorize @event_activity
   end
 
   def set_event
@@ -107,8 +143,12 @@ class Event::ActivitiesController < ApplicationController
     render_404
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet,
+  # only allow the white list through.
   def event_activity_params
-    params.require(:event_activity).permit(:activity_type, :event_day_id, :title, :description, :starts_at, :ends_at, :venue_room_id)
+    params.require(:event_activity).permit(
+      :activity_type, :event_day_id, :title,
+      :description, :starts_at, :ends_at, :venue_room_id
+    )
   end
 end

@@ -60,7 +60,6 @@ RSpec.describe Event::ActivitiesController, type: :controller do
     end
 
     it "assigns only activities of the event" do
-
       get :index, params: { event_id: event.to_param }, session: valid_session
       expect(assigns(:event_activities)).to eq [activity1]
     end

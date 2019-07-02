@@ -81,11 +81,11 @@ class VenuesController < ApplicationController
       :address,
       :lat,
       :lng,
-      rooms_attributes: [
-        :id,
-        :_destroy,
-        :name,
-        :capacity
+      rooms_attributes: %i[
+        id
+        _destroy
+        name
+        capacity
       ]
     )
   end

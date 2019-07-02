@@ -21,3 +21,6 @@ es:
             your_postulation_has_been_approved_html: Tu postulación al evento <strong>%{event_title}</strong> ha sido aprobada.
             you_can_see_your_activity: Puedes ver tu actividad
             here_is_what_you_sent: Aquí está lo que enviaste
+  ticket_mailer:
+    send_to_holder:
+      subject: Tu ticket para la actividad %{activity_title}

@@ -2,6 +2,21 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= "test"
+
+if ENV["RAILS_ENV"] == "test"
+  require "simplecov"
+  SimpleCov.start "rails" do
+    add_filter "lib/templates"
+    add_filter "vendor" # exclude vendor dir when installing gems there
+  end
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::HTMLFormatter
+    ]
+  )
+  puts "required simplecov"
+end
+
 require "spec_helper"
 require File.expand_path("../config/environment", __dir__)
 require "rspec/rails"
@@ -23,7 +38,7 @@ require "pundit/matchers"
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec", "support", "**", "*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.

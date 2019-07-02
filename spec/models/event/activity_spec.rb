@@ -12,8 +12,8 @@ RSpec.describe Event::Activity, type: :model do
     it "validates starts_at date is the same of event_day.starts_at date" do
       now = Time.current
       tomorrow = Time.current + 1.day
-      event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-      activity = build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minute)
+      event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hours)
+      activity = build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minutes)
       expect(activity).to be_invalid
       expect(activity.save).to be false
       expect(activity).not_to be_persisted
@@ -23,8 +23,8 @@ RSpec.describe Event::Activity, type: :model do
     it "validates ends_at date is the same of event_day.ends_at date" do
       now = Time.current
       tomorrow = Time.current + 1.day
-      event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-      activity = build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minute)
+      event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hours)
+      activity = build(:event_activity, starts_at: tomorrow + 1.hour, ends_at: tomorrow + 1.hour + 30.minutes)
       expect(activity).to be_invalid
       expect(activity.save).to be false
       expect(activity).not_to be_persisted
@@ -35,8 +35,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when activity ends before event_day.ends_at" do
         it "creates the activity" do
           now = Time.current
-          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: now + 1.hour + 30.minute)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hours)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: now + 1.hour + 30.minutes)
           expect(activity).to be_valid
           expect(activity.save).to be true
           expect(activity).to be_persisted
@@ -46,7 +46,7 @@ RSpec.describe Event::Activity, type: :model do
       context "when activity ends on event_day.ends_at" do
         it "creates the activity" do
           now = Time.current
-          ends_at = now + 2.hour
+          ends_at = now + 2.hours
           event_day = create(:event_day, starts_at: now + 1.hour, ends_at: ends_at)
           # it only passes the test if it ends a second before...
           activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: ends_at - 1.second)
@@ -59,8 +59,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when activity ends after event_day.ends_at" do
         it "does not create the activity" do
           now = Time.current
-          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: now + 3.hour)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hours)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 1.hour, ends_at: now + 3.hours)
           expect(activity).not_to be_valid
           expect(activity.save).to be false
           expect(activity).not_to be_persisted
@@ -72,8 +72,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when ends before event_day.ends_at" do
         it "creates the activity" do
           now = Time.current
-          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hour)
-          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hour, ends_at: now + 11.hour + 30.minute)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hours)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hours, ends_at: now + 11.hours + 30.minutes)
           expect(activity).to be_valid
           expect(activity.save).to be true
           expect(activity).to be_persisted
@@ -83,8 +83,8 @@ RSpec.describe Event::Activity, type: :model do
       context "when ends after event_day.ends_at" do
         it "does not create the activity" do
           now = Time.current
-          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hour)
-          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hour, ends_at: now + 21.hour)
+          event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 20.hours)
+          activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 10.hours, ends_at: now + 21.hours)
           expect(activity).not_to be_valid
           expect(activity.save).to be false
           expect(activity).not_to be_persisted
@@ -95,8 +95,8 @@ RSpec.describe Event::Activity, type: :model do
     context "when activity starts after event_day.starts_at and after event_day.ends_at" do
       it "does not create the activity" do
         now = Time.current
-        event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hour)
-        activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 3.hour, ends_at: now + 3.hour + 30.minute)
+        event_day = create(:event_day, starts_at: now + 1.hour, ends_at: now + 2.hours)
+        activity = build(:event_activity, event_day_id: event_day.id, starts_at: now + 3.hours, ends_at: now + 3.hours + 30.minutes)
         expect(activity).not_to be_valid
         expect(activity.save).to be false
         expect(activity).not_to be_persisted

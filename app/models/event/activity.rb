@@ -18,6 +18,11 @@ class Event::Activity < ApplicationRecord
            foreign_key: :event_activity_id,
            dependent: :destroy
 
+  has_many :attendees,
+           class_name: "Event::Activity::Attendee",
+           foreign_key: :event_activity_id,
+           dependent: :destroy
+
   has_many :speakers,
            class_name: "Event::Activity::Speaker",
            foreign_key: :event_activity_id,
@@ -41,6 +46,16 @@ class Event::Activity < ApplicationRecord
   # validates_date :starts_at, is_at: Proc.new { |x| x.event_day_starts_at.to_date }
   validate :starts_at_event_day_date, if: proc { |x| x.starts_at? && x.event_day_starts_at.present? }
   validate :ends_at_event_day_date, if: proc { |x| x.starts_at? && x.event_day_starts_at.present? }
+
+  def to_s
+    title
+  end
+
+  def dates
+    return "" unless starts_at? && ends_at?
+
+    "#{starts_at.strftime('%F %R')} - #{ends_at.strftime('%F %R')}"
+  end
 
   private
 

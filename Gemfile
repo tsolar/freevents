@@ -63,7 +63,8 @@ gem "validates_timeliness", "~> 4.0"
 
 # Follow coding standards!
 gem "rubocop", require: false
-gem "rubocop-rails", github: "rubocop-hq/rubocop-rails"
+gem "rubocop-performance"
+gem "rubocop-rails"
 gem "rubocop-rspec"
 
 # User authentication
@@ -108,6 +109,8 @@ group :development, :test do
 
   # lets generate some layouts with bootstrap...
   gem "rails_layout"
+
+  gem 'simplecov', require: false
 end
 
 group :development do

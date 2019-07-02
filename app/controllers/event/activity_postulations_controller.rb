@@ -3,13 +3,15 @@
 class Event::ActivityPostulationsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create]
   before_action :set_event
-  before_action :set_event_activity_postulation, only: %i[show edit update destroy approve]
+  before_action :set_event_activity_postulation,
+                only: %i[show edit update destroy approve]
   after_action :verify_authorized
 
   # GET /event/activity_postulations
   # GET /event/activity_postulations.json
   def index
-    @event_activity_postulations = Event::Activity::Postulation.where(event: @event)
+    @event_activity_postulations = @event.activity_postulations
+
     authorize @event, :update?
   end
 
@@ -21,6 +23,7 @@ class Event::ActivityPostulationsController < ApplicationController
   # GET /event/activity_postulations/new
   def new
     @event_activity_postulation = Event::Activity::Postulation.new
+
     authorize @event_activity_postulation
   end
 
@@ -31,16 +34,30 @@ class Event::ActivityPostulationsController < ApplicationController
   # POST /event/activity_postulations
   # POST /event/activity_postulations.json
   def create
-    @event_activity_postulation = Event::Activity::Postulation.new(event_activity_postulation_params)
+    @event_activity_postulation = Event::Activity::Postulation.new(
+      event_activity_postulation_params
+    )
+
     authorize @event_activity_postulation
 
     respond_to do |format|
       if @event_activity_postulation.save
-        format.html { redirect_to @event, notice: "#{Event::Activity::Postulation.model_name.human} #{t('actions.messages.success.created_f')}." }
-        format.json { render :show, status: :created, location: @event_activity_postulation }
+        format.html do
+          redirect_to(
+            @event,
+            notice: "#{Event::Activity::Postulation.model_name.human} " \
+              "#{t('actions.messages.success.created_f')}."
+          )
+        end
+        format.json do
+          render :show, status: :created, location: @event_activity_postulation
+        end
       else
         format.html { render :new }
-        format.json { render json: @event_activity_postulation.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @event_activity_postulation.errors,
+                 status: :unprocessable_entity
+        end
       end
     end
   end
@@ -50,7 +67,16 @@ class Event::ActivityPostulationsController < ApplicationController
   def update
     respond_to do |format|
       if @event_activity_postulation.update(event_activity_postulation_params)
-        format.html { redirect_to event_activities_postulation_path(event_id: @event_activity_postulation.event.to_param, id: @event_activity_postulation.to_param), notice: "#{Event::Activity::Postulation.model_name.human} #{t('actions.messages.success.updated_f')}." }
+        format.html do
+          redirect_to(
+            event_activities_postulation_path(
+              event_id: @event_activity_postulation.event.to_param,
+              id: @event_activity_postulation.to_param
+            ),
+            notice: "#{Event::Activity::Postulation.model_name.human} "\
+              "#{t('actions.messages.success.updated_f')}."
+          )
+        end
         format.json { render :show, status: :ok, location: @event_activity_postulation }
       else
         format.html { render :edit }
@@ -81,21 +107,17 @@ class Event::ActivityPostulationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event_activity_postulation
-    @event_activity_postulation = Event::Activity::Postulation.find_by(id: params[:id], event_id: @event.to_param)
-    if @event_activity_postulation.present?
-      authorize @event_activity_postulation
-    else
-      render_404
-    end
+    @event_activity_postulation = @event.activity_postulations.find(params[:id])
+
+    authorize @event_activity_postulation
   end
 
   def set_event
     @event = Event.find(params[:event_id])
-  rescue StandardError
-    render_404
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet,
+  # only allow the white list through.
   def event_activity_postulation_params
     params.require(:event_activity_postulation).permit(
       :postulant_firstname,

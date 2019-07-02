@@ -63,7 +63,7 @@ RSpec.describe Ticket, type: :model do
       ticket = create(:ticket)
 
       expect do
-        expect(ticket.update(scanned: true, scanned_at: Time.now)).to be true
+        expect(ticket.update(scanned: true, scanned_at: Time.zone.now)).to be true
       end.not_to have_enqueued_job.on_queue("freevents-#{Rails.env}.mailers")
     end
   end

@@ -11,7 +11,12 @@ RSpec.describe TicketMailer, type: :mailer do
     end
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Send to holder")
+      expect(mail.subject).to eq(
+        I18n.t(
+          "ticket_mailer.send_to_holder.subject",
+          activity_title: ticket.holder.activity.title
+        )
+      )
       expect(mail.to).to eq([ticket.holder.participant.user.email])
     end
 

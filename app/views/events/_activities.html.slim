@@ -7,4 +7,5 @@ h3 = Event::Activity.model_name.human(count: event.activities.count)
     - event.activities.each do |activity|
       li
         = link_to activity.title, event_activity_path(event_id: event.to_param, id: activity.to_param)
+        = render partial: "activity_attending_form", locals: { activity: activity, event: @event }
 p = link_to t('event.activities.postulations.invite_to_create_one'), new_event_activities_postulation_path(event_id: event.to_param)

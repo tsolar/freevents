@@ -21,7 +21,7 @@ class Event::Day < ApplicationRecord
 
   # TODO: test when ends on next day
   def to_s
-    return I18n.t("tbd") unless starts_at.present?
+    return I18n.t("tbd") if starts_at.blank?
 
     formatted_date
   end
