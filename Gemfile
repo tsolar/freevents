@@ -109,6 +109,8 @@ group :development, :test do
 
   # lets generate some layouts with bootstrap...
   gem "rails_layout"
+
+  gem 'simplecov', require: false
 end
 
 group :development do
