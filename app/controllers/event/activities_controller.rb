@@ -132,13 +132,9 @@ class Event::ActivitiesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event_activity
-    @event_activity = Event::Activity.joins(:event_day)
-                                     .where(event_days: { event_id: @event.to_param }).find_by(id: params[:id])
-    if @event_activity.present?
-      authorize @event_activity
-    else
-      render_404
-    end
+    @event_activity = @event.activities.find(params[:id])
+
+    authorize @event_activity
   end
 
   def set_event
@@ -147,8 +143,12 @@ class Event::ActivitiesController < ApplicationController
     render_404
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet,
+  # only allow the white list through.
   def event_activity_params
-    params.require(:event_activity).permit(:activity_type, :event_day_id, :title, :description, :starts_at, :ends_at, :venue_room_id)
+    params.require(:event_activity).permit(
+      :activity_type, :event_day_id, :title,
+      :description, :starts_at, :ends_at, :venue_room_id
+    )
   end
 end
