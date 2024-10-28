@@ -13,7 +13,7 @@ gem "rails", "~> 5.1.4"
 # gem 'sqlite3'
 
 # Use postgresql as de database for Active Record
-gem "pg", "~> 0.18"
+gem "pg"
 
 # Use Puma as the app server
 gem "puma", "~> 3.7"
