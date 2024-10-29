@@ -1,11 +1,12 @@
 require:
-  - rubocop-rspec
-  - rubocop-performance
   - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-factory_bot
 
 AllCops:
   # Override rubocop-rails target version
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 3.3
 
   # Display Cop name, please!
   DisplayCopNames: true

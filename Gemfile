@@ -10,7 +10,7 @@ end
 gem "dotenv-rails", require: "dotenv/rails-now"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 5.2"
+gem "rails", "~> 6.1.0"
 
 # for railties app_generator_test
 gem "bootsnap", ">= 1.1.0", require: false
@@ -19,14 +19,14 @@ gem "bootsnap", ">= 1.1.0", require: false
 # gem 'sqlite3'
 
 # Use postgresql as de database for Active Record
-gem "pg", ">= 0.18", "< 2.0"
+gem "pg"
 
 # Use Puma as the app server
-gem "puma", "~> 3.7"
+gem "puma"
 # Use SCSS for stylesheets
-gem "sass-rails", "~> 5.0"
+gem "sass-rails"
 # Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
+gem "uglifier"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -56,16 +56,17 @@ gem "cocoon"
 gem "simple_form"
 
 # countries data
-gem "country_select", require: "country_select_without_sort_alphabetical"
+gem "country_select" # , require: "country_select_without_sort_alphabetical"
 
 # Validate dates
-gem "validates_timeliness", "~> 4.0"
+gem "validates_timeliness", "~> 6.0.0"
 
 # Follow coding standards!
 gem "rubocop", require: false
 gem "rubocop-performance"
 gem "rubocop-rails"
 gem "rubocop-rspec"
+gem "rubocop-factory_bot"
 
 # User authentication
 gem "devise"
@@ -89,7 +90,7 @@ gem "wicked_pdf"
 
 # translations
 gem "devise-i18n"
-gem "rails-i18n", "~> 5.1"
+gem "rails-i18n", "~> 6.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -15,7 +15,7 @@ HOSTNAME = ENV["HOSTNAME"] || "freevents"
 module Freevents
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 6.1
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -52,5 +52,13 @@ module Freevents
       api_key: ENV["MAILGUN_API_KEY"],
       domain: ENV["ACTION_MAILER_SMTP_DOMAIN"]
     }
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
   end
 end
