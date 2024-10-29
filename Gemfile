@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 5.1.4"
+gem "rails", "~> 5.2"
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
@@ -50,7 +50,7 @@ gem "simple_form"
 gem "cocoon"
 
 # countries data
-gem "country_select", require: "country_select_without_sort_alphabetical"
+gem "country_select" # , require: "country_select_without_sort_alphabetical"
 
 # Validate dates
 gem "validates_timeliness", "~> 4.0"
