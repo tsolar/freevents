@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :entity_organization, class: "Entity::Organization" do
-    type ""
+    type { "" }
     name { FFaker::Company.name }
 
     trait :invalid do
-      name nil
+      name { nil }
     end
   end
 end
