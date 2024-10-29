@@ -59,6 +59,7 @@ gem "validates_timeliness", "~> 5.0.0"
 gem "rubocop", require: false
 gem "rubocop-rails"
 gem "rubocop-rspec"
+gem "rubocop-factory_bot"
 
 
 group :development, :test do
